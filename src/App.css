@@ -1,0 +1,115 @@
+@theme {
+    --font-sans: "Inter", sans-serif;
+
+    /* Brand */
+    --color-primary: #2563eb;
+    --color-primary-hover: #1d4ed8;
+
+    /* Success */
+    --color-success: #16a34a;
+
+    /* Warning */
+    --color-warning: #f59e0b;
+
+    /* Danger */
+    --color-danger: #dc2626;
+
+    /* Background */
+    --color-background: #f8fafc;
+
+    /* Surface */
+    --color-surface: #ffffff;
+
+    /* Borders */
+    --color-border: #e2e8f0;
+
+    /* Text */
+    --color-text-primary: #0f172a;
+    --color-text-secondary: #64748b;
+
+    /* Radius */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+
+    /* Shadows */
+    --shadow-card:
+        0 1px 2px rgb(0 0 0 / 0.05),
+        0 4px 8px rgb(0 0 0 / 0.05);
+}
+
+
+
+/* Basic styling */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+}
+
+button {
+    cursor: pointer;
+}
+
+img,
+picture,
+svg,
+video {
+    display: block;
+    max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+
+
+/* selection */
+::selection {
+    background: #bfdbfe;
+}
+
+
+
+/* scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+
+/* utility class */
+.container-page {
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-inline: 1rem;
+}
+
+
+
+/* cursor */
+.cursor-wait {
+    cursor: wait;
+}
