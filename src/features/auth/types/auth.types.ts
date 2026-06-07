@@ -4,10 +4,20 @@ export interface User {
     email: string
 }
 
+// login
+
 export interface LoginPayload {
     email: string,
     password: string
 }
+
+export interface LoginResponse {
+    accessToken: string,
+    user: User
+}
+
+
+// register
 
 export interface RegisterPayload {
     name: string,
@@ -15,7 +25,6 @@ export interface RegisterPayload {
     password: string
 }
 
-export interface AuthResponse {
-    accessToken: string,
+export interface RegisterResponse {
     user: User
 }
