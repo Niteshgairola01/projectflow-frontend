@@ -13,6 +13,7 @@ import type { LoginFormData } from "../schemas/login.schema";
 import { useLogin } from "../hooks/useLogin";
 import { useAppDispatch } from "../../../shared/hooks/useAppDispatch";
 import { setUser } from "../store/authSlice";
+import { tokenManager } from "../../../shared/services/auth/tokenManager";
 
 export function LoginForm() {
   const navigate = useNavigate();
@@ -34,6 +35,8 @@ export function LoginForm() {
     try {
       const response = await mutateAsync(data);
 
+      tokenManager.setToken(response.accessToken);      
+
       dispatch(setUser(response.user));
 
       navigate("/dashboard");
@@ -43,10 +46,7 @@ export function LoginForm() {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="space-y-5"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
       {/* Email */}
 
       <Input
@@ -86,9 +86,7 @@ export function LoginForm() {
 
           <button
             type="button"
-            onClick={() =>
-              setShowPassword((prev) => !prev)
-            }
+            onClick={() => setShowPassword((prev) => !prev)}
             className="
               absolute
               right-3
@@ -97,18 +95,12 @@ export function LoginForm() {
               text-slate-400
             "
           >
-            {showPassword ? (
-              <EyeOff size={18} />
-            ) : (
-              <Eye size={18} />
-            )}
+            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
           </button>
         </div>
 
         {errors.password && (
-          <p className="mt-1 text-xs text-red-500">
-            {errors.password.message}
-          </p>
+          <p className="mt-1 text-xs text-red-500">{errors.password.message}</p>
         )}
       </div>
 
@@ -116,11 +108,7 @@ export function LoginForm() {
 
       <div className="flex items-center justify-between text-sm">
         <label className="flex items-center gap-2 text-slate-600">
-          <input
-            type="checkbox"
-            className="rounded"
-          />
-
+          <input type="checkbox" className="rounded" />
           Remember me
         </label>
 
@@ -138,11 +126,7 @@ export function LoginForm() {
 
       {/* Submit */}
 
-      <Button
-        type="submit"
-        loading={isPending}
-        className="w-full"
-      >
+      <Button type="submit" loading={isPending} className="w-full">
         Login
       </Button>
 

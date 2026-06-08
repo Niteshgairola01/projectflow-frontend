@@ -10,15 +10,13 @@ export const authApi = {
   // register
   register: async (data: RegisterPayload): Promise<RegisterResponse> => {
     const response = await api.post("/auth/register", data);
-    return response.data;
+    return response.data?.data;
   },
 
   // login
   login: async (data: LoginPayload): Promise<LoginResponse> => {
-    const response = await api.post("/auth/login", data);
-    console.log("response", response);
-    
-    return response.data;
+    const response = await api.post("/auth/login", data);    
+    return response.data?.data;
   },
 
   // current user
