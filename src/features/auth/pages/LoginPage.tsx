@@ -1,14 +1,10 @@
-import AuthCard from "../components/AuthCard";
+import { AuthLayout } from "../components/AuthLayout";
 import { LoginForm } from "../components/LoginForm";
 
-const LoginPage = () => {
+export default function LoginPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-50">
-      <AuthCard title="Welcome Back">
-        <LoginForm />
-      </AuthCard>
-    </div>
+    <AuthLayout title="Welcome back" subtitle="Please login to your account">
+      <LoginForm />
+    </AuthLayout>
   );
-};
-
-export default LoginPage;
+}

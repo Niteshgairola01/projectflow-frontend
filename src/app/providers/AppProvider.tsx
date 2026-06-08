@@ -1,3 +1,4 @@
+import { Toaster } from "sonner";
 import { QueryProvider } from "./QueryProvider";
 import { ReduxProvider } from "./ReduxProvider";
 
@@ -9,6 +10,8 @@ export const AppProvider = ({ children }: Props) => {
   return (
     <ReduxProvider>
       <QueryProvider>{children}</QueryProvider>
+
+      <Toaster position="top-right" richColors />
     </ReduxProvider>
   );
 };

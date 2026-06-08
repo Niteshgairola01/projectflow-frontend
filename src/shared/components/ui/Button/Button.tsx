@@ -1,15 +1,26 @@
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  isLoading?: boolean;
+import type { ButtonHTMLAttributes } from "react";
+import clsx from "clsx";
+
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  loading?: boolean;
 }
 
-export const Button = ({ children, isLoading, ...props }: ButtonProps) => {
+export function Button({
+  children,
+  loading,
+  className,
+  ...props
+}: ButtonProps) {
   return (
     <button
-      disabled={isLoading || props.disabled}
       {...props}
-      className="w-full rounded-md bg-blue-600 px-4 text-white disabled:opacity-50"
+      disabled={loading || props.disabled}
+      className={clsx(
+        "h-11 rounded-lg bg-primary px-4 text-sm font-medium text-white transition hover:opacity-90 disabled:opacity-50",
+        className
+      )}
     >
-      {isLoading ? "Loading..." : children}
+      {loading ? "Loading..." : children}
     </button>
   );
-};
+}

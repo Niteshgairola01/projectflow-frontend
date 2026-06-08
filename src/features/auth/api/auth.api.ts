@@ -16,6 +16,8 @@ export const authApi = {
   // login
   login: async (data: LoginPayload): Promise<LoginResponse> => {
     const response = await api.post("/auth/login", data);
+    console.log("response", response);
+    
     return response.data;
   },
 
