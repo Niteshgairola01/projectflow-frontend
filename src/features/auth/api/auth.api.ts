@@ -15,16 +15,22 @@ export const authApi = {
 
   // login
   login: async (data: LoginPayload): Promise<LoginResponse> => {
-    const response = await api.post("/auth/login", data);    
+    const response = await api.post("/auth/login", data);
     return response.data?.data;
   },
 
   // current user
-  me: () => api.get("/auth/me"),
+  me: async () => {
+    const response = await api.get("/auth/me");
+    return response.data?.data;
+  },
 
   // logout
   logout: () => api.post("/auth/logout"),
 
   // refresh token
-  refreshToken: () => api.post("/auth/refresh"),
+  refreshToken: async () => {
+    const response = await api.post("/auth/refresh");
+    return response.data?.data;
+  },
 };

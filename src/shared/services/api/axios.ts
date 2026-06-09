@@ -1,5 +1,6 @@
 import axios from "axios";
 import { tokenManager } from "../auth/tokenManager";
+import { authApi } from "../../../features/auth/api/auth.api";
 
 export const api = axios.create({
   baseURL: "http://localhost:5000/api/v1",
@@ -18,6 +19,22 @@ api.interceptors.request.use(
   },
 
   (error) => {
+    return Promise.reject(error);
+  }
+);
+
+api.interceptors.response.use(
+  (response) => response,
+
+  async (error) => {
+    if (error.response?.status === 401) {
+      const refreshResponse = await authApi.refreshToken();
+
+      tokenManager.setToken(refreshResponse.accessToken);
+
+      return api(error.config);
+    }
+
     return Promise.reject(error);
   }
 );
