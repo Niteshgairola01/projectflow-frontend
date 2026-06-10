@@ -3,16 +3,38 @@
 html,
 body,
 #root {
-  width: 100%;
-  min-height: 100%;
+  /* colors */
+  --primary: #6C63FF;
+  --primary-dark: #5B52F0;
+
+  --background: #F8F9FC;
+  --surface: #FFFFFF;
+
+  --text-primary: #111827;
+  --text-secondary: #6B7280;
+
+  --border: #E5E7EB;
+
+  --success: #10B981;
+  --warning: #F59E0B;
+  --danger: #EF4444;
+
+
+  /* radius */
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+
+
+  /* shadow */
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+@theme inline {
+  --color-primary: var(--primary)
 }
 
 body {
-  font-family: var(--font-sans);
-  background-color: var(--color-background);
-  color: var(--color-text-primary);
-
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background: #f8fafc;
+  color: #111827;
 }
