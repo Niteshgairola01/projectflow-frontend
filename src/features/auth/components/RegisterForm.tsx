@@ -1,45 +1,36 @@
+import { useForm } from "react-hook-form";
+import { Input } from "../../../shared/components/ui/Input/Input.tsx";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  registerSchema,
+  type RegisterFormData,
+} from "../schemas/register.schema.ts";
+import { useRegister } from "../hooks/useRegister.ts";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "../../../shared/components/ui/Button/Button.tsx";
 
-import { Input } from "../../../shared/components/ui/Input/Input";
-import { Button } from "../../../shared/components/ui/Button/Button";
-
-import { loginSchema } from "../schemas/login.schema";
-import type { LoginFormData } from "../schemas/login.schema";
-
-import { useLogin } from "../hooks/useLogin";
-import { useAppDispatch } from "../../../shared/hooks/useAppDispatch";
-import { setUser } from "../store/authSlice";
-import { tokenManager } from "../../../shared/services/auth/tokenManager";
-
-export const LoginForm = () => {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-
+const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
-  const { mutateAsync, isPending } = useLogin();
+  const { mutateAsync, isPending } = useRegister();
+
+  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
+  } = useForm<RegisterFormData>({
+    resolver: zodResolver(registerSchema),
   });
 
-  const onSubmit = async (data: LoginFormData) => {
+  const onSubmit = async (data: RegisterFormData) => {
     try {
-      const response = await mutateAsync(data);
+      await mutateAsync(data);
 
-      tokenManager.setToken(response.accessToken);
-
-      dispatch(setUser(response.user));
-
-      navigate("/dashboard");
+      navigate("/");
     } catch (error) {
       console.error(error);
     }
@@ -47,8 +38,15 @@ export const LoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-      {/* Email */}
+      {/* name */}
+      <Input
+        label="Name"
+        placeholder="Name"
+        error={errors.name?.message}
+        {...register("name")}
+      />
 
+      {/* email */}
       <Input
         label="Email address"
         type="email"
@@ -104,30 +102,10 @@ export const LoginForm = () => {
         )}
       </div>
 
-      {/* Remember + Forgot */}
-
-      <div className="flex items-center justify-between text-sm">
-        <label className="flex items-center gap-2 text-slate-600">
-          <input type="checkbox" className="rounded" />
-          Remember me
-        </label>
-
-        <Link
-          to="/forgot-password"
-          className="
-            font-medium
-            text-primary
-            hover:underline
-          "
-        >
-          Forgot password?
-        </Link>
-      </div>
-
       {/* Submit */}
 
       <Button type="submit" loading={isPending} className="w-full">
-        Login
+        Register
       </Button>
 
       {/* Divider */}
@@ -139,12 +117,12 @@ export const LoginForm = () => {
 
         <div className="relative flex justify-center">
           <span className="bg-white px-3 text-xs text-slate-500">
-            OR CONTINUE WITH
+            OR REGISTER WITH
           </span>
         </div>
       </div>
 
-      {/* Social Login */}
+      {/* Social Register */}
 
       <div className="grid grid-cols-2 gap-3">
         <button
@@ -186,21 +164,23 @@ export const LoginForm = () => {
         </button>
       </div>
 
-      {/* Register */}
+      {/* Login */}
 
       <p className="text-center text-sm text-slate-500">
-        Don't have an account?{" "}
+        Already have an account?{" "}
         <Link
-          to="/register"
+          to="/"
           className="
             font-semibold
             text-primary
             hover:underline
           "
         >
-          Sign up
+          Login
         </Link>
       </p>
     </form>
   );
 };
+
+export default RegisterForm;
