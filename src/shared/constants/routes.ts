@@ -4,7 +4,10 @@ export const ROUTES = {
   LOGIN: "/login",
   REGISTER: "/register",
 
-  DASHBOARD: "/dashboard",
+  DASHOARD: "/dashboard",
+
+  WORKSPACES: "/workspaces",
+  WORKSPACE_DETAILS: "/workspaces/:id",
 
   PROJECTS: "/projects",
   TASKS: "/tasks",

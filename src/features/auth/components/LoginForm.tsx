@@ -14,6 +14,7 @@ import { useLogin } from "../hooks/useLogin";
 import { useAppDispatch } from "../../../shared/hooks/useAppDispatch";
 import { setUser } from "../store/authSlice";
 import { tokenManager } from "../../../shared/services/auth/tokenManager";
+import { ROUTES } from "../../../shared/constants/routes";
 
 export const LoginForm = () => {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ export const LoginForm = () => {
 
       dispatch(setUser(response.user));
 
-      navigate("/dashboard");
+      navigate(ROUTES.WORKSPACES);
     } catch (error) {
       console.error(error);
     }
