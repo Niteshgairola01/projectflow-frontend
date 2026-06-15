@@ -3,36 +3,73 @@
 html,
 body,
 #root {
-  /* colors */
+  /* Brand */
   --primary: #6C63FF;
-  --primary-dark: #5B52F0;
+  --primary-foreground: #FFFFFF;
 
+  /* Backgrounds */
   --background: #F8F9FC;
-  --surface: #FFFFFF;
+  --foreground: #111827;
 
-  --text-primary: #111827;
-  --text-secondary: #6B7280;
+  --card: #FFFFFF;
+  --card-foreground: #111827;
 
+  /* Muted */
+  --muted: #F3F4F6;
+  --muted-foreground: #6B7280;
+
+  /* Border */
   --border: #E5E7EB;
 
+  /* Status */
   --success: #10B981;
   --warning: #F59E0B;
   --danger: #EF4444;
 
-
-  /* radius */
+  /* Radius */
   --radius-sm: 8px;
   --radius-md: 10px;
   --radius-lg: 12px;
 
-
-  /* shadow */
+  /* Shadow */
   --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
-@theme inline {
-  --color-primary: var(--primary)
+.dark {
+  --background: #0f172a;
+  --foreground: #f8fafc;
+
+  --card: #1e293b;
+  --card-foreground: #f8fafc;
+
+  --muted: #334155;
+  --muted-foreground: #94a3b8;
+
+  --border: #334155;
+
+  --primary: #818cf8;
+  --primary-foreground: #ffffff;
 }
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-border: var(--border);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+}
+
+/* @theme inline {
+  --color-primary: var(--primary)
+} */
 
 body {
   background: #f8fafc;
