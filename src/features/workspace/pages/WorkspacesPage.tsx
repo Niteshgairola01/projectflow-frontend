@@ -2,7 +2,6 @@ import WorkspaceCard from "../components/WorkspaceCard";
 import { useWorkspaces } from "../hooks/useWorkspaces";
 import WorkspaceHeader from "../components/WorkspaceHeader";
 import { useAppSelector } from "../../../shared/hooks/useAppSelector";
-// import { useAppSelector } from "../../shared/hooks/useAppSelector";
 
 const WorkspacesPage = () => {
   const { data: workspaces, isLoading, isError } = useWorkspaces();
@@ -15,12 +14,7 @@ const WorkspacesPage = () => {
         {[1, 2, 3].map((item) => (
           <div
             key={item}
-            className="
-            h-24
-            animate-pulse
-            rounded-xl
-            bg-slate-200
-          "
+            className="h-24 animate-pulse rounded-xl bg-slate-200"
           />
         ))}
       </div>
@@ -39,18 +33,7 @@ const WorkspacesPage = () => {
         {/* header */}
         <WorkspaceHeader />
 
-        <div
-          className="
-        flex
-        flex-col
-        items-center
-        justify-center
-        rounded-2xl
-        border
-        bg-card
-        py-20
-      "
-        >
+        <div className="flex flex-col items-center justify-center rounded-2xl border bg-card py-20">
           <h3 className="text-lg font-semibold">No workspaces yet</h3>
 
           <p className="mt-2 text-sm text-muted-foreground">
@@ -78,6 +61,7 @@ const WorkspacesPage = () => {
               name={workspace.name}
               members={workspace.members}
               role={member?.role}
+              color={workspace?.color}
               key={workspace._id}
             />
           );

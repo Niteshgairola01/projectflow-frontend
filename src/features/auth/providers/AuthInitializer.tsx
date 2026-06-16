@@ -25,7 +25,7 @@ export const AuthInitializer = ({ children }: Props) => {
 
         dispatch(setUser(meResponse));
       } catch (error) {
-        console.log("No activ session");
+        console.log("No active session");
       } finally {
         setIsInitializing(false);
       }

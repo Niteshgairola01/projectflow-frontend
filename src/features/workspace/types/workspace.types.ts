@@ -4,13 +4,15 @@ export interface WorkspaceMember {
 }
 
 export interface CreateWorkspacePayload {
-  name: String
+  name: String,
+  color?: String
 }
 
 export interface Workspace {
   _id: string;
   name: string;
   owner: string;
+  color?: string;
   members: WorkspaceMember[];
 
   craetedAt: string;

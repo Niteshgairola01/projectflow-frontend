@@ -1,6 +1,11 @@
 import { Plus } from "lucide-react";
+import { useState } from "react";
+import CreateWorkspaceModal from "./CreateWorkspaceModal";
+import { Button } from "../../../shared/components/ui/Button/Button";
 
 const WorkspaceHeader = () => {
+  const [open, setOpen] = useState(false);
+
   return (
     <div className="m-8 flex items-center justify-between">
       <div>
@@ -9,20 +14,15 @@ const WorkspaceHeader = () => {
         <p className="mt-2 text-muted-foreground">Manage your workspaces</p>
       </div>
 
-      <button
-        className="inline-flex items-center
-            gap-2
-            rounded-xl
-            bg-primary
-            px-5
-            py-3
-            text-sm
-            font-medium
-            text-white"
+      <Button
+        className="inline-flex items-center gap-2"
+        onClick={() => setOpen(true)}
       >
         <Plus size={18} />
         Create Workspace
-      </button>
+      </Button>
+
+      <CreateWorkspaceModal open={open} onClose={() => setOpen(false)} />
     </div>
   );
 };
