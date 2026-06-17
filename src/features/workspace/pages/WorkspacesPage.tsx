@@ -2,6 +2,7 @@ import WorkspaceCard from "../components/WorkspaceCard";
 import { useWorkspaces } from "../hooks/useWorkspaces";
 import WorkspaceHeader from "../components/WorkspaceHeader";
 import { useAppSelector } from "../../../shared/hooks/useAppSelector";
+import { Link } from "react-router-dom";
 
 const WorkspacesPage = () => {
   const { data: workspaces, isLoading, isError } = useWorkspaces();
@@ -53,17 +54,18 @@ const WorkspacesPage = () => {
       <div className="overflow-hidden rounded-2xl border bg-card shadow-sm">
         {workspaces?.map((workspace) => {
           const member = workspace.members.find(
-            (member) => member.user === user?._id
+            (member) => member.user._id === user?._id
           );
 
           return (
-            <WorkspaceCard
-              name={workspace.name}
-              members={workspace.members}
-              role={member?.role}
-              color={workspace?.color}
-              key={workspace._id}
-            />
+            <Link to={`/workspaces/${workspace._id}`} key={workspace._id}>
+              <WorkspaceCard
+                name={workspace.name}
+                members={workspace.members}
+                role={member?.role}
+                color={workspace?.color}
+              />
+            </Link>
           );
         })}
       </div>

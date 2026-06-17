@@ -1,11 +1,15 @@
 export interface WorkspaceMember {
-  user: string;
+  user: {
+    _id: string;
+    name: string;
+    email: string;
+  };
   role: string;
 }
 
 export interface CreateWorkspacePayload {
-  name: String,
-  color?: String
+  name: String;
+  color?: String;
 }
 
 export interface Workspace {
@@ -15,6 +19,10 @@ export interface Workspace {
   color?: string;
   members: WorkspaceMember[];
 
-  craetedAt: string;
+  createdAt: string;
   updateat: string;
+}
+
+export interface WorkspaceProps {
+  workspace: Workspace;
 }

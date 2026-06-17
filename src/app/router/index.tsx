@@ -6,6 +6,7 @@ import { ROUTES } from "../../shared/constants/routes";
 import AppLayout from "../layouts/AppLayout";
 import WorkspacesPage from "../../features/workspace/pages/WorkspacesPage";
 import { PublicRoute } from "./PublicRoute";
+import WorkspaceDetailsPage from "../../features/workspace/pages/WorkspaceDetailsPage";
 
 export const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.WORKSPACES,
         element: <WorkspacesPage />,
+      },
+      {
+        path: ROUTES.WORKSPACE_DETAILS,
+        element: <WorkspaceDetailsPage />,
       },
     ],
   },
