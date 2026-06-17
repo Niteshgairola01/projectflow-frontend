@@ -20,11 +20,11 @@ export const Input = forwardRef<HTMLInputElement, Props>(
           ref={ref}
           {...props}
           className={clsx(
-            "h-11 w-full rounded-lg border border-gray-200 px-3 outline-none focus:border-primary",
+            "h-11 w-full rounded-lg border px-3 outline-none focus:focus:ring-2 focus:ring-primary/20",
             className
           )}
         />
-
+        
         {error && <p className="text-xs text-red-500">{error}</p>}
       </div>
     );

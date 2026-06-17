@@ -7,7 +7,7 @@ export const ROUTES = {
   DASHOARD: "/dashboard",
 
   WORKSPACES: "/workspaces",
-  WORKSPACE_DETAILS: "/workspaces/:id",
+  WORKSPACE_DETAILS: "/workspaces/:workspaceId",
 
   PROJECTS: "/projects",
   TASKS: "/tasks",

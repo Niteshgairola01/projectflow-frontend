@@ -30,7 +30,7 @@ const RegisterForm = () => {
     try {
       await mutateAsync(data);
 
-      navigate("/");
+      navigate("/login");
     } catch (error) {
       console.error(error);
     }
@@ -169,7 +169,7 @@ const RegisterForm = () => {
       <p className="text-center text-sm text-slate-500">
         Already have an account?{" "}
         <Link
-          to="/"
+          to="/login"
           className="
             font-semibold
             text-primary
