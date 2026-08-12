@@ -8,47 +8,60 @@ import {
   Settings,
   Workflow,
 } from "lucide-react";
-import { ROUTES } from "./routes";
+import type React from "react";
 
-export const sidebarItems = [
+interface SidebarItem {
+  label: String;
+  key: String;
+  icon: React.ElementType;
+  requiresWorkspace?: boolean;
+}
+
+export const sidebarItems: SidebarItem[] = [
   {
     label: "Overview",
-    path: ROUTES.DASHOARD,
+    key: "overview",
     icon: LayoutDashboard,
   },
   {
     label: "Workspaces",
-    path: ROUTES.WORKSPACES,
+    key: "workspaces",
     icon: Workflow,
   },
   {
     label: "Projects",
-    path: ROUTES.PROJECTS,
+    key: "projects",
     icon: FolderKanban,
+    requiresWorkspace: true,
   },
   {
     label: "Tasks",
-    path: ROUTES.TASKS,
+    key: "tasks",
     icon: CheckSquare,
+    requiresWorkspace: true,
   },
   {
     label: "Calendar",
-    path: "/calendar",
+    key: "calendar",
     icon: Calendar,
+    requiresWorkspace: true,
   },
   {
     label: "Team",
-    path: "/team",
+    key: "team",
     icon: Users,
+    requiresWorkspace: true,
   },
   {
     label: "Reports",
-    path: "/reports",
+    key: "reports",
     icon: BarChart3,
+    requiresWorkspace: true,
   },
   {
     label: "Settings",
-    path: "/settings",
+    key: "settings",
     icon: Settings,
+    requiresWorkspace: true,
   },
 ];

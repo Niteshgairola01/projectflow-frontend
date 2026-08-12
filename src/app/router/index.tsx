@@ -1,4 +1,4 @@
-import { createBrowserRouter, Routes } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import LoginPage from "../../features/auth/pages/LoginPage";
 import RegisterPage from "../../features/auth/pages/RegisterPage";
 import { ProtectedRoute } from "./ProtectedRoute";
@@ -9,6 +9,7 @@ import { PublicRoute } from "./PublicRoute";
 import WorkspaceDetailsPage from "../../features/workspace/pages/WorkspaceDetailsPage";
 import ProjectsPage from "../../features/projects/pages/ProjectsPage";
 import ProjectDetailsPage from "../../features/projects/pages/ProjectDetailsPage";
+import WorkspaceLayout from "../../features/workspace/layouts/WorkspaceLayout";
 
 export const router = createBrowserRouter([
   {
@@ -40,15 +41,21 @@ export const router = createBrowserRouter([
       },
       {
         path: ROUTES.WORKSPACE_DETAILS,
-        element: <WorkspaceDetailsPage />,
-      },
-      {
-        path: ROUTES.PROJECTS,
-        element: <ProjectsPage />,
-      },
-      {
-        path: ROUTES.PROJECT_DETAILS,
-        element: <ProjectDetailsPage />,
+        element: <WorkspaceLayout />,
+        children: [
+          // {
+          //   index: true,
+          //   element: <WorkspaceOverviewPage />,
+          // },
+          {
+            path: ROUTES.PROJECTS,
+            element: <ProjectsPage />,
+          },
+          {
+            path: ROUTES.PROJECT_DETAILS,
+            element: <ProjectDetailsPage />,
+          },
+        ],
       },
     ],
   },

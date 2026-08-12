@@ -4,15 +4,15 @@ export const ROUTES = {
   LOGIN: "/login",
   REGISTER: "/register",
 
-  DASHOARD: "/dashboard",
+  DASHBOARD: "/dashboard",
 
   WORKSPACES: "/workspaces",
   WORKSPACE_DETAILS: "/workspaces/:workspaceId",
 
-  PROJECTS: "/workspaces/:workspaceId/projects",
-  PROJECT_DETAILS: "/workspaces/:workspaceId/projects/:projectId",
+  PROJECTS: "projects",
+  PROJECT_DETAILS: "projects/:projectId",
 
-  TASKS: "/tasks",
+  TASKS: "tasks",
 
-  SETTINGS: "/settings",
+  SETTINGS: "settings",
 };
