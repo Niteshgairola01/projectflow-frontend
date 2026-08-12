@@ -9,7 +9,9 @@ export const ROUTES = {
   WORKSPACES: "/workspaces",
   WORKSPACE_DETAILS: "/workspaces/:workspaceId",
 
-  PROJECTS: "/projects",
+  PROJECTS: "/workspaces/:workspaceId/projects",
+  PROJECT_DETAILS: "/workspaces/:workspaceId/projects/:projectId",
+
   TASKS: "/tasks",
 
   SETTINGS: "/settings",

@@ -8,26 +8,27 @@ import {
   Settings,
   Workflow,
 } from "lucide-react";
+import { ROUTES } from "./routes";
 
 export const sidebarItems = [
   {
     label: "Overview",
-    path: "/dashboard",
+    path: ROUTES.DASHOARD,
     icon: LayoutDashboard,
   },
   {
     label: "Workspaces",
-    path: "/workspaces",
+    path: ROUTES.WORKSPACES,
     icon: Workflow,
   },
   {
     label: "Projects",
-    path: "/projects",
+    path: ROUTES.PROJECTS,
     icon: FolderKanban,
   },
   {
     label: "Tasks",
-    path: "/tasks",
+    path: ROUTES.TASKS,
     icon: CheckSquare,
   },
   {
