@@ -1,5 +1,5 @@
 import { api } from "../../../shared/services/api/axios";
-import type { CreateProjectPayload } from "../shcema/createProjectSchema";
+import type { CreateProjectPayload } from "../schema/createProjectSchema";
 import type { Project } from "../types/project.types";
 
 const base = "/workspaces";
@@ -14,7 +14,7 @@ export const projectApi = {
     return response.data?.data;
   },
 
-  getAllProjects: async (workspaceId: string): Promise<Project[]> => {
+  getProjects: async (workspaceId: string): Promise<Project[]> => {
     const response = await api.get(`${base}/${workspaceId}/projects`);
 
     return response.data?.data;

@@ -1,5 +1,6 @@
 import { MoreVertical } from "lucide-react";
 import type { Project } from "../types/project.types";
+import { formatDate } from "../../../shared/utils/formateDate";
 
 interface ProjectCardProps {
   project: Project;
@@ -54,7 +55,7 @@ const ProjectCard = ({ project, onClick }: ProjectCardProps) => {
         </span>
 
         <span className="text-xs text-muted-foreground">
-          {new Date(project.startDate).toLocaleDateString()}
+          {formatDate(project.startDate)}
         </span>
       </div>
     </div>
