@@ -1,16 +1,29 @@
 import { MoreVertical } from "lucide-react";
 import type { Project } from "../types/project.types";
 import { formatDate } from "../../../shared/utils/formateDate";
+import { notify } from "../../../shared/utils/toast";
+import { useNavigate, useParams } from "react-router-dom";
 
 interface ProjectCardProps {
   project: Project;
-  onClick?: () => void;
 }
 
-const ProjectCard = ({ project, onClick }: ProjectCardProps) => {
+const ProjectCard = ({ project }: ProjectCardProps) => {
+  const navigate = useNavigate();
+  const { workspaceId } = useParams();
+
+  const handleNavigation = () => {
+    if (!workspaceId) {
+      notify.error("Workspace not found");
+      return;
+    }
+
+    navigate(`/workspaces/${workspaceId}/projects/${project?._id}`);
+  };
+
   return (
     <div
-      onClick={onClick}
+      onClick={handleNavigation}
       className="
         cursor-pointer
         rounded-2xl

@@ -23,7 +23,7 @@ const WorkspaceLayout = () => {
   }
 
   if (isLoading) {
-    return <AppLoader />;
+    return <AppLoader message="Loading your workspace..."/>;
   }
 
   if (isError || !workspace) {

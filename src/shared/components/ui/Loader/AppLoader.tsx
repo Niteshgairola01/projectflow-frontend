@@ -1,4 +1,8 @@
-const AppLoader = () => {
+interface AppLoaderProps {
+  message?: string
+}
+
+const AppLoader = ({ message }: AppLoaderProps) => {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background">
       <div className="flex flex-col items-center gap-4">
@@ -8,7 +12,7 @@ const AppLoader = () => {
           <h2 className="text-sm font-semibold text-foreground">ProjectFlow</h2>
 
           <p className="text-xs text-muted-foreground">
-            Loading your workspace...
+            {message}
           </p>
         </div>
       </div>
