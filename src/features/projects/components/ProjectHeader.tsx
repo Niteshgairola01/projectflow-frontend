@@ -1,13 +1,18 @@
-import { ArrowLeft, MoreVertical } from "lucide-react";
+import { ArrowLeft, MoreVertical, Pencil } from "lucide-react";
 import { formatDate } from "../../../shared/utils/formateDate";
 import type { Project } from "../types/project.types";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import UpdateProjectModal from "./UpdateProjectModal";
 
 interface ProjectHeaderProps {
   project: Project;
 }
 
 const ProjectHeader = ({ project }: ProjectHeaderProps) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isUpdateOpen, setIsUpdateOpen] = useState(false);
+
   const navigate = useNavigate();
 
   return (
@@ -16,15 +21,7 @@ const ProjectHeader = ({ project }: ProjectHeaderProps) => {
       <button
         type="button"
         onClick={() => navigate(-1)}
-        className="
-          inline-flex
-          items-center
-          gap-2
-          text-sm
-          text-muted-foreground
-          transition
-          hover:text-foreground
-        "
+        className="inline-flex items-center gap-2 text-sm text-muted-foreground transition hover:text-foreground"
       >
         <ArrowLeft size={16} />
         Back to Projects
@@ -35,19 +32,7 @@ const ProjectHeader = ({ project }: ProjectHeaderProps) => {
         <div className="flex items-start gap-4">
           {/* Project Icon */}
           <div
-            className="
-              flex
-              h-14
-              w-14
-              shrink-0
-              items-center
-              justify-center
-              rounded-2xl
-              text-xl
-              font-semibold
-              text-white
-              shadow-sm
-            "
+            className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl text-xl font-semibold text-white shadow-sm"
             style={{
               backgroundColor: project.color || "#6C63FF",
             }}
@@ -77,20 +62,40 @@ const ProjectHeader = ({ project }: ProjectHeaderProps) => {
         </div>
 
         {/* Actions */}
-        <button
-          type="button"
-          className="
-            rounded-xl
-            border
-            p-2
-            text-muted-foreground
-            transition
-            hover:bg-muted
-            hover:text-foreground
-          "
-        >
-          <MoreVertical size={20} />
-        </button>
+        <div className="relative">
+          <button
+            type="button"
+            onClick={() => setIsMenuOpen((prev) => !prev)}
+            className="rounded-xl border p-2 text-muted-foreground transition hover:bg-muted hover:text-foreground"
+            aria-label="Project actions"
+          >
+            <MoreVertical size={20} />
+          </button>
+
+          {isMenuOpen && (
+            <div className="absolute right-0 top-12 z-50 w-44 rounded-xl border bg-background p-1 shadow-lg">
+              <button
+                type="button"
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  setIsUpdateOpen(true);
+                }}
+                className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm transition hover:bg-muted"
+              >
+                <Pencil size={16} />
+                Edit Project
+              </button>
+            </div>
+          )}
+
+          {/* Your update modal will eventually go here */}
+
+          <UpdateProjectModal
+            open={isUpdateOpen}
+            onClose={() => setIsUpdateOpen(false)}
+            project={project}
+          />
+        </div>
       </div>
     </div>
   );

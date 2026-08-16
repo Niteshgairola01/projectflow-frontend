@@ -1,5 +1,8 @@
 import { api } from "../../../shared/services/api/axios";
-import type { CreateProjectPayload } from "../schema/createProjectSchema";
+import type {
+  CreateProjectPayload,
+  UpdateProjectPayload,
+} from "../schema/createProjectSchema";
 import type { Project } from "../types/project.types";
 
 const base = "/workspaces";
@@ -26,6 +29,19 @@ export const projectApi = {
   ): Promise<Project> => {
     const response = await api.get(
       `${base}/${workspaceId}/projects/${projectId}`
+    );
+
+    return response.data?.data;
+  },
+
+  updateProject: async (
+    workspaceId: string,
+    projectId: string,
+    data: UpdateProjectPayload
+  ): Promise<Project> => {
+    const response = await api.patch(
+      `${base}/${workspaceId}/projects/${projectId}`,
+      data
     );
 
     return response.data?.data;

@@ -212,16 +212,7 @@ const DateSelector = ({
 
       {/* Date input */}
       <div
-        className={`
-          flex
-          h-11
-          w-full
-          items-center
-          rounded-xl
-          border
-          bg-background
-          transition
-          focus-within:ring-2
+        className={` flex h-11 w-full items-center rounded-xl border bg-background transition focus-within:ring-2 
           focus-within:ring-primary/20
           ${error ? "border-red-500" : "border-input hover:border-primary/50"}
           ${disabled ? "cursor-not-allowed opacity-50" : ""}
@@ -237,18 +228,7 @@ const DateSelector = ({
           onBlur={handleInputBlur}
           onKeyDown={handleKeyDown}
           onFocus={() => setOpen(true)}
-          className="
-            h-full
-            min-w-0
-            flex-1
-            rounded-xl
-            bg-transparent
-            px-3
-            text-sm
-            text-foreground
-            outline-none
-            placeholder:text-muted-foreground
-            disabled:cursor-not-allowed
+          className="h-full min-w-0 flex-1 rounded-xl bg-transparent px-3 text-sm text-foreground outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed
           "
         />
 
@@ -258,19 +238,7 @@ const DateSelector = ({
             type="button"
             onMouseDown={(event) => event.preventDefault()}
             onClick={handleClear}
-            className="
-              flex
-              h-8
-              w-8
-              shrink-0
-              items-center
-              justify-center
-              rounded-full
-              text-muted-foreground
-              transition
-              hover:bg-muted
-              hover:text-foreground
-            "
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-muted-foreground transition hover:bg-muted hover:text-foreground"
             aria-label="Clear date"
           >
             <X size={16} />
@@ -286,21 +254,7 @@ const DateSelector = ({
             setOpen((prev) => !prev);
             inputRef.current?.focus();
           }}
-          className="
-            mr-1
-            flex
-            h-9
-            w-9
-            shrink-0
-            items-center
-            justify-center
-            rounded-lg
-            text-muted-foreground
-            transition
-            hover:bg-muted
-            hover:text-foreground
-            disabled:cursor-not-allowed
-          "
+          className="mr-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition hover:bg-muted hover:text-foreground disabled:cursor-not-allowed"
           aria-label="Open calendar"
         >
           <CalendarDays size={18} />
@@ -309,20 +263,7 @@ const DateSelector = ({
 
       {/* Calendar popover */}
       {open && !disabled && (
-        <div
-          className="
-            absolute
-            left-0
-            top-full
-            z-50
-            mt-2
-            rounded-xl
-            border
-            bg-background
-            p-3
-            shadow-lg
-          "
-        >
+        <div className="absolute left-0 top-full z-50 mt-2 rounded-xl border bg-background p-3 shadow-lg">
           <DayPicker
             mode="single"
             selected={value ?? undefined}

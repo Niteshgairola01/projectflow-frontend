@@ -31,3 +31,5 @@ export const createProjectSchema = z
   );
 
 export type CreateProjectPayload = z.infer<typeof createProjectSchema>;
+
+export type UpdateProjectPayload = z.infer<typeof createProjectSchema.partial>
