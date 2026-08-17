@@ -1,9 +1,11 @@
-import { ArrowLeft, MoreVertical, Pencil } from "lucide-react";
+import { ArrowLeft, MoreVertical, Pencil, Trash2 } from "lucide-react";
 import { formatDate } from "../../../shared/utils/formateDate";
 import type { Project } from "../types/project.types";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import UpdateProjectModal from "./UpdateProjectModal";
+import ConfirmModal from "../../../shared/components/ui/Modal/ConfirmModal";
+import { useDeleteProject } from "../hooks/useDeleteProject";
 
 interface ProjectHeaderProps {
   project: Project;
@@ -12,8 +14,17 @@ interface ProjectHeaderProps {
 const ProjectHeader = ({ project }: ProjectHeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUpdateOpen, setIsUpdateOpen] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const navigate = useNavigate();
+
+  const { mutateAsync, isPending } = useDeleteProject();
+
+  const handleDelete = async () => {
+    await mutateAsync({
+      projectId: project._id,
+    });
+  };
 
   return (
     <div className="space-y-5">
@@ -85,15 +96,38 @@ const ProjectHeader = ({ project }: ProjectHeaderProps) => {
                 <Pencil size={16} />
                 Edit Project
               </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  setShowDeleteModal(true);
+                }}
+                className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-red-600 hover:bg-red-50"
+              >
+                <Trash2 size={15} />
+                Delete
+              </button>
             </div>
           )}
 
-          {/* Your update modal will eventually go here */}
-
+          {/* Update Project Modal */}
           <UpdateProjectModal
             open={isUpdateOpen}
             onClose={() => setIsUpdateOpen(false)}
             project={project}
+          />
+
+          {/* Delete Project Modal */}
+          <ConfirmModal
+            open={showDeleteModal}
+            title="Delete Project"
+            description={`Are you sure you want to delete "${project.name}"? This action cannot be undone.`}
+            confirmText="Delete Project"
+            cancelText="Cancel"
+            loading={isPending}
+            onCancel={() => setShowDeleteModal(false)}
+            onConfirm={handleDelete}
           />
         </div>
       </div>

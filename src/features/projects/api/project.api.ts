@@ -46,4 +46,15 @@ export const projectApi = {
 
     return response.data?.data;
   },
+
+  deleteProject: async (
+    workspaceId: string,
+    projectId: string
+  ): Promise<void> => {
+    const response = await api.delete(
+      `${base}/${workspaceId}/projects/${projectId}`
+    );
+
+    return response.data?.data;
+  },
 };
