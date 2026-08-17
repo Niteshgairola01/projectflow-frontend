@@ -40,7 +40,7 @@ const WorkspaceDetailsPage = () => {
 
   // Loading
   if (isLoading) {
-    return <AppLoader />;
+    return <AppLoader message="Loading your workspace..." />;
   }
 
   // Workspace not found

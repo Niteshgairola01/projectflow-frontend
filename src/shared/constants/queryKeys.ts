@@ -9,7 +9,7 @@ export const queryKeys = {
   },
 
   projects: {
-    all: ["projects"],
+    all: ["projects"] as const,
     detail: (id: string) => ["detail", id],
   },
 

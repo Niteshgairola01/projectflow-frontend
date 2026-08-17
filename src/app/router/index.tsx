@@ -6,7 +6,8 @@ import { ROUTES } from "../../shared/constants/routes";
 import AppLayout from "../layouts/AppLayout";
 import WorkspacesPage from "../../features/workspace/pages/WorkspacesPage";
 import { PublicRoute } from "./PublicRoute";
-import WorkspaceDetailsPage from "../../features/workspace/pages/WorkspaceDetailsPage";
+import ProjectsPage from "../../features/projects/pages/ProjectsPage";
+import WorkspaceLayout from "../../features/workspace/layouts/WorkspaceLayout";
 
 export const router = createBrowserRouter([
   {
@@ -38,7 +39,25 @@ export const router = createBrowserRouter([
       },
       {
         path: ROUTES.WORKSPACE_DETAILS,
-        element: <WorkspaceDetailsPage />,
+        element: <WorkspaceLayout />,
+        children: [
+          {
+            path: ROUTES.PROJECTS,
+            element: <ProjectsPage />,
+          },
+          {
+            path: ROUTES.PROJECT_DETAILS,
+            lazy: async () => {
+              const module = await import(
+                "../../features/projects/pages/ProjectDetailsPage"
+              );
+
+              return {
+                Component: module.default,
+              };
+            },
+          },
+        ],
       },
     ],
   },

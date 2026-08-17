@@ -33,4 +33,10 @@ export const authApi = {
     const response = await api.post("/auth/refresh");
     return response.data?.data;
   },
+
+  // get user by id
+  getUserById: async (userId: string) => {
+    const response = await api.get(`/auth/user/${userId}`);
+    return response?.data?.data;
+  },
 };

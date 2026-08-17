@@ -36,7 +36,7 @@ export const AuthInitializer = ({ children }: Props) => {
   }, [dispatch]);
 
   if (isInitializing) {
-    return <AppLoader />;
+    return <AppLoader message="Loading your workspace..."/>;
   }
 
   return <>{children}</>;
