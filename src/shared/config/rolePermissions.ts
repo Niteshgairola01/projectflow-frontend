@@ -1,0 +1,25 @@
+import { PERMISSIONS, type Permission } from "../constants/permissions";
+import {
+  WORKSPACE_ROLES,
+  type WorkspaceRole,
+} from "../constants/workSpaceRoles";
+
+export const ROLE_PERMISSIONS = {
+  [WORKSPACE_ROLES.OWNER]: [
+    PERMISSIONS.PROJECT_CREATE,
+    PERMISSIONS.PROJECT_READ,
+    PERMISSIONS.PROJECT_UPDATE,
+    PERMISSIONS.PROJECT_DELETE,
+
+    PERMISSIONS.WORKSPACE_CREATE,
+  ],
+
+  [WORKSPACE_ROLES.ADMIN]: [
+    PERMISSIONS.PROJECT_CREATE,
+    PERMISSIONS.PROJECT_READ,
+    PERMISSIONS.PROJECT_UPDATE,
+    PERMISSIONS.PROJECT_DELETE,
+  ],
+
+  [WORKSPACE_ROLES.MEMBER]: [PERMISSIONS.PROJECT_READ],
+} satisfies Record<WorkspaceRole, readonly Permission[]>;

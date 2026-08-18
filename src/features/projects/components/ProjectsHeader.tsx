@@ -2,6 +2,8 @@ import { Plus } from "lucide-react";
 import { Button } from "../../../shared/components/ui/Button/Button";
 import { useState } from "react";
 import CreateProjectModal from "./CreateProjectModal";
+import Can from "../../../shared/components/auth/Can";
+import { PERMISSIONS } from "../../../shared/constants/permissions";
 
 const ProjectsHeader = () => {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
@@ -17,13 +19,15 @@ const ProjectsHeader = () => {
           </p>
         </div>
 
-        <Button
-          className="inline-flex items-center gap-2"
-          onClick={() => setIsCreateOpen(true)}
-        >
-          <Plus size={18} />
-          Create Project
-        </Button>
+        <Can permission={PERMISSIONS.PROJECT_CREATE}>
+          <Button
+            className="inline-flex items-center gap-2"
+            onClick={() => setIsCreateOpen(true)}
+          >
+            <Plus size={18} />
+            Create Project
+          </Button>
+        </Can>
       </div>
 
       {isCreateOpen && (
