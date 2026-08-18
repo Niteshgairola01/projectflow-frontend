@@ -6,6 +6,8 @@ import { useState } from "react";
 import UpdateProjectModal from "./UpdateProjectModal";
 import ConfirmModal from "../../../shared/components/ui/Modal/ConfirmModal";
 import { useDeleteProject } from "../hooks/useDeleteProject";
+import Can from "../../../shared/components/auth/Can";
+import { PERMISSIONS } from "../../../shared/constants/permissions";
 
 interface ProjectHeaderProps {
   project: Project;
@@ -85,29 +87,33 @@ const ProjectHeader = ({ project }: ProjectHeaderProps) => {
 
           {isMenuOpen && (
             <div className="absolute right-0 top-12 z-50 w-44 rounded-xl border bg-background p-1 shadow-lg">
-              <button
-                type="button"
-                onClick={() => {
-                  setIsMenuOpen(false);
-                  setIsUpdateOpen(true);
-                }}
-                className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm transition hover:bg-muted"
-              >
-                <Pencil size={16} />
-                Edit Project
-              </button>
+              <Can permission={PERMISSIONS.PROJECT_UPDATE}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    setIsUpdateOpen(true);
+                  }}
+                  className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm transition hover:bg-muted"
+                >
+                  <Pencil size={16} />
+                  Edit Project
+                </button>
+              </Can>
 
-              <button
-                type="button"
-                onClick={() => {
-                  setIsMenuOpen(false);
-                  setShowDeleteModal(true);
-                }}
-                className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-red-600 hover:bg-red-50"
-              >
-                <Trash2 size={15} />
-                Delete
-              </button>
+              <Can permission={PERMISSIONS.PROJECT_DELETE}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    setShowDeleteModal(true);
+                  }}
+                  className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-red-600 hover:bg-red-50"
+                >
+                  <Trash2 size={15} />
+                  Delete
+                </button>
+              </Can>
             </div>
           )}
 
