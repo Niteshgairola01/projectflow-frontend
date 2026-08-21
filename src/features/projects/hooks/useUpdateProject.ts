@@ -1,9 +1,8 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { notify } from "../../../shared/utils/toast";
 import { projectApi } from "../api/project.api";
 import type { UpdateProjectPayload } from "../schema/createProjectSchema";
-import { queryClient } from "../../../shared/services/api/queryClient";
 import { projectKeys } from "../constants/project.keys";
 
 interface UpdateProjectVariables {
@@ -13,6 +12,7 @@ interface UpdateProjectVariables {
 
 export const useUpdateProject = () => {
   const { workspaceId } = useParams();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: ({ projectId, data }: UpdateProjectVariables) => {
