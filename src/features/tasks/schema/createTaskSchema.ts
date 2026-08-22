@@ -19,7 +19,7 @@ export const createTaskSchema = z.object({
 
   priority: z.enum(["HIGH", "MEDIUM", "LOW"]).optional(),
 
-  dueDate: z.date().optional(),
+  dueDate: z.string().optional(),
 });
 
 export const updateTaskSchema = createTaskSchema.partial();

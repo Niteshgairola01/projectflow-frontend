@@ -8,7 +8,7 @@ import { useProjectTasks } from "../hooks/useProjectTasks";
 import type { TaskFilters } from "../types/task.types";
 
 const TasksPage = () => {
-  const [view, setView] = useState<"list" | "kanban">("list");
+  const [view, setView] = useState<"list" | "kanban">("kanban");
   const [filters, setFilters] = useState<TaskFilters>({
     search: "",
     status: "",

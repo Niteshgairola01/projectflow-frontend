@@ -1,11 +1,25 @@
-import { CalendarDays, User } from "lucide-react";
+import { CalendarDays, MoreVertical, Pencil, Trash2, User } from "lucide-react";
 import type { Task } from "../types/task.types";
+import { useState } from "react";
+import Can from "../../../shared/components/auth/Can";
+import { PERMISSIONS } from "../../../shared/constants/permissions";
+import UpdateTaskModal from "./UpdateTaskModal";
+import ConfirmModal from "../../../shared/components/ui/Modal/ConfirmModal";
+import { useDeleteTask } from "../hooks/useDeleteTasks";
+import { notify } from "../../../shared/utils/toast";
+import { NavLink } from "react-router-dom";
 
 interface TaskListItemProps {
   task: Task;
 }
 
 const TaskListItem = ({ task }: TaskListItemProps) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isUpdateOpen, setIsUpdateOpen] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const { mutateAsync, isPending } = useDeleteTask();
+
   const getStatusLabel = (status: Task["status"]) => {
     switch (status) {
       case "TODO":
@@ -76,13 +90,24 @@ const TaskListItem = ({ task }: TaskListItemProps) => {
     }).format(new Date(date));
   };
 
+  // Delete task
+  const handleDelete = async () => {
+    try {
+      mutateAsync({ taskId: task._id });
+      setShowDeleteModal(false);
+    } catch (error) {
+      notify.error(error?.message || "Failed to delete task");
+      console.log("error", error);
+    }
+  };
+
   return (
     <div
-      className="grid min-w-200 grid-cols-[minmax(280px,1fr)_150px_120px_160px_120px] items-center gap-4 px-6 py-4 transition-colors hover:bg-muted/30
+      className="grid min-w-200 grid-cols-[minmax(280px,1fr)_120px_120px_160px_120px_120px] items-center gap-4 px-6 py-4 transition-colors hover:bg-muted/30
       "
     >
       {/* Task */}
-      <div className="min-w-0">
+      <NavLink className="min-w-0" to={`${task._id}`}>
         <p className="truncate text-sm font-medium">{task.title}</p>
 
         {task.description && (
@@ -90,13 +115,13 @@ const TaskListItem = ({ task }: TaskListItemProps) => {
             {task.description}
           </p>
         )}
-      </div>
+      </NavLink>
 
       {/* Status */}
       <div>
         <span
           className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${getStatusStyles(
-            task.status
+            task.status,
           )}`}
         >
           {getStatusLabel(task.status)}
@@ -107,7 +132,7 @@ const TaskListItem = ({ task }: TaskListItemProps) => {
       <div>
         <span
           className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${getPriorityStyles(
-            task.priority
+            task.priority,
           )}`}
         >
           {getPriorityLabel(task.priority)}
@@ -131,6 +156,69 @@ const TaskListItem = ({ task }: TaskListItemProps) => {
 
         <span>{formatDate(task.dueDate)}</span>
       </div>
+
+      {/* Action */}
+      <div className="flex justify-end relative">
+        <button
+          type="button"
+          onClick={() => setIsMenuOpen((prev) => !prev)}
+          className="rounded-xl border p-2 text-muted-foreground transition hover:bg-muted hover:text-foreground"
+          aria-label="Project actions"
+        >
+          <MoreVertical size={20} />
+        </button>
+
+        {isMenuOpen && (
+          <div className="absolute  bottom-1 right-12 z-50 w-44 rounded-xl border bg-background p-1 shadow-lg">
+            <Can permission={PERMISSIONS.TASK_UPDATE}>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  setIsUpdateOpen(true);
+                }}
+                className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm transition hover:bg-muted"
+              >
+                <Pencil size={16} />
+                Edit Project
+              </button>
+            </Can>
+
+            <Can permission={PERMISSIONS.TASK_DELETE}>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  setShowDeleteModal(true);
+                }}
+                className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-red-600 hover:bg-red-50"
+              >
+                <Trash2 size={15} />
+                Delete
+              </button>
+            </Can>
+          </div>
+        )}
+      </div>
+
+      {/* Update Modal */}
+      <UpdateTaskModal
+        task={task}
+        open={isUpdateOpen}
+        onClose={() => setIsUpdateOpen(false)}
+      />
+
+      {/* Delete Task Modal */}
+      <ConfirmModal
+        open={showDeleteModal}
+        title="Delete Task"
+        description={`Are you sure you want to delete "${task.title}"? This action cannot be undone.`}
+        confirmText="Delete Task"
+        cancelText="Cancel"
+        loading={isPending}
+        onCancel={() => setShowDeleteModal(false)}
+        onConfirm={handleDelete}
+      />
     </div>
   );
 };

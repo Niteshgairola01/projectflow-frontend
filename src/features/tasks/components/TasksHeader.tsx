@@ -1,12 +1,16 @@
 import { Plus } from "lucide-react";
 
 import { Button } from "../../../shared/components/ui/Button/Button";
+import { useState } from "react";
+import CreateTaskModal from "./CreateTaskModal";
 
 interface TasksHeaderProps {
   taskCount?: number;
 }
 
 const TasksHeader = ({ taskCount = 0 }: TasksHeaderProps) => {
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+
   return (
     <div className="flex items-center justify-between border-b px-6 py-5">
       {/* Left */}
@@ -25,10 +29,20 @@ const TasksHeader = ({ taskCount = 0 }: TasksHeaderProps) => {
       </div>
 
       {/* Right */}
-      <Button type="button" className="inline-flex items-center gap-2 text-sm">
+      <Button
+        className="inline-flex items-center gap-2 text-sm"
+        onClick={() => setIsCreateOpen(true)}
+      >
         <Plus size={16} />
         Add Task
       </Button>
+
+      {isCreateOpen && (
+        <CreateTaskModal
+          open={isCreateOpen}
+          onClose={() => setIsCreateOpen(false)}
+        />
+      )}
     </div>
   );
 };

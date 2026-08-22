@@ -3,6 +3,9 @@ import { Plus } from "lucide-react";
 import type { Task, TaskStatus } from "../types/task.types";
 
 import TaskKanbanCard from "./TaskKanbanCard";
+import { useState } from "react";
+import CreateTaskModal from "./CreateTaskModal";
+import { NavLink } from "react-router-dom";
 
 interface TaskKanbanColumnProps {
   title: string;
@@ -11,6 +14,8 @@ interface TaskKanbanColumnProps {
 }
 
 const TaskKanbanColumn = ({ title, status, tasks }: TaskKanbanColumnProps) => {
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+
   const getStatusDot = (status: TaskStatus) => {
     switch (status) {
       case "TODO":
@@ -50,6 +55,7 @@ const TaskKanbanColumn = ({ title, status, tasks }: TaskKanbanColumnProps) => {
           type="button"
           className="rounded-md p-1 text-muted-foreground transition hover:bg-background hover:text-foreground"
           title="Add task"
+          onClick={() => setIsCreateOpen(true)}
         >
           <Plus size={16} />
         </button>
@@ -58,13 +64,24 @@ const TaskKanbanColumn = ({ title, status, tasks }: TaskKanbanColumnProps) => {
       {/* Tasks */}
       <div className="flex flex-1 flex-col gap-3">
         {tasks.length > 0 ? (
-          tasks.map((task) => <TaskKanbanCard key={task._id} task={task} />)
+          tasks.map((task) => (
+            <NavLink key={task._id} to={`${task._id}`}>
+              <TaskKanbanCard task={task} />
+            </NavLink>
+          ))
         ) : (
           <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed border-border/70 p-6 text-center">
             <p className="text-xs text-muted-foreground">No tasks</p>
           </div>
         )}
       </div>
+
+      {isCreateOpen && (
+        <CreateTaskModal
+          open={isCreateOpen}
+          onClose={() => setIsCreateOpen(false)}
+        />
+      )}
     </div>
   );
 };
