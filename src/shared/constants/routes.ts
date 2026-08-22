@@ -12,8 +12,8 @@ export const ROUTES = {
   PROJECTS: "projects",
   PROJECT_DETAILS: "projects/:projectId",
 
-  TASKS: "projects/:projectId/tasks",
-  TASKS_DETAILS: "projects/:projectId/tasks/:taskId",
+  TASKS: "tasks",
+  TASKS_DETAILS: "tasks/:taskId",
 
   SETTINGS: "settings",
 };

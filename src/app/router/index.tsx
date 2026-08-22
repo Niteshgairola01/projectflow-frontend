@@ -9,7 +9,8 @@ import { PublicRoute } from "./PublicRoute";
 import ProjectsPage from "../../features/projects/pages/ProjectsPage";
 import WorkspaceLayout from "../../features/workspace/layouts/WorkspaceLayout";
 import TasksPage from "../../features/tasks/pages/TasksPage";
-import TaskDetailsPage from "../../features/tasks/pages/TaskDetailsPage";
+import ProjectLayout from "../../features/workspace/layouts/ProjectLayout";
+import ProjectOverviewPage from "../../features/projects/pages/ProjectOverviewPage";
 
 export const router = createBrowserRouter([
   {
@@ -49,23 +50,17 @@ export const router = createBrowserRouter([
           },
           {
             path: ROUTES.PROJECT_DETAILS,
-            lazy: async () => {
-              const module = await import(
-                "../../features/projects/pages/ProjectDetailsPage"
-              );
-
-              return {
-                Component: module.default,
-              };
-            },
-          },
-          {
-            path: ROUTES.TASKS,
-            element: <TasksPage />,
-          },
-          {
-            path: ROUTES.TASKS_DETAILS,
-            element: <TaskDetailsPage />,
+            element: <ProjectLayout />,
+            children: [
+              {
+                index: true,
+                element: <ProjectOverviewPage />,
+              },
+              {
+                path: ROUTES.TASKS,
+                element: <TasksPage />,
+              },
+            ],
           },
         ],
       },
