@@ -1,7 +1,9 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { ROUTES } from "../../../constants/routes";
 import { useAppSelector } from "../../../hooks/useAppSelector";
 import { sidebarItems } from "../../../constants/sidebar";
+import { useProject } from "../../../../features/projects/hooks/useProject";
+import ProjectSideNavigation from "../../../../features/projects/components/ProjectSideNavigation";
 
 interface SidebarItem {
   label: string;
@@ -14,9 +16,13 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const { projectId } = useParams();
+
   const currentWorkspace = useAppSelector(
     (state) => state.workspace.currentWorkspace
   );
+
+  const { data: project } = useProject();
 
   const workspaceId = currentWorkspace?._id;
 
@@ -30,22 +36,6 @@ const Sidebar = () => {
 
       case "projects":
         return workspaceId ? `/workspaces/${workspaceId}/projects` : null;
-
-      case "tasks":
-        return workspaceId ? `/workspaces/${workspaceId}/tasks` : null;
-
-      case "calendar":
-        return workspaceId ? `/workspaces/${workspaceId}/calendar` : null;
-
-      case "team":
-        return workspaceId ? `/workspaces/${workspaceId}/team` : null;
-
-      case "reports":
-        return workspaceId ? `/workspaces/${workspaceId}/reports` : null;
-
-      case "settings":
-        return workspaceId ? `/workspaces/${workspaceId}/settings` : null;
-
       default:
         return null;
     }
@@ -81,7 +71,7 @@ const Sidebar = () => {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 space-y-1 p-4">
+      <nav className="flex-1 overflow-y-auto space-y-1 p-4">
         {sidebarItems.map((item: SidebarItem) => {
           const Icon = item.icon;
 
@@ -126,6 +116,8 @@ const Sidebar = () => {
             </button>
           );
         })}
+
+        {projectId && project && <ProjectSideNavigation project={project} />}
       </nav>
 
       {/* Current Workspace */}

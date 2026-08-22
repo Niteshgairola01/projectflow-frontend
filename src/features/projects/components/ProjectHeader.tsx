@@ -1,7 +1,6 @@
-import { ArrowLeft, MoreVertical, Pencil, Trash2 } from "lucide-react";
+import { MoreVertical, Pencil, Trash2 } from "lucide-react";
 import { formatDate } from "../../../shared/utils/formateDate";
 import type { Project } from "../types/project.types";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import UpdateProjectModal from "./UpdateProjectModal";
 import ConfirmModal from "../../../shared/components/ui/Modal/ConfirmModal";
@@ -18,8 +17,6 @@ const ProjectHeader = ({ project }: ProjectHeaderProps) => {
   const [isUpdateOpen, setIsUpdateOpen] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const navigate = useNavigate();
-
   const { mutateAsync, isPending } = useDeleteProject();
 
   const handleDelete = async () => {
@@ -30,16 +27,6 @@ const ProjectHeader = ({ project }: ProjectHeaderProps) => {
 
   return (
     <div className="space-y-5">
-      {/* Back */}
-      <button
-        type="button"
-        onClick={() => navigate(-1)}
-        className="inline-flex items-center gap-2 text-sm text-muted-foreground transition hover:text-foreground"
-      >
-        <ArrowLeft size={16} />
-        Back to Projects
-      </button>
-
       {/* Header */}
       <div className="flex items-start justify-between gap-4">
         <div className="flex items-start gap-4">
