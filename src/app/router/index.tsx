@@ -8,6 +8,8 @@ import WorkspacesPage from "../../features/workspace/pages/WorkspacesPage";
 import { PublicRoute } from "./PublicRoute";
 import ProjectsPage from "../../features/projects/pages/ProjectsPage";
 import WorkspaceLayout from "../../features/workspace/layouts/WorkspaceLayout";
+import TasksPage from "../../features/tasks/pages/TasksPage";
+import TaskDetailsPage from "../../features/tasks/pages/TaskDetailsPage";
 
 export const router = createBrowserRouter([
   {
@@ -56,6 +58,14 @@ export const router = createBrowserRouter([
                 Component: module.default,
               };
             },
+          },
+          {
+            path: ROUTES.TASKS,
+            element: <TasksPage />,
+          },
+          {
+            path: ROUTES.TASKS_DETAILS,
+            element: <TaskDetailsPage />,
           },
         ],
       },
