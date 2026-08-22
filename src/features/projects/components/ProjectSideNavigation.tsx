@@ -68,7 +68,10 @@ const ProjectNavigation = ({ project }: ProjectNavigationProps) => {
         </p>
 
         <div className="flex items-center gap-3 rounded-xl bg-muted/50 px-3 py-3">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary text-sm font-semibold text-white">
+          <div
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-sm font-semibold text-white"
+            style={{ backgroundColor: project.color || "#6C63FF" }}
+          >
             {project.name.charAt(0).toUpperCase()}
           </div>
 
