@@ -15,3 +15,10 @@ export interface Task {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface TaskFilters {
+  search: string;
+  status: TaskStatus | "";
+  priority: TaskPriority | "";
+  assignee: string;
+}

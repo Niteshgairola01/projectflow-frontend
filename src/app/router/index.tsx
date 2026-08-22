@@ -11,6 +11,7 @@ import WorkspaceLayout from "../../features/workspace/layouts/WorkspaceLayout";
 import TasksPage from "../../features/tasks/pages/TasksPage";
 import ProjectLayout from "../../features/workspace/layouts/ProjectLayout";
 import ProjectOverviewPage from "../../features/projects/pages/ProjectOverviewPage";
+import TaskDetailsPage from "../../features/tasks/pages/TaskDetailsPage";
 
 export const router = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ export const router = createBrowserRouter([
               {
                 path: ROUTES.TASKS,
                 element: <TasksPage />,
+              },
+              {
+                path: ROUTES.TASKS_DETAILS,
+                element: <TaskDetailsPage />,
               },
             ],
           },

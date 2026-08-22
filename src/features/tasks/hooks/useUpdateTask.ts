@@ -5,8 +5,8 @@ import type { UpdateTaskPayload } from "../schema/createTaskSchema";
 import { taskKeys } from "../constants/task.keys";
 // import { queryClient } from "../../../shared/services/api/queryClient";
 
-export const useUpdateTask = () => {
-  const { workspaceId, projectId, taskId } = useParams();
+export const useUpdateTask = (taskId: string) => {
+  const { workspaceId, projectId } = useParams();
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -29,7 +29,7 @@ export const useUpdateTask = () => {
     onSuccess: (updatedTask) => {
       queryClient.setQueryData(
         taskKeys.detail(workspaceId, projectId, taskId),
-        updatedTask
+        updatedTask,
       );
 
       queryClient.invalidateQueries({
