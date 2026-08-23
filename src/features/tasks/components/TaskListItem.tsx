@@ -180,7 +180,7 @@ const TaskListItem = ({ task }: TaskListItemProps) => {
                 className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm transition hover:bg-muted"
               >
                 <Pencil size={16} />
-                Edit Project
+                Edit Task
               </button>
             </Can>
 
