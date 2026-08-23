@@ -1,11 +1,11 @@
+import { useDroppable } from "@dnd-kit/core";
 import { Plus } from "lucide-react";
-
 import type { Task, TaskStatus } from "../types/task.types";
 
 import TaskKanbanCard from "./TaskKanbanCard";
 import { useState } from "react";
 import CreateTaskModal from "./CreateTaskModal";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface TaskKanbanColumnProps {
   title: string;
@@ -15,6 +15,11 @@ interface TaskKanbanColumnProps {
 
 const TaskKanbanColumn = ({ title, status, tasks }: TaskKanbanColumnProps) => {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const { setNodeRef } = useDroppable({
+    id: status,
+  });
 
   const getStatusDot = (status: TaskStatus) => {
     switch (status) {
@@ -36,7 +41,10 @@ const TaskKanbanColumn = ({ title, status, tasks }: TaskKanbanColumnProps) => {
   };
 
   return (
-    <div className="flex min-h-125 min-w-0 flex-col rounded-xl bg-muted/40 p-3">
+    <div
+      ref={setNodeRef}
+      className="flex min-h-125 min-w-0 flex-col rounded-xl bg-muted/40 p-3"
+    >
       {/* Column header */}
       <div className="mb-3 flex items-center justify-between px-1">
         <div className="flex items-center gap-2">
@@ -65,9 +73,11 @@ const TaskKanbanColumn = ({ title, status, tasks }: TaskKanbanColumnProps) => {
       <div className="flex flex-1 flex-col gap-3">
         {tasks.length > 0 ? (
           tasks.map((task) => (
-            <NavLink key={task._id} to={`${task._id}`}>
-              <TaskKanbanCard task={task} />
-            </NavLink>
+            <TaskKanbanCard
+              key={task._id}
+              task={task}
+              onClick={() => navigate(`${task._id}`)}
+            />
           ))
         ) : (
           <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed border-border/70 p-6 text-center">

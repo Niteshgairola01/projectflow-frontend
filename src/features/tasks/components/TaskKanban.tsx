@@ -1,6 +1,15 @@
 import type { Task, TaskStatus } from "../types/task.types";
+import {
+  DndContext,
+  useSensor,
+  useSensors,
+  PointerSensor,
+} from "@dnd-kit/core";
 
 import TaskKanbanColumn from "./TaskKanbanColumn";
+import { useUpdateTask } from "../hooks/useUpdateTask";
+import { notify } from "../../../shared/utils/toast";
+import { getErrorMessage } from "../../../shared/utils/getErrorMessage";
 
 const columns: {
   id: TaskStatus;
@@ -31,6 +40,16 @@ interface TaskKanbanProps {
 }
 
 const TaskKanban = ({ tasks, isLoading, isError }: TaskKanbanProps) => {
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
+  );
+
+  const { mutateAsync } = useUpdateTask();
+
   if (isLoading) {
     return (
       <div className="grid gap-4 overflow-x-auto p-6 md:grid-cols-2 xl:grid-cols-4">
@@ -79,21 +98,44 @@ const TaskKanban = ({ tasks, isLoading, isError }: TaskKanbanProps) => {
       IN_PROGRESS: [],
       IN_REVIEW: [],
       DONE: [],
-    }
+    },
   );
+
+  const handleDragEnd = async (event) => {
+    const { active, over } = event;
+    const isSameColumn = active?.data?.current?.status === over?.id;
+
+    if (isSameColumn) return;
+
+    try {
+      await mutateAsync({
+        payload: {
+          status: over?.id,
+        },
+        taskId: active?.id,
+      });
+
+      notify.success("Task status updated successfully");
+    } catch (error) {
+      const errorMemssage = getErrorMessage(error);
+      notify.error(errorMemssage);
+    }
+  };
 
   return (
     <div className="overflow-x-auto">
-      <div className="grid min-w-287.5 grid-cols-4 gap-4 p-6">
-        {columns.map((column) => (
-          <TaskKanbanColumn
-            key={column.id}
-            title={column.title}
-            status={column.id}
-            tasks={groupedTasks[column.id]}
-          />
-        ))}
-      </div>
+      <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
+        <div className="grid min-w-287.5 grid-cols-4 gap-4 p-6">
+          {columns.map((column) => (
+            <TaskKanbanColumn
+              key={column.id}
+              title={column.title}
+              status={column.id}
+              tasks={groupedTasks[column.id]}
+            />
+          ))}
+        </div>
+      </DndContext>
     </div>
   );
 };

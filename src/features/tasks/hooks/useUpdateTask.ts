@@ -3,14 +3,18 @@ import { useParams } from "react-router-dom";
 import { taskApi } from "../api/task.api";
 import type { UpdateTaskPayload } from "../schema/createTaskSchema";
 import { taskKeys } from "../constants/task.keys";
-// import { queryClient } from "../../../shared/services/api/queryClient";
 
-export const useUpdateTask = (taskId: string) => {
+interface UpdateTaskVairables {
+  taskId: string;
+  payload: UpdateTaskPayload;
+}
+
+export const useUpdateTask = () => {
   const { workspaceId, projectId } = useParams();
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (payload: UpdateTaskPayload) => {
+    mutationFn: ({ payload, taskId }: UpdateTaskVairables) => {
       if (!workspaceId) {
         throw new Error("Workspace not found");
       }
@@ -26,9 +30,9 @@ export const useUpdateTask = (taskId: string) => {
       return taskApi.updateTask(workspaceId, projectId, taskId, payload);
     },
 
-    onSuccess: (updatedTask) => {
+    onSuccess: (updatedTask, variables) => {
       queryClient.setQueryData(
-        taskKeys.detail(workspaceId, projectId, taskId),
+        taskKeys.detail(workspaceId, projectId, variables.taskId),
         updatedTask,
       );
 

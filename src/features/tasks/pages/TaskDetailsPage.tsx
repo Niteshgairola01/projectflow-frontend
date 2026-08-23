@@ -78,6 +78,13 @@ const TaskDetailsPage = () => {
               </div>
 
               <div>
+                <p className="text-xs text-muted-foreground">Last Updated</p>
+                <p className="mt-1 truncate text-sm font-medium">
+                  {formatDate(task.updatedAt)}
+                </p>
+              </div>
+
+              <div>
                 <p className="text-xs text-muted-foreground">Task ID</p>
                 <p className="mt-1 truncate text-sm font-medium">{task._id}</p>
               </div>

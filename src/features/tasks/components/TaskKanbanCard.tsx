@@ -1,12 +1,22 @@
 import { CalendarDays, MoreHorizontal, User } from "lucide-react";
+import { useDraggable } from "@dnd-kit/core";
+import { CSS } from "@dnd-kit/utilities";
 
 import type { Task } from "../types/task.types";
 
 interface TaskKanbanCardProps {
   task: Task;
+  onClick: () => void;
 }
 
-const TaskKanbanCard = ({ task }: TaskKanbanCardProps) => {
+const TaskKanbanCard = ({ task, onClick }: TaskKanbanCardProps) => {
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: task._id,
+    data: {
+      status: task.status,
+    },
+  });
+
   const getPriorityStyles = (priority: Task["priority"]) => {
     switch (priority) {
       case "HIGH":
@@ -39,12 +49,21 @@ const TaskKanbanCard = ({ task }: TaskKanbanCardProps) => {
   };
 
   return (
-    <div className="group cursor-pointer rounded-xl border bg-card p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+    <div
+      className="group cursor-pointer rounded-xl border bg-card p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+      onClick={onClick}
+      ref={setNodeRef}
+      {...listeners}
+      {...attributes}
+      style={{
+        transform: CSS.Translate.toString(transform),
+      }}
+    >
       {/* Top row */}
       <div className="flex items-start justify-between gap-3">
         <span
           className={`inline-flex rounded-md px-2 py-1 text-[11px] font-medium ${getPriorityStyles(
-            task.priority
+            task.priority,
           )}`}
         >
           {getPriorityLabel(task.priority)}

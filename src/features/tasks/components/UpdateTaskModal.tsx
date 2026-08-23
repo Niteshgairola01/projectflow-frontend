@@ -12,11 +12,14 @@ interface UpdateTaskModalProps {
 }
 
 const UpdateTaskModal = ({ open, onClose, task }: UpdateTaskModalProps) => {
-  const { mutateAsync, isPending } = useUpdateTask(task._id);
+  const { mutateAsync, isPending } = useUpdateTask();
 
   const onSubmit = async (data: CreateTaskPayload) => {
     try {
-      await mutateAsync(data);
+      await mutateAsync({
+        payload: data,
+        taskId: task._id,
+      });
       notify.success("Task updated successfully");
       onClose();
     } catch (error) {
