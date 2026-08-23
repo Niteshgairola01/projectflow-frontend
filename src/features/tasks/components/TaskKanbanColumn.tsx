@@ -11,13 +11,19 @@ interface TaskKanbanColumnProps {
   title: string;
   status: TaskStatus;
   tasks: Task[];
+  activeTaskId?: string;
 }
 
-const TaskKanbanColumn = ({ title, status, tasks }: TaskKanbanColumnProps) => {
+const TaskKanbanColumn = ({
+  title,
+  status,
+  tasks,
+  activeTaskId,
+}: TaskKanbanColumnProps) => {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const navigate = useNavigate();
 
-  const { setNodeRef } = useDroppable({
+  const { setNodeRef, isOver } = useDroppable({
     id: status,
   });
 
@@ -43,7 +49,11 @@ const TaskKanbanColumn = ({ title, status, tasks }: TaskKanbanColumnProps) => {
   return (
     <div
       ref={setNodeRef}
-      className="flex min-h-125 min-w-0 flex-col rounded-xl bg-muted/40 p-3"
+      className={
+        `flex min-h-125 min-w-0 flex-col rounded-xl border p-3 ${
+          isOver ? 'border-muted bg-muted/60' : 'border-muted/10'
+        }`
+      }
     >
       {/* Column header */}
       <div className="mb-3 flex items-center justify-between px-1">
@@ -77,6 +87,7 @@ const TaskKanbanColumn = ({ title, status, tasks }: TaskKanbanColumnProps) => {
               key={task._id}
               task={task}
               onClick={() => navigate(`${task._id}`)}
+              isPlaceholder={task._id === activeTaskId}
             />
           ))
         ) : (

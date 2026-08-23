@@ -6,10 +6,17 @@ import type { Task } from "../types/task.types";
 
 interface TaskKanbanCardProps {
   task: Task;
-  onClick: () => void;
+  onClick?: () => void;
+  isDragging?: boolean;
+  isPlaceholder?: boolean;
 }
 
-const TaskKanbanCard = ({ task, onClick }: TaskKanbanCardProps) => {
+const TaskKanbanCard = ({
+  task,
+  onClick,
+  isDragging,
+  isPlaceholder,
+}: TaskKanbanCardProps) => {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: task._id,
     data: {
@@ -50,13 +57,30 @@ const TaskKanbanCard = ({ task, onClick }: TaskKanbanCardProps) => {
 
   return (
     <div
-      className="group cursor-pointer rounded-xl border bg-card p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
-      onClick={onClick}
       ref={setNodeRef}
-      {...listeners}
-      {...attributes}
+      {...(!isPlaceholder ? listeners : {})}
+      {...(!isPlaceholder ? attributes : {})}
+      className={`
+  group rounded-xl border border-border bg-card p-4
+  shadow-sm transition-all duration-150
+
+  ${
+    isPlaceholder
+      ? "border-dashed border-muted-foreground/30 bg-muted/30 opacity-40"
+      : "cursor-pointer hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md"
+  }
+
+  ${
+    isDragging
+      ? "scale-[1.02] rotate-1 cursor-grabbing border-primary/50 shadow-2xl"
+      : ""
+  }
+`}
+      onClick={onClick}
       style={{
-        transform: CSS.Translate.toString(transform),
+        transform: isPlaceholder
+          ? undefined
+          : CSS.Translate.toString(transform),
       }}
     >
       {/* Top row */}

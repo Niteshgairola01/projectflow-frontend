@@ -4,12 +4,17 @@ import {
   useSensor,
   useSensors,
   PointerSensor,
+  DragOverlay,
+  type DragStartEvent,
+  type DragEndEvent,
 } from "@dnd-kit/core";
 
 import TaskKanbanColumn from "./TaskKanbanColumn";
 import { useUpdateTask } from "../hooks/useUpdateTask";
 import { notify } from "../../../shared/utils/toast";
 import { getErrorMessage } from "../../../shared/utils/getErrorMessage";
+import { useState } from "react";
+import TaskKanbanCard from "./TaskKanbanCard";
 
 const columns: {
   id: TaskStatus;
@@ -40,6 +45,8 @@ interface TaskKanbanProps {
 }
 
 const TaskKanban = ({ tasks, isLoading, isError }: TaskKanbanProps) => {
+  const [activeTask, setActiveTask] = useState<Task | null>(null);
+
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -101,30 +108,54 @@ const TaskKanban = ({ tasks, isLoading, isError }: TaskKanbanProps) => {
     },
   );
 
-  const handleDragEnd = async (event) => {
-    const { active, over } = event;
-    const isSameColumn = active?.data?.current?.status === over?.id;
+  const handleDragStart = (event: DragStartEvent) => {
+    const task = tasks.find((task) => task._id === event.active.id);
 
-    if (isSameColumn) return;
+    if (!task) return;
+
+    setActiveTask(task);
+  };
+
+  const handleDragEnd = async (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    setActiveTask(null);
+
+    if (!over) {
+      return;
+    }
+
+    const currentStatus = active.data.current?.status;
+    const newStatus = over.id as TaskStatus;
+
+    if (currentStatus === newStatus) {
+      return;
+    }
 
     try {
       await mutateAsync({
+        taskId: String(active.id),
         payload: {
-          status: over?.id,
+          status: newStatus,
         },
-        taskId: active?.id,
       });
-
-      notify.success("Task status updated successfully");
     } catch (error) {
-      const errorMemssage = getErrorMessage(error);
-      notify.error(errorMemssage);
+      notify.error(getErrorMessage(error));
     }
+  };
+
+  const handleDragCancel = () => {
+    setActiveTask(null);
   };
 
   return (
     <div className="overflow-x-auto">
-      <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
+      <DndContext
+        sensors={sensors}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+        onDragCancel={handleDragCancel}
+      >
         <div className="grid min-w-287.5 grid-cols-4 gap-4 p-6">
           {columns.map((column) => (
             <TaskKanbanColumn
@@ -132,9 +163,13 @@ const TaskKanban = ({ tasks, isLoading, isError }: TaskKanbanProps) => {
               title={column.title}
               status={column.id}
               tasks={groupedTasks[column.id]}
+              activeTaskId={activeTask?._id}
             />
           ))}
         </div>
+        <DragOverlay>
+          {activeTask ? <TaskKanbanCard task={activeTask} isDragging /> : null}
+        </DragOverlay>
       </DndContext>
     </div>
   );
