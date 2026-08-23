@@ -13,5 +13,6 @@ export const useGetUserById = (userId: string) => {
       return authApi.getUserById(userId);
     },
     queryKey: ["userById", userId],
+    enabled: !!userId,
   });
 };

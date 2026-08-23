@@ -2,9 +2,12 @@ import TaskHeader from "../components/TaskHeader";
 import { useTask } from "../hooks/useTask";
 import AppLoader from "../../../shared/components/ui/Loader/AppLoader";
 import { formatDate } from "../../../shared/utils/formateDate";
+import { useGetUserById } from "../../auth/hooks/useGetUserById";
 
 const TaskDetailsPage = () => {
   const { data: task, isLoading, isError } = useTask();
+
+  const { data: user } = useGetUserById(task?.createdBy);
 
   if (isLoading) {
     return <AppLoader message="Loading task...." />;
@@ -67,7 +70,13 @@ const TaskDetailsPage = () => {
             <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
               <div>
                 <p className="text-xs text-muted-foreground">Created by</p>
-                <p className="mt-1 text-sm font-medium">{task.createdBy}</p>
+                {/* user */}
+                <div>
+                  <p className="mt-1 text-sm font-medium">{user?.name}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    {user?.email || ""}
+                  </p>
+                </div>
               </div>
 
               <div>
