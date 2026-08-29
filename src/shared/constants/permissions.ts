@@ -1,4 +1,5 @@
 export const PERMISSIONS = {
+  INVITATION_CREATE: "invitation:create",
   PROJECT_CREATE: "project:create",
   PROJECT_READ: "project:read",
   PROJECT_UPDATE: "project:update",

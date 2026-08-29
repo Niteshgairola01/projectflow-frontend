@@ -17,7 +17,7 @@ export function Button({
       disabled={loading || props.disabled}
       className={clsx(
         "h-11 rounded-lg bg-primary px-4 text-sm font-medium text-white transition hover:opacity-90 disabled:opacity-50",
-        className
+        className,
       )}
     >
       {loading ? "Loading..." : children}

@@ -1,3 +1,4 @@
+import { Card } from "../../../shared/components/ui/Card/Card";
 import { formatDate } from "../../../shared/utils/formateDate";
 import type { Workspace } from "../types/workspace.types";
 
@@ -8,7 +9,7 @@ interface WorkspaceInfoCardProps {
 
 const WorkspaceInfoCard = ({ workspace, role }: WorkspaceInfoCardProps) => {
   return (
-    <div className="lg:col-span-2 rounded-2xl border bg-card p-6">
+    <Card className="lg:col-span-2 p-6">
       <h2 className="mb-6 text-lg font-semibold text-primary">
         Workspace Information
       </h2>
@@ -34,7 +35,7 @@ const WorkspaceInfoCard = ({ workspace, role }: WorkspaceInfoCardProps) => {
           <p className="mt-1 font-medium">{formatDate(workspace.createdAt)}</p>
         </div>
       </div>
-    </div>
+    </Card>
   );
 };
 

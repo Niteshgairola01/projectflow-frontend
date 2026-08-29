@@ -50,7 +50,7 @@ const RegisterForm = () => {
       <Input
         label="Email address"
         type="email"
-        placeholder="john@example.com"
+        placeholder="user@example.com"
         error={errors.email?.message}
         {...register("email")}
       />

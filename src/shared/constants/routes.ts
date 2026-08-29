@@ -3,11 +3,13 @@ export const ROUTES = {
 
   LOGIN: "/login",
   REGISTER: "/register",
+  INVITATION: "/invitations/:token",
 
   DASHBOARD: "/dashboard",
 
   WORKSPACES: "/workspaces",
   WORKSPACE_DETAILS: "/workspaces/:workspaceId",
+  WORKSPACE_PENDING_INVITATIONS: "/workspaces/:workspaceId/invitations/pending",
 
   PROJECTS: "projects",
   PROJECT_DETAILS: "projects/:projectId",

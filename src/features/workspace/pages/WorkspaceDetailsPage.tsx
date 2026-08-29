@@ -5,12 +5,6 @@ import WorkspaceDetailsHeader from "../components/WorkspaceDetailsHeader";
 import WorkspaceInfoCard from "../components/WorkspaceInfoCard";
 import WorkspaceStatsCard from "../components/WorkspaceStatsCard";
 import WorkspaceMembersList from "../components/WorkspaceMembersList";
-import { useAppDispatch } from "../../../shared/hooks/useAppDispatch";
-import { useEffect } from "react";
-import {
-  clearCurrentWorkspace,
-  setCurrentWorkspace,
-} from "../store/workspaceSlice";
 import AppLoader from "../../../shared/components/ui/Loader/AppLoader";
 
 const WorkspaceDetailsPage = () => {
@@ -18,20 +12,6 @@ const WorkspaceDetailsPage = () => {
   const { user } = useAppSelector((state) => state.auth);
 
   const { data: workspace, isLoading } = useWorkspace(workspaceId);
-
-  const dispatch = useAppDispatch();
-
-  // set current workspace to global state
-  useEffect(() => {
-    if (workspace) {
-      dispatch(setCurrentWorkspace(workspace));
-    }
-
-    // clear currenr workspace from global state
-    return () => {
-      dispatch(clearCurrentWorkspace());
-    };
-  }, [workspace, dispatch]);
 
   // Invalid workspace
   if (!workspaceId) {
@@ -49,7 +29,7 @@ const WorkspaceDetailsPage = () => {
   }
 
   const role = workspace.members.find(
-    (member) => member.user?._id === user?._id
+    (member) => member.user?._id === user?._id,
   )?.role;
 
   return (
