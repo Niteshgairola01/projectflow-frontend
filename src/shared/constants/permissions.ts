@@ -1,9 +1,11 @@
 export const PERMISSIONS = {
   INVITATION_CREATE: "invitation:create",
+
   PROJECT_CREATE: "project:create",
   PROJECT_READ: "project:read",
   PROJECT_UPDATE: "project:update",
   PROJECT_DELETE: "project:delete",
+  ADD_MEMBER_TO_PROJECT: "project:add-member",
 
   TASK_CREATE: "task:create",
   TASK_READ: "task:read",

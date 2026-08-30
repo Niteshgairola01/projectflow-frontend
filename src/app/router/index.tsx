@@ -15,6 +15,7 @@ import TaskDetailsPage from "../../features/tasks/pages/TaskDetailsPage";
 import InvitationPage from "../../features/invitation/pages/InvitationPage";
 import WorkspaceDetailsPage from "../../features/workspace/pages/WorkspaceDetailsPage";
 import WorkspacePendingInvitationsPage from "../../features/workspace/pages/WorkspacePendingInvitationsPage";
+import ProjectMembersPage from "../../features/projects/pages/ProjectMembersPage";
 
 export const router = createBrowserRouter([
   {
@@ -85,6 +86,10 @@ export const router = createBrowserRouter([
               {
                 path: ROUTES.TASKS_DETAILS,
                 element: <TaskDetailsPage />,
+              },
+              {
+                path: ROUTES.PROJECT_MEMBERS,
+                element: <ProjectMembersPage />,
               },
             ],
           },

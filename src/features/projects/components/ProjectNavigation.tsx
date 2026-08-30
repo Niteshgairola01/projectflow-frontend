@@ -1,6 +1,6 @@
 import { NavLink, useParams } from "react-router-dom";
 import type { Project } from "../types/project.types";
-import { ArrowLeft, CheckSquare, LayoutDashboard } from "lucide-react";
+import { ArrowLeft, CheckSquare, LayoutDashboard, Users } from "lucide-react";
 import ProjectNavigationItem from "./ProjectNavigationItem";
 import ProjectHeader from "./ProjectHeader";
 
@@ -14,8 +14,8 @@ const ProjectNavigation = ({ project }: ProjectNavigationProps) => {
   if (!workspaceId || !projectId) return null;
 
   const overviewPath = `/workspaces/${workspaceId}/projects/${projectId}`;
-
   const tasksPath = `${overviewPath}/tasks`;
+  const membersPath = `${overviewPath}/members`;
 
   return (
     <div className="space-y-4">
@@ -42,6 +42,10 @@ const ProjectNavigation = ({ project }: ProjectNavigationProps) => {
 
           <ProjectNavigationItem title="Tasks" path={tasksPath}>
             <CheckSquare size={17} />
+          </ProjectNavigationItem>
+
+          <ProjectNavigationItem title="Members" path={membersPath}>
+            <Users size={17} />
           </ProjectNavigationItem>
         </nav>
       </div>

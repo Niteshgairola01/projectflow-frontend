@@ -47,8 +47,6 @@ const WorkspaceInvitationList = ({
   isLoading,
   isError,
 }: WorkspaceInvitationListProps) => {
-  console.log("invitations", invitations);
-
   if (isLoading) {
     return (
       <Card className="p-3">

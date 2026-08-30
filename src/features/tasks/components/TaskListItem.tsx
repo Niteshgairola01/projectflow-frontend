@@ -146,7 +146,7 @@ const TaskListItem = ({ task }: TaskListItemProps) => {
         </div>
 
         <span className="truncate text-sm text-muted-foreground">
-          {task.assignedTo ?? "Unassigned"}
+          {task.assignedTo?.name ?? "Unassigned"}
         </span>
       </div>
 

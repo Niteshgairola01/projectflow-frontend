@@ -17,5 +17,7 @@ export const ROUTES = {
   TASKS: "tasks",
   TASKS_DETAILS: "tasks/:taskId",
 
+  PROJECT_MEMBERS: "members",
+
   SETTINGS: "settings",
 };
