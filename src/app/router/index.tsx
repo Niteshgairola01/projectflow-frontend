@@ -36,11 +36,7 @@ export const router = createBrowserRouter([
   },
   {
     path: ROUTES.INVITATION,
-    element: (
-      <PublicRoute>
-        <InvitationPage />
-      </PublicRoute>
-    ),
+    element: <InvitationPage />,
   },
   {
     element: (

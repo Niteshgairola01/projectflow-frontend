@@ -1,18 +1,15 @@
 export const invitationKeys = {
-  all: ["invitaitons"] as const,
+  all: ["invitations"] as const,
 
-  lists: () => [...invitationKeys.all, "lists"] as const,
+  lists: () => [...invitationKeys.all, "list"] as const,
 
   workspaceLists: (workspaceId: string) =>
-    [...invitationKeys.lists(), workspaceId] as const,
+    [...invitationKeys.lists(), "workspace", workspaceId] as const,
 
-  myLists: () => [...invitationKeys.lists(), "my"] as const,
+  myPending: () => [...invitationKeys.lists(), "my-pending"] as const,
 
   details: () => [...invitationKeys.all, "detail"] as const,
 
-  detail: (workspaceId: string, invitationId: string) => [
-    ...invitationKeys.details(),
-    workspaceId,
-    invitationId,
-  ],
+  byToken: (token: string) =>
+    [...invitationKeys.details(), "token", token] as const,
 };

@@ -21,4 +21,21 @@ export const invitaitonApis = {
 
     return response.data?.data;
   },
+
+  getInvitationByToken: async (token: string): Promise<Invitation> => {
+    const response = await api.get(`${base}/invitations/${token}`);
+
+    return response.data?.data;
+  },
+
+  acceptInvitation: async (
+    workspaceId: string,
+    token: string,
+  ): Promise<Invitation> => {
+    const response = await api.post(
+      `${base}/${workspaceId}/invitations/${token}/accept`,
+    );
+
+    return response.data?.data;
+  },
 };
