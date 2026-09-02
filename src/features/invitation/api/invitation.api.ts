@@ -38,4 +38,10 @@ export const invitaitonApis = {
 
     return response.data?.data;
   },
+
+  getMyPendingInvitations: async (): Promise<Invitation[]> => {
+    const response = await api.get(`${base}/invitations/my-pending`);
+
+    return response.data?.data;
+  },
 };

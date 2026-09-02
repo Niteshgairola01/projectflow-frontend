@@ -14,10 +14,12 @@ export interface CreateWorkspacePayload {
 
 export interface Workspace {
   _id: string;
+  description?: string;
   name: string;
   owner: string;
   color?: string;
   members: WorkspaceMember[];
+  projectsCount?: number;
 
   createdAt: string;
   updateat: string;

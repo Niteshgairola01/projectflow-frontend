@@ -1,4 +1,4 @@
-import { CheckSquare, FolderKanban, Users } from "lucide-react";
+import { FolderKanban, Users } from "lucide-react";
 import type { WorkspaceProps } from "../types/workspace.types";
 import { Card } from "../../../shared/components/ui/Card/Card";
 
@@ -10,7 +10,7 @@ const Stats = ({ title, value, children }) => {
         <span>{title}</span>
       </div>
 
-      <span className="font-semibold">{value || "N/A"}</span>
+      <span className="font-semibold">{value ?? "N/A"}</span>
     </div>
   );
 };
@@ -24,11 +24,8 @@ const WorkspaceStatsCard = ({ workspace }: WorkspaceProps) => {
         <Stats title="Members" value={workspace.members.length}>
           <Users className="text-primary " size={20} />
         </Stats>
-        <Stats title="Projects" value={8}>
+        <Stats title="Projects" value={workspace.projectsCount ?? 0}>
           <FolderKanban className="text-red-400 " size={20} />
-        </Stats>
-        <Stats title="Tasks" value={10}>
-          <CheckSquare className="text-green-500 " size={20} />
         </Stats>
       </div>
     </Card>

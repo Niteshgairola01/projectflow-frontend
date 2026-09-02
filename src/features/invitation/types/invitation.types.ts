@@ -15,6 +15,7 @@ export interface InvitationUser {
 export interface Invitation {
   _id: string;
   email: string;
+  token?: string;
   workspace: InvitationWorkspace;
   invitedBy: InvitationUser;
   status: InvitationStatus;
