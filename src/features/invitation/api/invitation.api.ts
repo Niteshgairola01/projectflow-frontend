@@ -44,4 +44,15 @@ export const invitaitonApis = {
 
     return response.data?.data;
   },
+
+  cancelInvitation: async (
+    workspaceId: string,
+    invitationId: string,
+  ): Promise<Invitation[]> => {
+    const response = await api.delete(
+      `${base}/${workspaceId}/invitations/${invitationId}`,
+    );
+
+    return response.data?.data;
+  },
 };

@@ -25,7 +25,7 @@ const ConfirmModal = ({
   return (
     <Modal open={open} onClose={onCancel} title={title}>
       <div className="space-y-6">
-        <p className="text-sm text-muted-foreground">{description}</p>
+        <p className="text-sm text-center text-muted-foreground">{description}</p>
 
         <div className="flex justify-end gap-3">
           <button
