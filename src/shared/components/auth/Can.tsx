@@ -1,5 +1,5 @@
 import type React from "react";
-import { useWorkspacePermissions } from "../../hooks/useWorkspacePermissions";
+import { usePermissions } from "../../hooks/usePermissions";
 import type { Permission } from "../../constants/permissions";
 
 interface CanProps {
@@ -8,9 +8,9 @@ interface CanProps {
 }
 
 const Can = ({ permission, children }: CanProps) => {
-  const { can } = useWorkspacePermissions();
+  const { can, isLoading } = usePermissions();
 
-  if (!can(permission)) {
+  if (isLoading || !can(permission)) {
     return null;
   }
 

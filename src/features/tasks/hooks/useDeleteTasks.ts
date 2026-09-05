@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { notify } from "../../../shared/utils/toast";
 import { taskApi } from "../api/task.api";
 import { taskKeys } from "../constants/task.keys";
+import { usePermissions } from "../../../shared/hooks/usePermissions";
+import { PERMISSIONS } from "../../../shared/constants/permissions";
 
 interface DeleteTaskVariables {
   taskId: string;
@@ -12,9 +14,11 @@ export const useDeleteTask = () => {
   const { workspaceId, projectId } = useParams();
 
   const queryClient = useQueryClient();
+  const { can } = usePermissions();
 
   return useMutation({
     mutationFn: ({ taskId }: DeleteTaskVariables) => {
+      if (!can(PERMISSIONS.TASK_DELETE)) throw new Error("Access denied");
       if (!workspaceId) {
         throw new Error("Workspace not found");
       }

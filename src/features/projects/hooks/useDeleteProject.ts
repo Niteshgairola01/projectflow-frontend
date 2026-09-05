@@ -3,6 +3,8 @@ import { projectApi } from "../api/project.api";
 import { useNavigate, useParams } from "react-router-dom";
 import { notify } from "../../../shared/utils/toast";
 import { projectKeys } from "../constants/project.keys";
+import { usePermissions } from "../../../shared/hooks/usePermissions";
+import { PERMISSIONS } from "../../../shared/constants/permissions";
 
 interface DeleteProjectVariables {
   projectId: string;
@@ -11,11 +13,13 @@ interface DeleteProjectVariables {
 export const useDeleteProject = () => {
   const { workspaceId } = useParams();
   const queryClient = useQueryClient();
+  const { can } = usePermissions();
 
   const navigate = useNavigate();
 
   return useMutation({
     mutationFn: ({ projectId }: DeleteProjectVariables) => {
+      if (!can(PERMISSIONS.PROJECT_DELETE)) throw new Error("Access denied");
       if (!workspaceId) {
         throw new Error("Workspace not found");
       }

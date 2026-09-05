@@ -9,6 +9,7 @@ interface TaskKanbanCardProps {
   onClick?: () => void;
   isDragging?: boolean;
   isPlaceholder?: boolean;
+  canDrag?: boolean;
 }
 
 const TaskKanbanCard = ({
@@ -16,9 +17,11 @@ const TaskKanbanCard = ({
   onClick,
   isDragging,
   isPlaceholder,
+  canDrag = false,
 }: TaskKanbanCardProps) => {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: task._id,
+    disabled: !canDrag,
     data: {
       status: task.status,
     },
@@ -58,8 +61,8 @@ const TaskKanbanCard = ({
   return (
     <div
       ref={setNodeRef}
-      {...(!isPlaceholder ? listeners : {})}
-      {...(!isPlaceholder ? attributes : {})}
+      {...(!isPlaceholder && canDrag ? listeners : {})}
+      {...(!isPlaceholder && canDrag ? attributes : {})}
       className={`
   group rounded-xl border border-border bg-card p-4
   shadow-sm transition-all duration-150
@@ -67,7 +70,7 @@ const TaskKanbanCard = ({
   ${
     isPlaceholder
       ? "border-dashed border-muted-foreground/30 bg-muted/30 opacity-40"
-      : "cursor-pointer hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md"
+      : `${canDrag ? "cursor-grab" : "cursor-pointer"} hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md`
   }
 
   ${

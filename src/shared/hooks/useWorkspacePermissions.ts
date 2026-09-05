@@ -1,4 +1,4 @@
-import { ROLE_PERMISSIONS } from "../config/rolePermissions";
+import { WORKSPACE_ROLE_PERMISSIONS } from "../config/rolePermissions";
 import type { Permission } from "../constants/permissions";
 import { useAppSelector } from "./useAppSelector";
 
@@ -13,7 +13,7 @@ export const useWorkspacePermissions = () => {
 
   const role = membership?.role;
 
-  const permissions = ROLE_PERMISSIONS[role] ?? [];
+  const permissions = role ? WORKSPACE_ROLE_PERMISSIONS[role] : [];
 
   const can = (permission: Permission) => {
     return permissions.includes(permission);

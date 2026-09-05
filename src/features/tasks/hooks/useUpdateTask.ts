@@ -5,6 +5,8 @@ import { taskApi } from "../api/task.api";
 import type { UpdateTaskPayload } from "../schema/createTaskSchema";
 import { taskKeys } from "../constants/task.keys";
 import type { Task, UpdateTask } from "../types/task.types";
+import { usePermissions } from "../../../shared/hooks/usePermissions";
+import { PERMISSIONS } from "../../../shared/constants/permissions";
 
 interface UpdateTaskVariables {
   taskId: string;
@@ -15,9 +17,11 @@ export const useUpdateTask = () => {
   const { workspaceId, projectId } = useParams();
 
   const queryClient = useQueryClient();
+  const { can } = usePermissions();
 
   return useMutation({
     mutationFn: ({ payload, taskId }: UpdateTaskVariables) => {
+      if (!can(PERMISSIONS.TASK_UPDATE)) throw new Error("Access denied");
       if (!workspaceId) {
         throw new Error("Workspace not found");
       }

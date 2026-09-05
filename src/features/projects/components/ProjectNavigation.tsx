@@ -3,6 +3,8 @@ import type { Project } from "../types/project.types";
 import { ArrowLeft, CheckSquare, LayoutDashboard, Users } from "lucide-react";
 import ProjectNavigationItem from "./ProjectNavigationItem";
 import ProjectHeader from "./ProjectHeader";
+import Can from "../../../shared/components/auth/Can";
+import { PERMISSIONS } from "../../../shared/constants/permissions";
 
 interface ProjectNavigationProps {
   project: Project;
@@ -36,17 +38,23 @@ const ProjectNavigation = ({ project }: ProjectNavigationProps) => {
 
         {/* Project Navigation */}
         <nav className="mt-6 flex gap-6 border-t px-6">
-          <ProjectNavigationItem title="Overview" path={overviewPath}>
-            <LayoutDashboard size={17} />
-          </ProjectNavigationItem>
+          <Can permission={PERMISSIONS.PROJECT_READ}>
+            <ProjectNavigationItem title="Overview" path={overviewPath}>
+              <LayoutDashboard size={17} />
+            </ProjectNavigationItem>
+          </Can>
 
-          <ProjectNavigationItem title="Tasks" path={tasksPath}>
-            <CheckSquare size={17} />
-          </ProjectNavigationItem>
+          <Can permission={PERMISSIONS.TASK_READ}>
+            <ProjectNavigationItem title="Tasks" path={tasksPath}>
+              <CheckSquare size={17} />
+            </ProjectNavigationItem>
+          </Can>
 
-          <ProjectNavigationItem title="Members" path={membersPath}>
-            <Users size={17} />
-          </ProjectNavigationItem>
+          <Can permission={PERMISSIONS.PROJECT_READ}>
+            <ProjectNavigationItem title="Members" path={membersPath}>
+              <Users size={17} />
+            </ProjectNavigationItem>
+          </Can>
         </nav>
       </div>
     </div>
