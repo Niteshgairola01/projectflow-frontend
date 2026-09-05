@@ -15,6 +15,7 @@ export const PERMISSIONS = {
   TASK_DELETE: "task:delete",
 
   WORKSPACE_CREATE: "workspace:create",
+  MANAGE_WORKSPACE_MEMBER: "workspce:manage-member",
 } as const;
 
 export type Permission = (typeof PERMISSIONS)[keyof typeof PERMISSIONS];

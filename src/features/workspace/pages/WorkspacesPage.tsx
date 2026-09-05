@@ -5,9 +5,9 @@ import WorkspacesList from "../components/WorkspacesList";
 import PendingInvitations from "../components/PendingInvitations";
 
 const WorkspacesPage = () => {
-  const { data: workspaces, isLoading, isError } = useWorkspaces();
+  const { user } = useAppSelector((state) => state.auth);
 
-  const user = useAppSelector((state) => state.auth.user);
+  const { data: workspaces, isLoading, isError } = useWorkspaces();
 
   if (isLoading) {
     return (
@@ -34,7 +34,10 @@ const WorkspacesPage = () => {
         {/* header */}
         <WorkspaceHeader />
 
-        <div className="flex flex-col items-center justify-center rounded-2xl border bg-card py-20">
+        {/* pending invitations */}
+        <PendingInvitations />
+
+        <div className="flex flex-col items-center justify-center rounded-2xl border bg-card py-20 mt-5">
           <h3 className="text-lg font-semibold">No workspaces yet</h3>
 
           <p className="mt-2 text-sm text-muted-foreground">

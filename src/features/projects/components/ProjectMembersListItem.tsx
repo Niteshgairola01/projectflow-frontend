@@ -45,6 +45,7 @@ const ProjectMembersListItem = ({
   const handleCloseMenu = () => {
     onCloseMenu && onCloseMenu();
     setShowCancelModal(false);
+    setShowUpdateModal(false);
   };
 
   const handleCancelInvitation = async () => {
@@ -120,7 +121,7 @@ const ProjectMembersListItem = ({
         <ProjectMemberRoleUpdateModal
           open={showUpdateModal}
           member={member}
-          onClose={() => setShowUpdateModal(false)}
+          onClose={handleCloseMenu}
         />
 
         {/* Remove Member Modal */}
@@ -129,7 +130,7 @@ const ProjectMembersListItem = ({
           title="Remove Member"
           description={`Are you sure you want to remove ${member.user?.name} ?`}
           confirmText="Remove Member"
-          cancelText="Remove"
+          cancelText="Cancel"
           loading={isPending}
           onCancel={handleCloseMenu}
           onConfirm={handleCancelInvitation}
