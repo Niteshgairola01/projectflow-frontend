@@ -9,7 +9,6 @@ export const useCancelInvitation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationKey: [""],
     mutationFn: (invitationId: string) => {
       if (!workspaceId) {
         throw new Error("Workspace not found");

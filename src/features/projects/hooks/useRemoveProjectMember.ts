@@ -1,0 +1,45 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { projectMemberApis } from "../api/projectMember.api";
+import { useParams } from "react-router-dom";
+import { projectMemberKeys } from "../constants/projectMember..keys";
+
+interface RemoveProjectMemberVariables {
+  projectId: string;
+  memberId: string;
+}
+
+export const useRemoveProjectMember = () => {
+  const { workspaceId } = useParams();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ projectId, memberId }: RemoveProjectMemberVariables) => {
+      if (!workspaceId) {
+        throw new Error("Workspace not found");
+      }
+
+      if (!projectId) {
+        throw new Error("Project not found");
+      }
+
+      if (!memberId) {
+        throw new Error("Member not found");
+      }
+
+      return projectMemberApis.removeProjectMember(
+        workspaceId,
+        projectId,
+        memberId,
+      );
+    },
+
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: projectMemberKeys.list(
+          workspaceId ?? "",
+          variables.projectId ?? "",
+        ),
+      });
+    },
+  });
+};

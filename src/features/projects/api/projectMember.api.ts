@@ -30,4 +30,16 @@ export const projectMemberApis = {
 
     return response.data?.data;
   },
+
+  removeProjectMember: async (
+    workspaceId: string,
+    projectId: string,
+    memberId: string,
+  ) => {
+    const response = await api.delete(
+      `/${base}/${workspaceId}/projects/${projectId}/members/${memberId}`,
+    );
+
+    return response.data?.data;
+  },
 };

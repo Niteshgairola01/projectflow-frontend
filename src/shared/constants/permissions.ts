@@ -7,6 +7,7 @@ export const PERMISSIONS = {
   PROJECT_UPDATE: "project:update",
   PROJECT_DELETE: "project:delete",
   ADD_MEMBER_TO_PROJECT: "project:add-member",
+  REMOVE_PROJECT_MEMBER: "project:remove-member",
 
   TASK_CREATE: "task:create",
   TASK_READ: "task:read",

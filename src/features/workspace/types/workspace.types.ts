@@ -1,10 +1,12 @@
+export type WorkspaceMemberRole = "OWNER" | "ADMIN" | "MEMBER";
+
 export interface WorkspaceMember {
   user: {
     _id: string;
     name: string;
     email: string;
   };
-  role: string;
+  role: WorkspaceMemberRole;
 }
 
 export interface CreateWorkspacePayload {

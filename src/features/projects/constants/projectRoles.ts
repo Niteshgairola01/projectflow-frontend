@@ -3,4 +3,4 @@ export const PROJECT_ROLES = {
   MEMBER: "MEMBER",
 } as const;
 
-export type WorkspaceRole = (typeof PROJECT_ROLES)[keyof typeof PROJECT_ROLES];
+export type ProjectRole = (typeof PROJECT_ROLES)[keyof typeof PROJECT_ROLES];
