@@ -3,6 +3,8 @@ import { useState } from "react";
 
 import CreateWorkspaceModal from "./CreateWorkspaceModal";
 import { Button } from "../../../shared/components/ui/Button/Button";
+import Can from "../../../shared/components/auth/Can";
+import { PERMISSIONS } from "../../../shared/constants/permissions";
 
 const WorkspaceHeader = () => {
   const [open, setOpen] = useState(false);
@@ -20,13 +22,15 @@ const WorkspaceHeader = () => {
           </p>
         </div>
 
+        <Can permission={PERMISSIONS.WORKSPACE_CREATE}>
           <Button
-            className="inline-flex items-center justify-center gap-2 sm:w-auto"
-            onClick={() => setOpen(true)}
-          >
-            <Plus size={18} />
-            Create Workspace
-          </Button>
+              className="inline-flex items-center justify-center gap-2 sm:w-auto"
+              onClick={() => setOpen(true)}
+            >
+              <Plus size={18} />
+              Create Workspace
+            </Button>
+          </Can>
       </div>
 
       <CreateWorkspaceModal open={open} onClose={() => setOpen(false)} />

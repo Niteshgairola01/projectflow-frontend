@@ -12,6 +12,8 @@ interface TaskKanbanColumnProps {
   status: TaskStatus;
   tasks: Task[];
   activeTaskId?: string;
+  canCreate: boolean;
+  canDrag: boolean;
 }
 
 const TaskKanbanColumn = ({
@@ -19,6 +21,8 @@ const TaskKanbanColumn = ({
   status,
   tasks,
   activeTaskId,
+  canCreate,
+  canDrag,
 }: TaskKanbanColumnProps) => {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const navigate = useNavigate();
@@ -69,14 +73,16 @@ const TaskKanbanColumn = ({
           </span>
         </div>
 
-        <button
-          type="button"
-          className="rounded-md p-1 text-muted-foreground transition hover:bg-background hover:text-foreground"
-          title="Add task"
-          onClick={() => setIsCreateOpen(true)}
-        >
-          <Plus size={16} />
-        </button>
+        {canCreate && (
+          <button
+            type="button"
+            className="rounded-md p-1 text-muted-foreground transition hover:bg-background hover:text-foreground"
+            title="Add task"
+            onClick={() => setIsCreateOpen(true)}
+          >
+            <Plus size={16} />
+          </button>
+        )}
       </div>
 
       {/* Tasks */}
@@ -88,6 +94,7 @@ const TaskKanbanColumn = ({
               task={task}
               onClick={() => navigate(`${task._id}`)}
               isPlaceholder={task._id === activeTaskId}
+              canDrag={canDrag}
             />
           ))
         ) : (

@@ -4,6 +4,8 @@ import { notify } from "../../../shared/utils/toast";
 import { projectApi } from "../api/project.api";
 import type { UpdateProjectPayload } from "../schema/createProjectSchema";
 import { projectKeys } from "../constants/project.keys";
+import { usePermissions } from "../../../shared/hooks/usePermissions";
+import { PERMISSIONS } from "../../../shared/constants/permissions";
 
 interface UpdateProjectVariables {
   projectId: string;
@@ -13,9 +15,11 @@ interface UpdateProjectVariables {
 export const useUpdateProject = () => {
   const { workspaceId } = useParams();
   const queryClient = useQueryClient();
+  const { can } = usePermissions();
 
   return useMutation({
     mutationFn: ({ projectId, data }: UpdateProjectVariables) => {
+      if (!can(PERMISSIONS.PROJECT_UPDATE)) throw new Error("Access denied");
       if (!workspaceId) {
         notify.error("Workspace not found");
         throw new Error("Workspace not found");

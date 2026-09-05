@@ -3,6 +3,8 @@ import { Plus } from "lucide-react";
 import { Button } from "../../../shared/components/ui/Button/Button";
 import { useState } from "react";
 import CreateTaskModal from "./CreateTaskModal";
+import Can from "../../../shared/components/auth/Can";
+import { PERMISSIONS } from "../../../shared/constants/permissions";
 
 interface TasksHeaderProps {
   taskCount?: number;
@@ -29,13 +31,15 @@ const TasksHeader = ({ taskCount = 0 }: TasksHeaderProps) => {
       </div>
 
       {/* Right */}
-      <Button
-        className="inline-flex items-center gap-2 text-sm"
-        onClick={() => setIsCreateOpen(true)}
-      >
-        <Plus size={16} />
-        Add Task
-      </Button>
+      <Can permission={PERMISSIONS.TASK_CREATE}>
+        <Button
+          className="inline-flex items-center gap-2 text-sm"
+          onClick={() => setIsCreateOpen(true)}
+        >
+          <Plus size={16} />
+          Add Task
+        </Button>
+      </Can>
 
       {isCreateOpen && (
         <CreateTaskModal

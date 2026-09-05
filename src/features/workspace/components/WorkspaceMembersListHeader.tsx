@@ -37,21 +37,21 @@ const WorkspaceMembersListHeader = () => {
 
         <div className="flex w-full flex-col justify-end gap-2 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center">
           {/* Invitations */}
-          <button
-            type="button"
-            className="inline-flex w-full items-center justify-center gap-2 whitespace-nowrap rounded-xl border px-4 py-2 sm:w-auto"
-            onClick={() =>
-              navigate(`/workspaces/${workspaceId}/invitations/pending`)
-            }
-          >
-            <Mail size={17} className="shrink-0" />
-
-            <span>Invitations</span>
-
-            <span className="ml-1 shrink-0 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-700">
-              3
-            </span>
-          </button>
+          <Can permission={PERMISSIONS.INVITATION_CREATE}>
+            <button
+              type="button"
+              className="inline-flex w-full items-center justify-center gap-2 whitespace-nowrap rounded-xl border px-4 py-2 sm:w-auto"
+              onClick={() =>
+                navigate(`/workspaces/${workspaceId}/invitations/pending`)
+              }
+            >
+              <Mail size={17} className="shrink-0" />
+              <span>Invitations</span>
+              <span className="ml-1 shrink-0 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-700">
+                3
+              </span>
+            </button>
+          </Can>
 
           {/* Invite members */}
           <Can permission={PERMISSIONS.INVITATION_CREATE}>

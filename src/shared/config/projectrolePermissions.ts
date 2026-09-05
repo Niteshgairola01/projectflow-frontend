@@ -1,13 +1,12 @@
 import { PROJECT_ROLES } from "../../features/projects/constants/projectRoles";
-import { PERMISSIONS } from "../constants/permissions";
+import { PERMISSIONS, type Permission } from "../constants/permissions";
+import type { ProjectRole } from "../../features/projects/constants/projectRoles";
 
-export const ROLE_PERMISSIONS = {
+export const PROJECT_ROLE_PERMISSIONS = {
   // Project Roles Permissions
   [PROJECT_ROLES.PROJECT_ADMIN]: [
-    PERMISSIONS.PROJECT_CREATE,
     PERMISSIONS.PROJECT_READ,
     PERMISSIONS.PROJECT_UPDATE,
-    PERMISSIONS.PROJECT_DELETE,
 
     PERMISSIONS.ADD_MEMBER_TO_PROJECT,
     PERMISSIONS.MANAGE_PROJECT_MEMBER,
@@ -19,14 +18,10 @@ export const ROLE_PERMISSIONS = {
   ],
 
   [PROJECT_ROLES.MEMBER]: [
-    PERMISSIONS.PROJECT_CREATE,
     PERMISSIONS.PROJECT_READ,
-    PERMISSIONS.PROJECT_UPDATE,
-    PERMISSIONS.PROJECT_DELETE,
 
     PERMISSIONS.TASK_CREATE,
     PERMISSIONS.TASK_READ,
     PERMISSIONS.TASK_UPDATE,
-    PERMISSIONS.TASK_DELETE,
   ],
-};
+} satisfies Record<ProjectRole, readonly Permission[]>;

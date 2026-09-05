@@ -16,6 +16,8 @@ import InvitationPage from "../../features/invitation/pages/InvitationPage";
 import WorkspaceDetailsPage from "../../features/workspace/pages/WorkspaceDetailsPage";
 import WorkspacePendingInvitationsPage from "../../features/workspace/pages/WorkspacePendingInvitationsPage";
 import ProjectMembersPage from "../../features/projects/pages/ProjectMembersPage";
+import RequirePermission from "../../shared/components/auth/RequirePermission";
+import { PERMISSIONS } from "../../shared/constants/permissions";
 
 export const router = createBrowserRouter([
   {
@@ -59,13 +61,26 @@ export const router = createBrowserRouter([
           },
           {
             path: ROUTES.WORKSPACE_PENDING_INVITATIONS,
-            element: <WorkspacePendingInvitationsPage />,
+            element: (
+              <RequirePermission
+                anyOf={[
+                  PERMISSIONS.INVITATION_CREATE,
+                  PERMISSIONS.INVITATION_CANCEL,
+                ]}
+              >
+                <WorkspacePendingInvitationsPage />
+              </RequirePermission>
+            ),
           },
 
           // project
           {
             path: ROUTES.PROJECTS,
-            element: <ProjectsPage />,
+            element: (
+              <RequirePermission anyOf={[PERMISSIONS.PROJECT_READ]}>
+                <ProjectsPage />
+              </RequirePermission>
+            ),
           },
           {
             path: ROUTES.PROJECT_DETAILS,
@@ -73,19 +88,35 @@ export const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: <ProjectOverviewPage />,
+                element: (
+                  <RequirePermission anyOf={[PERMISSIONS.PROJECT_READ]}>
+                    <ProjectOverviewPage />
+                  </RequirePermission>
+                ),
               },
               {
                 path: ROUTES.TASKS,
-                element: <TasksPage />,
+                element: (
+                  <RequirePermission anyOf={[PERMISSIONS.TASK_READ]}>
+                    <TasksPage />
+                  </RequirePermission>
+                ),
               },
               {
                 path: ROUTES.TASKS_DETAILS,
-                element: <TaskDetailsPage />,
+                element: (
+                  <RequirePermission anyOf={[PERMISSIONS.TASK_READ]}>
+                    <TaskDetailsPage />
+                  </RequirePermission>
+                ),
               },
               {
                 path: ROUTES.PROJECT_MEMBERS,
-                element: <ProjectMembersPage />,
+                element: (
+                  <RequirePermission anyOf={[PERMISSIONS.PROJECT_READ]}>
+                    <ProjectMembersPage />
+                  </RequirePermission>
+                ),
               },
             ],
           },

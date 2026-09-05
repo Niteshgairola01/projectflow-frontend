@@ -15,6 +15,8 @@ import { notify } from "../../../shared/utils/toast";
 import { getErrorMessage } from "../../../shared/utils/getErrorMessage";
 import { useState } from "react";
 import TaskKanbanCard from "./TaskKanbanCard";
+import { usePermissions } from "../../../shared/hooks/usePermissions";
+import { PERMISSIONS } from "../../../shared/constants/permissions";
 
 const columns: {
   id: TaskStatus;
@@ -56,6 +58,8 @@ const TaskKanban = ({ tasks, isLoading, isError }: TaskKanbanProps) => {
   );
 
   const { mutateAsync } = useUpdateTask();
+  const { can } = usePermissions();
+  const canUpdateTasks = can(PERMISSIONS.TASK_UPDATE);
 
   if (isLoading) {
     return (
@@ -109,6 +113,7 @@ const TaskKanban = ({ tasks, isLoading, isError }: TaskKanbanProps) => {
   );
 
   const handleDragStart = (event: DragStartEvent) => {
+    if (!canUpdateTasks) return;
     const task = tasks.find((task) => task._id === event.active.id);
 
     if (!task) return;
@@ -117,6 +122,7 @@ const TaskKanban = ({ tasks, isLoading, isError }: TaskKanbanProps) => {
   };
 
   const handleDragEnd = async (event: DragEndEvent) => {
+    if (!canUpdateTasks) return;
     const { active, over } = event;
 
     setActiveTask(null);
@@ -164,11 +170,15 @@ const TaskKanban = ({ tasks, isLoading, isError }: TaskKanbanProps) => {
               status={column.id}
               tasks={groupedTasks[column.id]}
               activeTaskId={activeTask?._id}
+              canCreate={can(PERMISSIONS.TASK_CREATE)}
+              canDrag={canUpdateTasks}
             />
           ))}
         </div>
         <DragOverlay>
-          {activeTask ? <TaskKanbanCard task={activeTask} isDragging /> : null}
+          {activeTask ? (
+            <TaskKanbanCard task={activeTask} isDragging canDrag />
+          ) : null}
         </DragOverlay>
       </DndContext>
     </div>
