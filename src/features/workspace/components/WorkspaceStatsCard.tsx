@@ -1,45 +1,34 @@
-import { CheckSquare, FolderKanban, Users } from "lucide-react";
+import { FolderKanban, Users } from "lucide-react";
 import type { WorkspaceProps } from "../types/workspace.types";
+import { Card } from "../../../shared/components/ui/Card/Card";
+
+const Stats = ({ title, value, children }) => {
+  return (
+    <div className="flex items-center justify-between">
+      <div className="flex items-center gap-2">
+        {children}
+        <span>{title}</span>
+      </div>
+
+      <span className="font-semibold">{value ?? "N/A"}</span>
+    </div>
+  );
+};
 
 const WorkspaceStatsCard = ({ workspace }: WorkspaceProps) => {
   return (
-    <div className="rounded-2xl border bg-card p-6">
+    <Card className="p-6">
       <h2 className="mb-6 text-lg font-semibold text-primary">Quick Stats</h2>
 
       <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Users size={18} />
-
-            <span>Members</span>
-          </div>
-
-          <span className="font-semibold">
-            {workspace.members.length || "N/A"}
-          </span>
-        </div>
-
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <FolderKanban size={18} />
-
-            <span>works</span>
-          </div>
-
-          <span className="font-semibold">8</span>
-        </div>
-
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <CheckSquare size={18} />
-
-            <span>Tasks</span>
-          </div>
-
-          <span className="font-semibold">46</span>
-        </div>
+        <Stats title="Members" value={workspace.members.length}>
+          <Users className="text-primary " size={20} />
+        </Stats>
+        <Stats title="Projects" value={workspace.projectsCount ?? 0}>
+          <FolderKanban className="text-red-400 " size={20} />
+        </Stats>
       </div>
-    </div>
+    </Card>
   );
 };
 

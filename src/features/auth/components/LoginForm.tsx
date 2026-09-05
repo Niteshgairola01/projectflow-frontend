@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -14,12 +14,9 @@ import { useLogin } from "../hooks/useLogin";
 import { useAppDispatch } from "../../../shared/hooks/useAppDispatch";
 import { setUser } from "../store/authSlice";
 import { tokenManager } from "../../../shared/services/auth/tokenManager";
-import { ROUTES } from "../../../shared/constants/routes";
 
 export const LoginForm = () => {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
   const [showPassword, setShowPassword] = useState(false);
 
   const { mutateAsync, isPending } = useLogin();
@@ -39,8 +36,6 @@ export const LoginForm = () => {
       tokenManager.setToken(response.accessToken);
 
       dispatch(setUser(response.user));
-
-      navigate(ROUTES.WORKSPACES);
     } catch (error) {
       console.error(error);
     }
@@ -53,7 +48,7 @@ export const LoginForm = () => {
       <Input
         label="Email address"
         type="email"
-        placeholder="john@example.com"
+        placeholder="user@example.com"
         error={errors.email?.message}
         {...register("email")}
       />

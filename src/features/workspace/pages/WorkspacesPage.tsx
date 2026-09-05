@@ -1,13 +1,13 @@
-import WorkspaceCard from "../components/WorkspaceCard";
 import { useWorkspaces } from "../hooks/useWorkspaces";
 import WorkspaceHeader from "../components/WorkspaceHeader";
 import { useAppSelector } from "../../../shared/hooks/useAppSelector";
-import { Link } from "react-router-dom";
+import WorkspacesList from "../components/WorkspacesList";
+import PendingInvitations from "../components/PendingInvitations";
 
 const WorkspacesPage = () => {
-  const { data: workspaces, isLoading, isError } = useWorkspaces();
+  const { user } = useAppSelector((state) => state.auth);
 
-  const user = useAppSelector((state) => state.auth.user);
+  const { data: workspaces, isLoading, isError } = useWorkspaces();
 
   if (isLoading) {
     return (
@@ -34,7 +34,10 @@ const WorkspacesPage = () => {
         {/* header */}
         <WorkspaceHeader />
 
-        <div className="flex flex-col items-center justify-center rounded-2xl border bg-card py-20">
+        {/* pending invitations */}
+        <PendingInvitations />
+
+        <div className="flex flex-col items-center justify-center rounded-2xl border bg-card py-20 mt-5">
           <h3 className="text-lg font-semibold">No workspaces yet</h3>
 
           <p className="mt-2 text-sm text-muted-foreground">
@@ -50,25 +53,11 @@ const WorkspacesPage = () => {
       {/* header */}
       <WorkspaceHeader />
 
-      {/* card */}
-      <div className="overflow-hidden rounded-2xl border bg-card shadow-sm">
-        {workspaces?.map((workspace) => {
-          const member = workspace.members.find(
-            (member) => member.user._id === user?._id
-          );
+      {/* pending invitations */}
+      <PendingInvitations />
 
-          return (
-            <Link to={`/workspaces/${workspace._id}`} key={workspace._id}>
-              <WorkspaceCard
-                name={workspace.name}
-                members={workspace.members}
-                role={member?.role}
-                color={workspace?.color}
-              />
-            </Link>
-          );
-        })}
-      </div>
+      {/* card */}
+      <WorkspacesList workspaces={workspaces} user={user} />
     </div>
   );
 };

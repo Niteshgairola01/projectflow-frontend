@@ -35,13 +35,13 @@ const ProjectNavigation = ({ project }: ProjectNavigationProps) => {
       path: `${projectBasePath}/tasks`,
       icon: CheckSquare,
     },
-
-    // Future project modules
     {
       label: "Members",
       path: `${projectBasePath}/members`,
       icon: Users,
     },
+
+    // Future project modules
     {
       label: "Calendar",
       path: `${projectBasePath}/calendar`,

@@ -12,6 +12,10 @@ import TasksPage from "../../features/tasks/pages/TasksPage";
 import ProjectLayout from "../../features/workspace/layouts/ProjectLayout";
 import ProjectOverviewPage from "../../features/projects/pages/ProjectOverviewPage";
 import TaskDetailsPage from "../../features/tasks/pages/TaskDetailsPage";
+import InvitationPage from "../../features/invitation/pages/InvitationPage";
+import WorkspaceDetailsPage from "../../features/workspace/pages/WorkspaceDetailsPage";
+import WorkspacePendingInvitationsPage from "../../features/workspace/pages/WorkspacePendingInvitationsPage";
+import ProjectMembersPage from "../../features/projects/pages/ProjectMembersPage";
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +35,10 @@ export const router = createBrowserRouter([
     ),
   },
   {
+    path: ROUTES.INVITATION,
+    element: <InvitationPage />,
+  },
+  {
     element: (
       <ProtectedRoute>
         <AppLayout />
@@ -45,6 +53,16 @@ export const router = createBrowserRouter([
         path: ROUTES.WORKSPACE_DETAILS,
         element: <WorkspaceLayout />,
         children: [
+          {
+            index: true,
+            element: <WorkspaceDetailsPage />,
+          },
+          {
+            path: ROUTES.WORKSPACE_PENDING_INVITATIONS,
+            element: <WorkspacePendingInvitationsPage />,
+          },
+
+          // project
           {
             path: ROUTES.PROJECTS,
             element: <ProjectsPage />,
@@ -64,6 +82,10 @@ export const router = createBrowserRouter([
               {
                 path: ROUTES.TASKS_DETAILS,
                 element: <TaskDetailsPage />,
+              },
+              {
+                path: ROUTES.PROJECT_MEMBERS,
+                element: <ProjectMembersPage />,
               },
             ],
           },

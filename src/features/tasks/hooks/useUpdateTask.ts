@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { taskApi } from "../api/task.api";
 import type { UpdateTaskPayload } from "../schema/createTaskSchema";
 import { taskKeys } from "../constants/task.keys";
-import type { Task } from "../types/task.types";
+import type { Task, UpdateTask } from "../types/task.types";
 
 interface UpdateTaskVariables {
   taskId: string;
@@ -51,10 +51,10 @@ export const useUpdateTask = () => {
       });
 
       // Save the current list so we can rollback if the API fails.
-      const previousTasks = queryClient.getQueryData<Task[]>(listKey);
+      const previousTasks = queryClient.getQueryData<UpdateTask[]>(listKey);
 
       // Optimistically update the task list.
-      queryClient.setQueryData<Task[]>(listKey, (oldTasks) => {
+      queryClient.setQueryData<UpdateTask[]>(listKey, (oldTasks) => {
         if (!oldTasks) {
           return oldTasks;
         }
@@ -70,9 +70,10 @@ export const useUpdateTask = () => {
       });
 
       // Optimistically update task details cache too.
-      const previousTask = queryClient.getQueryData<Task>(detailKey);
+      let previousTask = queryClient.getQueryData<UpdateTask>(detailKey);
 
-      queryClient.setQueryData<Task>(detailKey, (oldTask) => {
+      // previousTask.assignedTo = previousTask.assignedTo?._id;
+      queryClient.setQueryData<UpdateTask>(detailKey, (oldTask) => {
         if (!oldTask) {
           return oldTask;
         }

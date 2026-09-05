@@ -1,8 +1,13 @@
 export const PERMISSIONS = {
+  INVITATION_CREATE: "invitation:create",
+  INVITATION_CANCEL: "invitation:cancel",
+
   PROJECT_CREATE: "project:create",
   PROJECT_READ: "project:read",
   PROJECT_UPDATE: "project:update",
   PROJECT_DELETE: "project:delete",
+  ADD_MEMBER_TO_PROJECT: "project:add-member",
+  MANAGE_PROJECT_MEMBER: "project:manage-member",
 
   TASK_CREATE: "task:create",
   TASK_READ: "task:read",
@@ -10,6 +15,7 @@ export const PERMISSIONS = {
   TASK_DELETE: "task:delete",
 
   WORKSPACE_CREATE: "workspace:create",
+  MANAGE_WORKSPACE_MEMBER: "workspce:manage-member",
 } as const;
 
 export type Permission = (typeof PERMISSIONS)[keyof typeof PERMISSIONS];

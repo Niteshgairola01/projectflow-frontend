@@ -21,6 +21,7 @@ interface TaskFormProps {
   defaultValues?: CreateTaskPayload;
   onSubmit: (data: CreateTaskPayload) => void;
   onCancel: () => void;
+  workspaceMembers: { label: string; value: string }[];
   isSubmitting: boolean;
   submitLabel: string;
 }
@@ -29,6 +30,7 @@ const TaskForm = ({
   defaultValues,
   onSubmit,
   onCancel,
+  workspaceMembers,
   isSubmitting,
   submitLabel,
 }: TaskFormProps) => {
@@ -88,10 +90,7 @@ const TaskForm = ({
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Select
           label="Assignee"
-          options={[
-            { label: "John Doe", value: "user-1" },
-            { label: "Jane Smith", value: "user-2" },
-          ]}
+          options={workspaceMembers}
           {...register("assignedTo")}
           error={errors.assignedTo?.message}
           placeholder="Assign to..."

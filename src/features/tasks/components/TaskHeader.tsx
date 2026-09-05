@@ -193,7 +193,7 @@ const TaskHeader = ({ task }: TaskHeaderProps) => {
             <User size={14} />
           </div>
 
-          <span>{task.assignedTo || "Unassigned"}</span>
+          <span>{task.assignedTo?.name || "Unassigned"}</span>
         </div>
 
         {/* Due date */}

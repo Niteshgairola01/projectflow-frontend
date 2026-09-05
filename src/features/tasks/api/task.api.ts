@@ -11,11 +11,11 @@ export const taskApi = {
   createTask: async (
     workspaceId: string,
     projectId: string,
-    payload: CreateTaskPayload
+    payload: CreateTaskPayload,
   ): Promise<Task> => {
     const response = await api.post(
       `${base}/${workspaceId}/projects/${projectId}/tasks`,
-      payload
+      payload,
     );
 
     return response.data?.data;
@@ -23,10 +23,10 @@ export const taskApi = {
 
   getTasksByProject: async (
     workspaceId: string,
-    projectId: string
+    projectId: string,
   ): Promise<Task[]> => {
     const response = await api.get(
-      `${base}/${workspaceId}/projects/${projectId}/tasks`
+      `${base}/${workspaceId}/projects/${projectId}/tasks`,
     );
 
     return response.data?.data;
@@ -35,10 +35,10 @@ export const taskApi = {
   getTaskById: async (
     workspaceId: string,
     projectId: string,
-    taskId: string
+    taskId: string,
   ): Promise<Task> => {
     const response = await api.get(
-      `${base}/${workspaceId}/projects/${projectId}/tasks/${taskId}`
+      `${base}/${workspaceId}/projects/${projectId}/tasks/${taskId}`,
     );
 
     return response.data?.data;
@@ -48,23 +48,23 @@ export const taskApi = {
     workspaceId: string,
     projectId: string,
     taskId: string,
-    payload: UpdateTaskPayload
+    payload: UpdateTaskPayload,
   ): Promise<Task> => {
     const response = await api.patch(
       `${base}/${workspaceId}/projects/${projectId}/tasks/${taskId}`,
-      payload
+      payload,
     );
-
+    
     return response.data?.data;
   },
 
   deleteTask: async (
     workspaceId: string,
     projectId: string,
-    taskId: string
+    taskId: string,
   ): Promise<void> => {
     const response = await api.delete(
-      `${base}/${workspaceId}/projects/${projectId}/tasks/${taskId}`
+      `${base}/${workspaceId}/projects/${projectId}/tasks/${taskId}`,
     );
 
     return response.data?.data;

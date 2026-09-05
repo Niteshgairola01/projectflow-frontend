@@ -22,7 +22,7 @@ const TaskKanbanCard = ({
     data: {
       status: task.status,
     },
-  });
+  });  
 
   const getPriorityStyles = (priority: Task["priority"]) => {
     switch (priority) {
@@ -123,7 +123,7 @@ const TaskKanbanCard = ({
           </div>
 
           <span className="max-w-25 truncate text-xs text-muted-foreground">
-            {task.assignedTo ?? "Unassigned"}
+            {task.assignedTo?.name ?? "Unassigned"}
           </span>
         </div>
 

@@ -27,9 +27,9 @@ export const createProjectSchema = z
     {
       message: "End date must be after start date",
       path: ["endDate"],
-    }
+    },
   );
 
 export type CreateProjectPayload = z.infer<typeof createProjectSchema>;
 
-export type UpdateProjectPayload = z.infer<typeof createProjectSchema.partial>
+export type UpdateProjectPayload = z.infer<typeof createProjectSchema.partial>;

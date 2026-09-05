@@ -1,9 +1,13 @@
+import { useParams } from "react-router-dom";
 import Modal from "../../../shared/components/ui/Modal/Modal";
+import { getErrorMessage } from "../../../shared/utils/getErrorMessage";
 import { notify } from "../../../shared/utils/toast";
 import { useUpdateTask } from "../hooks/useUpdateTask";
 import type { CreateTaskPayload } from "../schema/createTaskSchema";
 import type { Task } from "../types/task.types";
 import TaskForm from "./TaskForm";
+import { useWorkspace } from "../../workspace/hooks/useWorkspace";
+import { useProjectMembers } from "../../projects/hooks/useProjecMembers";
 
 interface UpdateTaskModalProps {
   open: boolean;
@@ -12,7 +16,14 @@ interface UpdateTaskModalProps {
 }
 
 const UpdateTaskModal = ({ open, onClose, task }: UpdateTaskModalProps) => {
+  const { data: members } = useProjectMembers();
+
   const { mutateAsync, isPending } = useUpdateTask();
+
+  const workspaceMembers = members?.map((member) => ({
+    label: `${member.user?.name}`,
+    value: `${member.user?._id}`,
+  }));
 
   const onSubmit = async (data: CreateTaskPayload) => {
     try {
@@ -23,8 +34,8 @@ const UpdateTaskModal = ({ open, onClose, task }: UpdateTaskModalProps) => {
       notify.success("Task updated successfully");
       onClose();
     } catch (error) {
-      notify.error(error?.message);
-      console.log("err", error);
+      const errorMessage = getErrorMessage(error);
+      notify.error(errorMessage);
     }
   };
 
@@ -35,12 +46,13 @@ const UpdateTaskModal = ({ open, onClose, task }: UpdateTaskModalProps) => {
           title: task.title,
           description: task?.description,
           dueDate: task.dueDate,
-          assignedTo: task?.assignedTo,
+          assignedTo: task?.assignedTo?._id,
           status: task?.status,
           priority: task?.priority,
         }}
         onSubmit={onSubmit}
         onCancel={onClose}
+        workspaceMembers={workspaceMembers}
         isSubmitting={isPending}
         submitLabel="Save Changes"
       />
