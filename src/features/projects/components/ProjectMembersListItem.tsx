@@ -1,4 +1,4 @@
-import { MoreHorizontal, Trash, X } from "lucide-react";
+import { Edit, MoreHorizontal, Trash, X } from "lucide-react";
 import ProjectMemberBadge from "./ProjectMemberBadge";
 import type { ProjectMember } from "../types/projectMember.types";
 import Can from "../../../shared/components/auth/Can";
@@ -10,7 +10,8 @@ import { notify } from "../../../shared/utils/toast";
 import { getErrorMessage } from "../../../shared/utils/getErrorMessage";
 import { useParams } from "react-router-dom";
 import type { WorkspaceMemberRole } from "../../workspace/types/workspace.types";
-import { canRemoveProjectMember } from "../utils/canRemoveProjectMember";
+import { canManageProjectMember } from "../utils/canManageProjectMember";
+import ProjectMemberRoleUpdateModal from "./ProjectMemberRoleUpdateModal";
 
 interface ProjectMembersListItemProps {
   member: ProjectMember;
@@ -27,6 +28,7 @@ const ProjectMembersListItem = ({
   onToggleMenu,
   onCloseMenu,
 }: ProjectMembersListItemProps) => {
+  const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false);
   const [showCancelModal, setShowCancelModal] = useState<boolean>(false);
   const { projectId } = useParams();
 
@@ -35,7 +37,7 @@ const ProjectMembersListItem = ({
   const name = member.user?.name ?? "";
   const email = member.user?.email ?? "";
 
-  const canRemoveMember = canRemoveProjectMember({
+  const canManageMember = canManageProjectMember({
     targetProjectRole: member.role,
     loggedInUserRole,
   });
@@ -88,22 +90,20 @@ const ProjectMembersListItem = ({
           <MoreHorizontal className="h-5 w-5" />
         </button>
 
-        {isMenuOpen && (
+        {isMenuOpen && canManageMember && (
           <div className="absolute bottom-1 right-12 z-50 w-44 rounded-xl border bg-background p-1 shadow-lg">
-            {canRemoveMember && (
-              <Can permission={PERMISSIONS.REMOVE_PROJECT_MEMBER}>
-                <button
-                  type="button"
-                  onClick={() => setShowCancelModal(true)}
-                  className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-red-600 hover:bg-red-50"
-                >
-                  <Trash size={16} />
-                  Remove
-                </button>
-              </Can>
-            )}
+            <Can permission={PERMISSIONS.MANAGE_PROJECT_MEMBER}>
+              <button
+                type="button"
+                onClick={() => setShowUpdateModal(true)}
+                className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm"
+              >
+                <Edit size={16} />
+                Update
+              </button>
+            </Can>
 
-            {/* <Can permission={PERMISSIONS.REMOVE_PROJECT_MEMBER}>
+            <Can permission={PERMISSIONS.MANAGE_PROJECT_MEMBER}>
               <button
                 type="button"
                 onClick={() => setShowCancelModal(true)}
@@ -112,11 +112,18 @@ const ProjectMembersListItem = ({
                 <Trash size={16} />
                 Remove
               </button>
-            </Can> */}
+            </Can>
           </div>
         )}
 
-        {/* Delete Task Modal */}
+        {/* Update Member Role Modal */}
+        <ProjectMemberRoleUpdateModal
+          open={showUpdateModal}
+          member={member}
+          onClose={() => setShowUpdateModal(false)}
+        />
+
+        {/* Remove Member Modal */}
         <ConfirmModal
           open={showCancelModal}
           title="Remove Member"

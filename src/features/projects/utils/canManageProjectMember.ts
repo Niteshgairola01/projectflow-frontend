@@ -1,7 +1,7 @@
 import type { WorkspaceRole } from "../../../shared/constants/workSpaceRoles";
 import type { ProjectMemberRole } from "../types/projectMember.types";
 
-export const canRemoveProjectMember = ({
+export const canManageProjectMember = ({
   targetProjectRole,
   loggedInUserRole,
 }: {

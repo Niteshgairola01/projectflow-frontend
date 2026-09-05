@@ -1,4 +1,5 @@
 import { api } from "../../../shared/services/api/axios";
+import type { UpdateProjectMemberRolePayload } from "../schema/updateProjectMemberRoleSchema";
 import type {
   AddProjectMemberPayload,
   ProjectMember,
@@ -38,6 +39,20 @@ export const projectMemberApis = {
   ) => {
     const response = await api.delete(
       `/${base}/${workspaceId}/projects/${projectId}/members/${memberId}`,
+    );
+
+    return response.data?.data;
+  },
+
+  updateProjectMemberRole: async (
+    workspaceId: string,
+    projectId: string,
+    memberId: string,
+    data: UpdateProjectMemberRolePayload,
+  ): Promise<ProjectMember> => {
+    const response = await api.patch(
+      `/${base}/${workspaceId}/projects/${projectId}/members/${memberId}`,
+      data,
     );
 
     return response.data?.data;
