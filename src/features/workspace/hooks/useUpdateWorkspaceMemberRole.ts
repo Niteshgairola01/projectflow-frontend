@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import type { UpdateWorkspaceMemberRolePayload } from "../schema/updateWorkspaceMemberRoleSchema";
 import { usePermissions } from "../../../shared/hooks/usePermissions";
 import { PERMISSIONS } from "../../../shared/constants/permissions";
+import { queryKeys } from "../../../shared/constants/queryKeys";
 
 interface MemberVariables {
   memberId: string;
@@ -28,7 +29,7 @@ export const useUpdateWorkspaceMemberRole = () => {
 
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["workspaces", workspaceId],
+        queryKey: queryKeys.workspace.detail(workspaceId ?? ""),
       });
     },
   });

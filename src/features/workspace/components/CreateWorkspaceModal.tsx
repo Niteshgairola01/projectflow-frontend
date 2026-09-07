@@ -4,8 +4,10 @@ import Modal from "../../../shared/components/ui/Modal/Modal";
 import { Button } from "../../../shared/components/ui/Button/Button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createWorkspaceSchema } from "../schema/createWorkspaceSchema";
-import type { CreateWorkspacePayload } from "../types/workspace.types";
+import {
+  createWorkspaceSchema,
+  type CreateWorkspacePayload,
+} from "../schema/createWorkspaceSchema";
 import { useCreateWorkspace } from "../hooks/useCreateWorkspace";
 import { WORKSPACE_COLOR } from "../../../shared/constants/workspaceColors";
 
@@ -17,7 +19,7 @@ interface CreateWorkspaceModalProps {
 const colors = WORKSPACE_COLOR;
 
 const CreateWorkspaceModal = ({ open, onClose }: CreateWorkspaceModalProps) => {
-  const [selectedColor, setSelectedColor] = useState(colors[0]);
+  const [selectedColor, setSelectedColor] = useState<string>(colors[0]);
 
   const { mutateAsync, isPending } = useCreateWorkspace();
 
@@ -26,7 +28,7 @@ const CreateWorkspaceModal = ({ open, onClose }: CreateWorkspaceModalProps) => {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm({
+  } = useForm<CreateWorkspacePayload>({
     resolver: zodResolver(createWorkspaceSchema),
   });
 

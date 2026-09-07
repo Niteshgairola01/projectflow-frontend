@@ -17,6 +17,7 @@ import { useState } from "react";
 import TaskKanbanCard from "./TaskKanbanCard";
 import { usePermissions } from "../../../shared/hooks/usePermissions";
 import { PERMISSIONS } from "../../../shared/constants/permissions";
+import { isTaskStatus } from "../constants/taskOptions";
 
 const columns: {
   id: TaskStatus;
@@ -132,7 +133,9 @@ const TaskKanban = ({ tasks, isLoading, isError }: TaskKanbanProps) => {
     }
 
     const currentStatus = active.data.current?.status;
-    const newStatus = over.id as TaskStatus;
+    const newStatus = String(over.id);
+
+    if (!isTaskStatus(newStatus)) return;
 
     if (currentStatus === newStatus) {
       return;

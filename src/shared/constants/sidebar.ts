@@ -1,9 +1,9 @@
 import { LayoutDashboard, FolderKanban, Workflow } from "lucide-react";
 import type React from "react";
 
-interface SidebarItem {
-  label: String;
-  key: String;
+export interface SidebarItem {
+  label: string;
+  key: string;
   icon: React.ElementType;
   requiresWorkspace?: boolean;
 }

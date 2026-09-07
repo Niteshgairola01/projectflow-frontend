@@ -32,6 +32,8 @@ const parseDate = (value: string): Date | null => {
 
   const [dayStr, monthStr, yearStr] = parts;
 
+  if (!dayStr || !monthStr || !yearStr) return null;
+
   if (dayStr.length !== 2 || monthStr.length !== 2 || yearStr.length !== 4) {
     return null;
   }
@@ -85,6 +87,8 @@ const DateSelector = ({
 
   // Keep input in sync when value changes externally
   useEffect(() => {
+    // This component intentionally keeps an editable draft separate from value.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setInputValue(formatDate(value));
   }, [value]);
 

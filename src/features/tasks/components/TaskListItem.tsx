@@ -1,5 +1,6 @@
 import { CalendarDays, MoreVertical, Pencil, Trash2, User } from "lucide-react";
 import type { Task } from "../types/task.types";
+import { getErrorMessage } from "../../../shared/utils/getErrorMessage";
 import { useState } from "react";
 import Can from "../../../shared/components/auth/Can";
 import { PERMISSIONS } from "../../../shared/constants/permissions";
@@ -96,7 +97,7 @@ const TaskListItem = ({ task }: TaskListItemProps) => {
       mutateAsync({ taskId: task._id });
       setShowDeleteModal(false);
     } catch (error) {
-      notify.error(error?.message || "Failed to delete task");
+      notify.error(getErrorMessage(error));
       console.log("error", error);
     }
   };

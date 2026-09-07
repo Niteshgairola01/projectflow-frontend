@@ -16,12 +16,12 @@ const TasksPage = () => {
     assignee: "",
   });
 
-  const { data: tasks, isLoading, isError } = useProjectTasks();
+  const { data: tasks = [], isLoading, isError } = useProjectTasks();
 
   const filteredTasks = useMemo(() => {
-    const isObjectEmpty = Object.keys(filters)
-      .map((key) => filters[key])
-      .every((value) => value?.trim() === "");
+    const isObjectEmpty = Object.values(filters).every(
+      (value) => value.trim() === "",
+    );
 
     if (isObjectEmpty) return tasks;
 

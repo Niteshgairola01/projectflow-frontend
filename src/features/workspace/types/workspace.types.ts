@@ -1,4 +1,6 @@
-export type WorkspaceMemberRole = "OWNER" | "ADMIN" | "MEMBER";
+import type { WorkspaceRole } from "../../../shared/constants/workSpaceRoles";
+
+export type WorkspaceMemberRole = WorkspaceRole;
 
 export interface WorkspaceMember {
   user: {
@@ -7,11 +9,6 @@ export interface WorkspaceMember {
     email: string;
   };
   role: WorkspaceMemberRole;
-}
-
-export interface CreateWorkspacePayload {
-  name: String;
-  color?: String;
 }
 
 export interface Workspace {
@@ -24,7 +21,7 @@ export interface Workspace {
   projectsCount?: number;
 
   createdAt: string;
-  updateat: string;
+  updatedAt: string;
 }
 
 export interface WorkspaceProps {

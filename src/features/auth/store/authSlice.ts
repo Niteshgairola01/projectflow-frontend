@@ -3,7 +3,7 @@ import type { User } from "../types/auth.types";
 
 interface AuthState {
   user: User | null;
-  isAuthenticated: Boolean;
+  isAuthenticated: boolean;
 }
 
 const initialState: AuthState = {

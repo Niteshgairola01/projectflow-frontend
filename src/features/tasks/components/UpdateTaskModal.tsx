@@ -1,4 +1,3 @@
-import { useParams } from "react-router-dom";
 import Modal from "../../../shared/components/ui/Modal/Modal";
 import { getErrorMessage } from "../../../shared/utils/getErrorMessage";
 import { notify } from "../../../shared/utils/toast";
@@ -6,7 +5,6 @@ import { useUpdateTask } from "../hooks/useUpdateTask";
 import type { CreateTaskPayload } from "../schema/createTaskSchema";
 import type { Task } from "../types/task.types";
 import TaskForm from "./TaskForm";
-import { useWorkspace } from "../../workspace/hooks/useWorkspace";
 import { useProjectMembers } from "../../projects/hooks/useProjecMembers";
 
 interface UpdateTaskModalProps {
@@ -20,7 +18,7 @@ const UpdateTaskModal = ({ open, onClose, task }: UpdateTaskModalProps) => {
 
   const { mutateAsync, isPending } = useUpdateTask();
 
-  const workspaceMembers = members?.map((member) => ({
+  const workspaceMembers = (members ?? []).map((member) => ({
     label: `${member.user?.name}`,
     value: `${member.user?._id}`,
   }));

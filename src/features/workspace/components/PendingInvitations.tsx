@@ -22,6 +22,14 @@ const PendingInvitations = () => {
     navigate(`/invitations/${token}`);
   };
 
+  const getInvitationToken = (token?: string) => {
+    if (!token) {
+      notify.error("Invitation link is unavailable");
+      return null;
+    }
+    return token;
+  };
+
   const handleAcceptInvitation = async (workspaceId: string, token: string) => {
     try {
       await mutateAsync({ workspaceId, token });
@@ -124,19 +132,22 @@ const PendingInvitations = () => {
               <button
                 type="button"
                 className="h-12 rounded-lg border bg-background px-4 text-sm font-medium text-foreground transition-colors hover:bg-muted"
-                onClick={() => handleViewDetails(invitation.token)}
+                onClick={() => {
+                  const token = getInvitationToken(invitation.token);
+                  if (token) handleViewDetails(token);
+                }}
               >
                 View Details
               </button>
 
               <Button
                 className="inline-flex h-9 items-center gap-2 rounded-lg px-4"
-                onClick={() =>
-                  handleAcceptInvitation(
-                    invitation.workspace._id,
-                    invitation.token,
-                  )
-                }
+                onClick={() => {
+                  const token = getInvitationToken(invitation.token);
+                  if (token) {
+                    handleAcceptInvitation(invitation.workspace._id, token);
+                  }
+                }}
                 disabled={isPending}
               >
                 Accept

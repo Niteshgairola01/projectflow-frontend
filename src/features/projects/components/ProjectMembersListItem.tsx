@@ -1,4 +1,4 @@
-import { Edit, MoreHorizontal, Trash, X } from "lucide-react";
+import { Edit, MoreHorizontal, Trash } from "lucide-react";
 import ProjectMemberBadge from "./ProjectMemberBadge";
 import type { ProjectMember } from "../types/projectMember.types";
 import Can from "../../../shared/components/auth/Can";
@@ -43,12 +43,17 @@ const ProjectMembersListItem = ({
   });
 
   const handleCloseMenu = () => {
-    onCloseMenu && onCloseMenu();
+    onCloseMenu();
     setShowCancelModal(false);
     setShowUpdateModal(false);
   };
 
-  const handleCancelInvitation = async () => {
+  const handleRemoveMember = async () => {
+    if (!projectId) {
+      notify.error("Project not found");
+      return;
+    }
+
     try {
       await mutateAsync({ projectId, memberId: member.user?._id });
       handleCloseMenu();
@@ -86,7 +91,7 @@ const ProjectMembersListItem = ({
           type="button"
           aria-label={`Manage ${name}`}
           className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition hover:bg-muted hover:text-foreground"
-          onClick={() => onToggleMenu(member?._id)}
+          onClick={() => onToggleMenu(member._id)}
         >
           <MoreHorizontal className="h-5 w-5" />
         </button>
@@ -133,7 +138,7 @@ const ProjectMembersListItem = ({
           cancelText="Cancel"
           loading={isPending}
           onCancel={handleCloseMenu}
-          onConfirm={handleCancelInvitation}
+          onConfirm={handleRemoveMember}
         />
       </td>
     </tr>

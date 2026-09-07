@@ -43,7 +43,7 @@ const WorkspaceMembersListItem = ({
   });
 
   const handleCloseMenu = () => {
-    onCloseMenu && onCloseMenu();
+    onCloseMenu();
     setShowUpdateModal(false);
     setShowCancelModal(false);
   };

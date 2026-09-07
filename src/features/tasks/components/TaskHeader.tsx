@@ -16,6 +16,7 @@ import UpdateTaskModal from "./UpdateTaskModal";
 import ConfirmModal from "../../../shared/components/ui/Modal/ConfirmModal";
 import type { Task } from "../types/task.types";
 import { formatDate } from "../../../shared/utils/formateDate";
+import { getErrorMessage } from "../../../shared/utils/getErrorMessage";
 
 interface TaskHeaderProps {
   task: Task;
@@ -91,7 +92,7 @@ const TaskHeader = ({ task }: TaskHeaderProps) => {
       setShowDeleteModal(false);
       navigate(-1);
     } catch (error) {
-      notify.error(error?.message || "Failed to delete task");
+      notify.error(getErrorMessage(error));
       console.log("error", error);
     }
   };

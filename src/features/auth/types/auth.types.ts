@@ -1,30 +1,34 @@
 export interface User {
-    _id: string,
-    name: string,
-    email: string
+  _id: string;
+  name: string;
+  email: string;
 }
 
 // login
 
 export interface LoginPayload {
-    email: string,
-    password: string
+  email: string;
+  password: string;
 }
 
 export interface LoginResponse {
-    accessToken: string,
-    user: User
+  accessToken: string;
+  user: User;
 }
 
 
 // register
 
 export interface RegisterPayload {
-    name: string,
-    email: string,
-    password: string
+  name: string;
+  email: string;
+  password: string;
 }
 
 export interface RegisterResponse {
-    user: User
+  user: User;
+}
+
+export interface RefreshTokenResponse {
+  accessToken: string;
 }

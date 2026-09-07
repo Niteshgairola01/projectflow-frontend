@@ -1,16 +1,9 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { ROUTES } from "../../../constants/routes";
 import { useAppSelector } from "../../../hooks/useAppSelector";
-import { sidebarItems } from "../../../constants/sidebar";
+import { sidebarItems, type SidebarItem } from "../../../constants/sidebar";
 import { useProject } from "../../../../features/projects/hooks/useProject";
 import ProjectSideNavigation from "../../../../features/projects/components/ProjectSideNavigation";
-
-interface SidebarItem {
-  label: string;
-  key: string;
-  icon: React.ElementType;
-  requiresWorkspace?: boolean;
-}
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -72,7 +65,7 @@ const Sidebar = () => {
 
       {/* Navigation */}
       <nav className="flex-1 overflow-y-auto space-y-1 p-4">
-        {sidebarItems.map((item: SidebarItem) => {
+        {sidebarItems.map((item) => {
           const Icon = item.icon;
 
           const disabled = item.requiresWorkspace && !currentWorkspace;

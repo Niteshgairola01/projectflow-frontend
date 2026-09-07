@@ -1,8 +1,6 @@
-import { useParams } from "react-router-dom";
 import Modal from "../../../shared/components/ui/Modal/Modal";
 import { getErrorMessage } from "../../../shared/utils/getErrorMessage";
 import { notify } from "../../../shared/utils/toast";
-import { useWorkspace } from "../../workspace/hooks/useWorkspace";
 import { useCreateTask } from "../hooks/useCreateTask";
 import type { CreateTaskPayload } from "../schema/createTaskSchema";
 import TaskForm from "./TaskForm";

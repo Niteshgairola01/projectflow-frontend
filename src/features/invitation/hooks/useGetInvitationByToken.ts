@@ -8,7 +8,10 @@ export const useGetInvitationByToken = () => {
 
   return useQuery({
     queryKey: invitationKeys.byToken(token ?? ""),
-    queryFn: () => invitaitonApis.getInvitationByToken(token),
+    queryFn: () => {
+      if (!token) throw new Error("Invitation not found");
+      return invitaitonApis.getInvitationByToken(token);
+    },
     enabled: !!token,
     retry: false,
   });

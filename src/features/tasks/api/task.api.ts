@@ -4,6 +4,7 @@ import type {
   UpdateTaskPayload,
 } from "../schema/createTaskSchema";
 import type { Task } from "../types/task.types";
+import type { ApiResponse } from "../../../shared/types/api.types";
 
 const base = "/workspaces";
 
@@ -13,23 +14,23 @@ export const taskApi = {
     projectId: string,
     payload: CreateTaskPayload,
   ): Promise<Task> => {
-    const response = await api.post(
+    const response = await api.post<ApiResponse<Task>>(
       `${base}/${workspaceId}/projects/${projectId}/tasks`,
       payload,
     );
 
-    return response.data?.data;
+    return response.data.data;
   },
 
   getTasksByProject: async (
     workspaceId: string,
     projectId: string,
   ): Promise<Task[]> => {
-    const response = await api.get(
+    const response = await api.get<ApiResponse<Task[]>>(
       `${base}/${workspaceId}/projects/${projectId}/tasks`,
     );
 
-    return response.data?.data;
+    return response.data.data;
   },
 
   getTaskById: async (
@@ -37,11 +38,11 @@ export const taskApi = {
     projectId: string,
     taskId: string,
   ): Promise<Task> => {
-    const response = await api.get(
+    const response = await api.get<ApiResponse<Task>>(
       `${base}/${workspaceId}/projects/${projectId}/tasks/${taskId}`,
     );
 
-    return response.data?.data;
+    return response.data.data;
   },
 
   updateTask: async (
@@ -50,12 +51,12 @@ export const taskApi = {
     taskId: string,
     payload: UpdateTaskPayload,
   ): Promise<Task> => {
-    const response = await api.patch(
+    const response = await api.patch<ApiResponse<Task>>(
       `${base}/${workspaceId}/projects/${projectId}/tasks/${taskId}`,
       payload,
     );
-    
-    return response.data?.data;
+
+    return response.data.data;
   },
 
   deleteTask: async (
@@ -63,10 +64,8 @@ export const taskApi = {
     projectId: string,
     taskId: string,
   ): Promise<void> => {
-    const response = await api.delete(
+    await api.delete(
       `${base}/${workspaceId}/projects/${projectId}/tasks/${taskId}`,
     );
-
-    return response.data?.data;
   },
 };

@@ -1,20 +1,21 @@
 export const queryKeys = {
   auth: {
-    me: ["auth", "me"],
+    me: ["auth", "me"] as const,
   },
 
   workspace: {
-    all: ["workspaces"],
-    detail: (id: string) => ["workspce", id],
+    all: ["workspaces"] as const,
+    list: (userId: string) => ["workspaces", userId] as const,
+    detail: (id: string) => ["workspaces", id] as const,
   },
 
   projects: {
     all: ["projects"] as const,
-    detail: (id: string) => ["detail", id],
+    detail: (id: string) => ["detail", id] as const,
   },
 
   tasks: {
-    all: ["tasks"],
-    detail: (id: string) => ["task", id],
+    all: ["tasks"] as const,
+    detail: (id: string) => ["task", id] as const,
   },
 };

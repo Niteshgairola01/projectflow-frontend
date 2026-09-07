@@ -23,6 +23,11 @@ const LoggedInWithCorrectAccount = ({
   const { mutateAsync, isPending } = useAcceptInvitation();
 
   const handleAcceptInvitation = async () => {
+    if (!token) {
+      notify.error("Invitation not found");
+      return;
+    }
+
     try {
       await mutateAsync(
         { workspaceId: invitation.workspace?._id, token },

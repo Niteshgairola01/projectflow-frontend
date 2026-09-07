@@ -53,14 +53,16 @@ const ProjectMembersHeader = ({
         </Can>
       </div>
 
-      <AddProjectMemberForm
-        open={isAddOpen}
-        onClose={() => setIsAddOpen(false)}
-        workspaceId={workspaceId}
-        projectId={projectId}
-        workspaceMembers={workspaceMembers}
-        projectMembers={projectMembers}
-      />
+      {workspaceId && projectId && (
+        <AddProjectMemberForm
+          open={isAddOpen}
+          onClose={() => setIsAddOpen(false)}
+          workspaceId={workspaceId}
+          projectId={projectId}
+          workspaceMembers={workspaceMembers}
+          projectMembers={projectMembers}
+        />
+      )}
     </div>
   );
 };

@@ -8,7 +8,12 @@ export const useProjectMembers = () => {
   return useQuery({
     queryKey: projectMemberKeys.list(workspaceId ?? "", projectId ?? ""),
 
-    queryFn: () => projectMemberApis.getProjectMembers(workspaceId, projectId),
+    queryFn: () => {
+      if (!workspaceId) throw new Error("Workspace not found");
+      if (!projectId) throw new Error("Project not found");
+
+      return projectMemberApis.getProjectMembers(workspaceId, projectId);
+    },
 
     enabled: !!workspaceId && !!projectId,
   });
