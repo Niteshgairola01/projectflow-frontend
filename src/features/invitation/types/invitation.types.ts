@@ -1,4 +1,6 @@
-export type InvitationStatus = "PENDING" | "ACCEPTED" | "EXPIRED" | "CANCELLED";
+import type { InvitationStatus } from "../constants/invitationStatuses";
+
+export type { InvitationStatus } from "../constants/invitationStatuses";
 
 export interface InvitationWorkspace {
   _id: string;

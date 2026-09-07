@@ -7,7 +7,7 @@ export const useGetInvitations = () => {
   const { workspaceId } = useParams();
 
   return useQuery({
-    queryKey: invitationKeys.workspaceLists(workspaceId),
+    queryKey: invitationKeys.workspaceLists(workspaceId ?? ""),
     queryFn: () => {
       if (!workspaceId) {
         throw new Error("Workspace not found");
@@ -15,5 +15,6 @@ export const useGetInvitations = () => {
 
       return invitaitonApis.getWorkspaceInvitations(workspaceId);
     },
+    enabled: !!workspaceId,
   });
 };

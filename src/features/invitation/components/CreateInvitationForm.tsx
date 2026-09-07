@@ -12,7 +12,12 @@ import { notify } from "../../../shared/utils/toast";
 import { getErrorMessage } from "../../../shared/utils/getErrorMessage";
 import { Send } from "lucide-react";
 
-const CreateInvitationForm = ({ open, onClose }) => {
+interface CreateInvitationFormProps {
+  open: boolean;
+  onClose: () => void;
+}
+
+const CreateInvitationForm = ({ open, onClose }: CreateInvitationFormProps) => {
   const { mutateAsync, isPending } = useCreateInvitation();
 
   const {

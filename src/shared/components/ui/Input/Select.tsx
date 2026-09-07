@@ -4,15 +4,12 @@ import type { SelectHTMLAttributes, ReactNode } from "react";
 
 import clsx from "clsx";
 
-interface SelectOption {
-  label: string;
-  value: string;
-}
+import type { SelectOption } from "../../../types/common.types";
 
 interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   label?: string;
   error?: string;
-  options: SelectOption[];
+  options: readonly SelectOption[];
   placeholder?: string;
   icon?: ReactNode;
 }

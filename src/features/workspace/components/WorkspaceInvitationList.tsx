@@ -1,9 +1,8 @@
-import { Clock3, Mail, MoreHorizontal, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import { Input } from "../../../shared/components/ui/Input/Input";
 import type { Invitation } from "../../invitation/types/invitation.types";
 import { Card } from "../../../shared/components/ui/Card/Card";
 import AppLoader from "../../../shared/components/ui/Loader/AppLoader";
-import { formatDate } from "../../../shared/utils/formateDate";
 import WorkspaceInvitaitonsListItem from "./workspaceInvitaitonsListItem";
 
 interface WorkspaceInvitationListProps {

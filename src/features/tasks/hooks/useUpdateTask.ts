@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { taskApi } from "../api/task.api";
 import type { UpdateTaskPayload } from "../schema/createTaskSchema";
 import { taskKeys } from "../constants/task.keys";
-import type { Task, UpdateTask } from "../types/task.types";
+import type { Task } from "../types/task.types";
 import { usePermissions } from "../../../shared/hooks/usePermissions";
 import { PERMISSIONS } from "../../../shared/constants/permissions";
 
@@ -12,6 +12,26 @@ interface UpdateTaskVariables {
   taskId: string;
   payload: UpdateTaskPayload;
 }
+
+const applyOptimisticUpdate = (
+  task: Task,
+  payload: UpdateTaskPayload,
+): Task => {
+  const { assignedTo, ...changes } = payload;
+
+  if (assignedTo === undefined) return { ...task, ...changes };
+  if (assignedTo === null || assignedTo === "") {
+    return { ...task, ...changes, assignedTo: null };
+  }
+
+  return {
+    ...task,
+    ...changes,
+    // The mutation only contains an assignee ID, while cached tasks contain
+    // the full user. Keep the current user until the server response arrives.
+    assignedTo: task.assignedTo,
+  };
+};
 
 export const useUpdateTask = () => {
   const { workspaceId, projectId } = useParams();
@@ -55,37 +75,30 @@ export const useUpdateTask = () => {
       });
 
       // Save the current list so we can rollback if the API fails.
-      const previousTasks = queryClient.getQueryData<UpdateTask[]>(listKey);
+      const previousTasks = queryClient.getQueryData<Task[]>(listKey);
 
       // Optimistically update the task list.
-      queryClient.setQueryData<UpdateTask[]>(listKey, (oldTasks) => {
+      queryClient.setQueryData<Task[]>(listKey, (oldTasks) => {
         if (!oldTasks) {
           return oldTasks;
         }
 
         return oldTasks.map((task) =>
           task._id === taskId
-            ? {
-                ...task,
-                ...payload,
-              }
+            ? applyOptimisticUpdate(task, payload)
             : task,
         );
       });
 
       // Optimistically update task details cache too.
-      let previousTask = queryClient.getQueryData<UpdateTask>(detailKey);
+      const previousTask = queryClient.getQueryData<Task>(detailKey);
 
-      // previousTask.assignedTo = previousTask.assignedTo?._id;
-      queryClient.setQueryData<UpdateTask>(detailKey, (oldTask) => {
+      queryClient.setQueryData<Task>(detailKey, (oldTask) => {
         if (!oldTask) {
           return oldTask;
         }
 
-        return {
-          ...oldTask,
-          ...payload,
-        };
+        return applyOptimisticUpdate(oldTask, payload);
       });
 
       //  Return everything required for rollback.
@@ -135,7 +148,7 @@ export const useUpdateTask = () => {
     },
 
     // Always synchronize with server eventually.
-    onSettled: (_data, _error, _variables) => {
+    onSettled: () => {
       if (!workspaceId || !projectId) {
         return;
       }

@@ -79,12 +79,12 @@ const InvitationPage = () => {
               {!isLoggedIn && <NotLoggedIn invitation={invitation} />}
 
               {/* LOGGED IN BUT WRONG ACCOUNT */}
-              {isLoggedIn && !isCorrectUser && (
+              {user && !isCorrectUser && (
                 <LoggedInWithWrongAccount invitation={invitation} user={user} />
               )}
 
               {/* LOGGED IN WITH CORRECT ACCOUNT */}
-              {isLoggedIn && isCorrectUser && (
+              {user && isCorrectUser && (
                 <LoggedInWithCorrectAccount invitation={invitation} user={user} />
               )}
             </div>

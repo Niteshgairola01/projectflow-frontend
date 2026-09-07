@@ -1,6 +1,7 @@
 import { api } from "../../../shared/services/api/axios";
 import type { UpdateWorkspaceMemberRolePayload } from "../schema/updateWorkspaceMemberRoleSchema";
 import type { WorkspaceMember } from "../types/workspace.types";
+import type { ApiResponse } from "../../../shared/types/api.types";
 
 const base = "workspaces";
 
@@ -10,19 +11,18 @@ export const workspaceMemberApi = {
     memberId: string,
     data: UpdateWorkspaceMemberRolePayload,
   ): Promise<WorkspaceMember> => {
-    const response = await api.patch(
+    const response = await api.patch<ApiResponse<WorkspaceMember>>(
       `${base}/${workspceId}/members/${memberId}`,
       data,
     );
 
-    return response.data?.data;
+    return response.data.data;
   },
 
-  removeWorkspaceMemberRole: async (workspceId: string, memberId: string) => {
-    const response = await api.delete(
+  removeWorkspaceMember: async (workspceId: string, memberId: string): Promise<void> => {
+    await api.delete(
       `${base}/${workspceId}/members/${memberId}`,
     );
 
-    return response.data?.data;
   },
 };

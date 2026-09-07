@@ -1,8 +1,15 @@
 import { FolderKanban, Users } from "lucide-react";
 import type { WorkspaceProps } from "../types/workspace.types";
 import { Card } from "../../../shared/components/ui/Card/Card";
+import type { ReactNode } from "react";
 
-const Stats = ({ title, value, children }) => {
+interface StatsProps {
+  title: string;
+  value?: number;
+  children: ReactNode;
+}
+
+const Stats = ({ title, value, children }: StatsProps) => {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-2">

@@ -1,10 +1,10 @@
 import { Card } from "../../../shared/components/ui/Card/Card";
 import { formatDate } from "../../../shared/utils/formateDate";
-import type { Workspace } from "../types/workspace.types";
+import type { Workspace, WorkspaceMemberRole } from "../types/workspace.types";
 
 interface WorkspaceInfoCardProps {
   workspace: Workspace;
-  role: string;
+  role?: WorkspaceMemberRole;
 }
 
 const WorkspaceInfoCard = ({ workspace, role }: WorkspaceInfoCardProps) => {

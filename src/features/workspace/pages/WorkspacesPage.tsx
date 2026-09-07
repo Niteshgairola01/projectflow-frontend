@@ -28,6 +28,10 @@ const WorkspacesPage = () => {
     );
   }
 
+  if (!user) {
+    return null;
+  }
+
   if (!workspaces?.length) {
     return (
       <div className="">

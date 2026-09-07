@@ -41,7 +41,7 @@ const ProjectMemberRoleUpdateModal = ({
   const email = member.user?.email;
 
   const handleClose = () => {
-    onClose && onClose();
+    onClose();
     reset();
   };
 

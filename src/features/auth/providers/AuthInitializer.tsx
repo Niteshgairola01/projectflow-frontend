@@ -24,7 +24,7 @@ export const AuthInitializer = ({ children }: Props) => {
         const meResponse = await authApi.me();
 
         dispatch(setUser(meResponse));
-      } catch (error) {
+      } catch {
         console.log("No active session");
         tokenManager.clearToken();
       } finally {

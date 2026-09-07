@@ -4,7 +4,7 @@ import WorkspaceInvitationList from "../components/WorkspaceInvitationList";
 import { useGetInvitations } from "../../invitation/hooks/useGetInvitations";
 
 const WorkspacePendingInvitationsPage = () => {
-  const { data, isLoading, isError } = useGetInvitations();
+  const { data = [], isLoading, isError } = useGetInvitations();
 
   // UI data only.
   // Replace this with API data later.

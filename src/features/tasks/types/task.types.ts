@@ -1,5 +1,5 @@
-export type TaskStatus = "TODO" | "IN_PROGRESS" | "IN_REVIEW" | "DONE";
-export type TaskPriority = "HIGH" | "MEDIUM" | "LOW";
+export type { TaskPriority, TaskStatus } from "../constants/taskOptions";
+import type { TaskPriority, TaskStatus } from "../constants/taskOptions";
 
 export interface TaskAssignee {
   _id: string;
@@ -15,21 +15,6 @@ export interface Task {
   project: string;
   createdBy: string;
   assignedTo?: TaskAssignee | null;
-  status: TaskStatus;
-  priority: TaskPriority;
-  dueDate?: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface UpdateTask {
-  _id: string;
-  title: string;
-  description?: string;
-  workspace: string;
-  project: string;
-  createdBy: string;
-  assignedTo?: string | null;
   status: TaskStatus;
   priority: TaskPriority;
   dueDate?: string;

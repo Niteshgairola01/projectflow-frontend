@@ -1,4 +1,6 @@
-export type ProjectMemberRole = "PROJECT_ADMIN" | "MEMBER";
+import type { ProjectRole } from "../constants/projectRoles";
+
+export type ProjectMemberRole = ProjectRole;
 
 export interface ProjectMemberUser {
   _id: string;
@@ -8,7 +10,7 @@ export interface ProjectMemberUser {
 }
 
 export interface ProjectMember {
-  _id?: string;
+  _id: string;
   user: ProjectMemberUser;
   role: ProjectMemberRole;
 }
@@ -18,6 +20,6 @@ export interface AddProjectMemberPayload {
   role: ProjectMemberRole;
 }
 
-export interface PropjectMembersResponse {
+export interface ProjectMembersResponse {
   members: ProjectMember[];
 }

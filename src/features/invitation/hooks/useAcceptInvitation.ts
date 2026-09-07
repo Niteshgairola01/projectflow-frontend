@@ -1,6 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { invitationKeys } from "../constants/invitation.keys";
 import { invitaitonApis } from "../api/invitation.api";
+import { queryKeys } from "../../../shared/constants/queryKeys";
+import { useAppSelector } from "../../../shared/hooks/useAppSelector";
 
 interface Variables {
   workspaceId: string;
@@ -9,6 +11,7 @@ interface Variables {
 
 export const useAcceptInvitation = () => {
   const queryClient = useQueryClient();
+  const { user } = useAppSelector((state) => state.auth);
 
   return useMutation({
     mutationFn: ({ workspaceId, token }: Variables) => {
@@ -23,7 +26,7 @@ export const useAcceptInvitation = () => {
       // Accepting an invitation
       // Changes user's workspace membership.
       queryClient.invalidateQueries({
-        queryKey: ["workspaces"],
+        queryKey: queryKeys.workspace.list(user?._id ?? ""),
       });
     },
   });

@@ -1,4 +1,5 @@
 import z from "zod";
+import { TASK_PRIORITIES, TASK_STATUSES } from "../constants/taskOptions";
 
 export const createTaskSchema = z.object({
   title: z
@@ -15,9 +16,9 @@ export const createTaskSchema = z.object({
 
   assignedTo: z.string().optional(),
 
-  status: z.enum(["TODO", "IN_PROGRESS", "IN_REVIEW", "DONE"]).optional(),
+  status: z.enum(Object.values(TASK_STATUSES)).optional(),
 
-  priority: z.enum(["HIGH", "MEDIUM", "LOW"]).optional(),
+  priority: z.enum(Object.values(TASK_PRIORITIES)).optional(),
 
   dueDate: z.string().optional(),
 });

@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import { useProjectMembers } from "../../features/projects/hooks/useProjecMembers";
-import type { ProjectRole } from "../../features/projects/constants/projectRoles";
 import { PROJECT_ROLE_PERMISSIONS } from "../config/projectrolePermissions";
 import { WORKSPACE_ROLE_PERMISSIONS } from "../config/rolePermissions";
 import { PERMISSIONS, type Permission } from "../constants/permissions";
@@ -19,7 +18,7 @@ export const usePermissions = () => {
 
   const projectRole = projectMembers?.find(
     (member) => member.user?._id === user?._id,
-  )?.role as ProjectRole | undefined;
+  )?.role;
 
   const workspacePermissions: readonly Permission[] = workspaceRole
     ? WORKSPACE_ROLE_PERMISSIONS[workspaceRole]

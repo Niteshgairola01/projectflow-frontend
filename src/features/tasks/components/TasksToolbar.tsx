@@ -3,20 +3,18 @@ import { Input } from "../../../shared/components/ui/Input/Input";
 import { Select } from "../../../shared/components/ui/Input/Select";
 import {
   taskAssigStatusOptions,
+  isTaskPriority,
+  isTaskStatus,
   taskPriorityOptions,
   taskStatusOptions,
 } from "../constants/taskOptions";
-import type {
-  TaskFilters,
-  TaskPriority,
-  TaskStatus,
-} from "../types/task.types";
+import type { TaskFilters } from "../types/task.types";
 
 type TaskView = "list" | "kanban";
 
 interface TasksToolbarProps {
   filters: TaskFilters;
-  view: string;
+  view: TaskView;
   onViewChange: (view: TaskView) => void;
   updateFilter: <K extends keyof TaskFilters>(
     key: K,
@@ -62,9 +60,12 @@ const TasksToolbar = ({
           />
           <Select
             value={filters.status}
-            onChange={(e) =>
-              updateFilter("status", e.target.value as TaskStatus | "")
-            }
+            onChange={(e) => {
+              const value = e.target.value;
+              if (value === "" || isTaskStatus(value)) {
+                updateFilter("status", value);
+              }
+            }}
             placeholder="All Status"
             icon={<CheckCircle2 size={14} />}
             options={taskStatusOptions}
@@ -75,9 +76,12 @@ const TasksToolbar = ({
         {/* Priority */}
         <Select
           value={filters.priority}
-          onChange={(e) =>
-            updateFilter("priority", e.target.value as TaskPriority | "")
-          }
+          onChange={(e) => {
+            const value = e.target.value;
+            if (value === "" || isTaskPriority(value)) {
+              updateFilter("priority", value);
+            }
+          }}
           placeholder="All Priority"
           options={taskPriorityOptions}
           className="h-9 w-auto min-w-32.5"
