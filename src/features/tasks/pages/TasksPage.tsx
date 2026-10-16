@@ -42,7 +42,11 @@ const TasksPage = () => {
         !filters.priority || task.priority === filters.priority;
 
       // Assignee
-      const matchesAssignee = !filters.assignee || !task.assignedTo;
+      const matchesAssignee =
+        !filters.assignee ||
+        (filters.assignee === "unassigned"
+          ? !task.assignedTo
+          : task.assignedTo?._id === filters.assignee);
 
       return (
         matchesSearch && matchesStatus && matchesPriority && matchesAssignee
@@ -82,8 +86,12 @@ const TasksPage = () => {
       />
 
       {/* Empty state */}
-      {!tasks?.length ? (
+      {!isLoading && !isError && !tasks.length ? (
         <EmptyTasksState />
+      ) : !isLoading && !isError && !filteredTasks.length ? (
+        <p className="px-6 py-12 text-center text-muted-foreground">
+          No tasks match your filters.
+        </p>
       ) : (
         <>
           {view === "list" ? (
