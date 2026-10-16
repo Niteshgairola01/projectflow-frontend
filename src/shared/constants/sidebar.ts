@@ -1,4 +1,4 @@
-import { LayoutDashboard, FolderKanban, Workflow } from "lucide-react";
+import { FolderKanban, Workflow } from "lucide-react";
 import type React from "react";
 
 export interface SidebarItem {
@@ -9,11 +9,6 @@ export interface SidebarItem {
 }
 
 export const sidebarItems: SidebarItem[] = [
-  {
-    label: "Overview",
-    key: "overview",
-    icon: LayoutDashboard,
-  },
   {
     label: "Workspaces",
     key: "workspaces",
