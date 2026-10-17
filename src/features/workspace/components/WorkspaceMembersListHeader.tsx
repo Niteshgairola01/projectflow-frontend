@@ -1,13 +1,13 @@
-import { Mail, Plus, Search, Users } from "lucide-react";
+import MemberSearch from "../../../shared/components/members/MemberSearch";
+import { Mail, Plus, Users } from "lucide-react";
 import Can from "../../../shared/components/auth/Can";
 import { Button } from "../../../shared/components/ui/Button/Button";
 import { PERMISSIONS } from "../../../shared/constants/permissions";
-import { Input } from "../../../shared/components/ui/Input/Input";
 import CreateInvitationForm from "../../invitation/components/CreateInvitationForm";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-const WorkspaceMembersListHeader = () => {
+const WorkspaceMembersListHeader = ({ search, onSearchChange, total }: { search: string; onSearchChange: (value: string) => void; total: number }) => {
   const [isCreateOpen, setIsCreateOpen] = useState<boolean>(false);
   const navigate = useNavigate();
   const { workspaceId } = useParams();
@@ -19,7 +19,7 @@ const WorkspaceMembersListHeader = () => {
           <Users className="h-5 w-5 shrink-0 text-primary" />
 
           <h2 className="truncate font-semibold text-foreground">
-            Workspace Members
+            Workspace Members ({total})
           </h2>
         </div>
 
@@ -29,11 +29,7 @@ const WorkspaceMembersListHeader = () => {
       </div>
 
       <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center lg:w-auto">
-        <div className="relative w-full sm:min-w-56 sm:flex-1 lg:w-64 lg:flex-none">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-
-          <Input className="w-full pl-9" placeholder="Search members..." />
-        </div>
+        <MemberSearch value={search} onChange={onSearchChange} />
 
         <div className="flex w-full flex-col justify-end gap-2 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center">
           {/* Invitations */}
@@ -47,9 +43,7 @@ const WorkspaceMembersListHeader = () => {
             >
               <Mail size={17} className="shrink-0" />
               <span>Invitations</span>
-              <span className="ml-1 shrink-0 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-700">
-                3
-              </span>
+
             </button>
           </Can>
 

@@ -9,6 +9,7 @@ import {
   taskStatusOptions,
 } from "../constants/taskOptions";
 import type { TaskFilters } from "../types/task.types";
+import { useProjectMembers } from "../../projects/hooks/useProjecMembers";
 
 type TaskView = "list" | "kanban";
 
@@ -30,6 +31,14 @@ const TasksToolbar = ({
   updateFilter,
   clearFilters,
 }: TasksToolbarProps) => {
+  const { data: members = [] } = useProjectMembers();
+  const assigneeOptions = [
+    ...taskAssigStatusOptions,
+    ...members.filter((member) => member.user).map(({ user }) => ({
+      value: user._id,
+      label: `${user.name} (${user.email})`,
+    })),
+  ];
   const hasFilters =
     filters.search || filters.status || filters.priority || filters.assignee;
 
@@ -45,6 +54,7 @@ const TasksToolbar = ({
           />
 
           <Input
+            aria-label="Search tasks"
             value={filters.search}
             onChange={(e) => updateFilter("search", e.target.value)}
             placeholder="Search tasks..."
@@ -59,6 +69,7 @@ const TasksToolbar = ({
             className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
           />
           <Select
+            aria-label="Filter by status"
             value={filters.status}
             onChange={(e) => {
               const value = e.target.value;
@@ -75,6 +86,7 @@ const TasksToolbar = ({
 
         {/* Priority */}
         <Select
+          aria-label="Filter by priority"
           value={filters.priority}
           onChange={(e) => {
             const value = e.target.value;
@@ -88,10 +100,11 @@ const TasksToolbar = ({
         />
         {/* Assignee */}
         <Select
+          aria-label="Filter by assignee"
           value={filters.assignee}
           onChange={(e) => updateFilter("assignee", e.target.value)}
-          placeholder="All Assignees"
-          options={taskAssigStatusOptions}
+          placeholder="Anyone"
+          options={assigneeOptions}
           className="h-9 w-auto min-w-35"
         />
 

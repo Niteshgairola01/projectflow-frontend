@@ -1,10 +1,10 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import EmptyTasksState from "../components/EmptyTasksState";
 import TaskKanban from "../components/TaskKanban";
 import TaskList from "../components/TaskList";
 import TasksHeader from "../components/TasksHeader";
 import TasksToolbar from "../components/TasksToolbar";
-import { useProjectTasks } from "../hooks/useProjectTasks";
+import { useFilteredProjectTasks } from "../hooks/useProjectTasks";
 import type { TaskFilters } from "../types/task.types";
 
 const TasksPage = () => {
@@ -16,43 +16,9 @@ const TasksPage = () => {
     assignee: "",
   });
 
-  const { data: tasks = [], isLoading, isError } = useProjectTasks();
-
-  const filteredTasks = useMemo(() => {
-    const isObjectEmpty = Object.values(filters).every(
-      (value) => value.trim() === "",
-    );
-
-    if (isObjectEmpty) return tasks;
-
-    return tasks.filter((task) => {
-      // Search
-      const search = filters.search.trim().toLowerCase();
-
-      const matchesSearch =
-        !search ||
-        task.title.toLowerCase().includes(search) ||
-        task.description?.toLowerCase().includes(search);
-
-      // Status
-      const matchesStatus = !filters.status || task.status === filters.status;
-
-      // Priority
-      const matchesPriority =
-        !filters.priority || task.priority === filters.priority;
-
-      // Assignee
-      const matchesAssignee =
-        !filters.assignee ||
-        (filters.assignee === "unassigned"
-          ? !task.assignedTo
-          : task.assignedTo?._id === filters.assignee);
-
-      return (
-        matchesSearch && matchesStatus && matchesPriority && matchesAssignee
-      );
-    });
-  }, [tasks, filters]);
+  const { data, isLoading, isError } = useFilteredProjectTasks(filters);
+  const tasks = data?.tasks ?? [];
+  const total = data?.total ?? 0;
 
   const updateFilter = <K extends keyof TaskFilters>(
     key: K,
@@ -76,7 +42,7 @@ const TasksPage = () => {
   return (
     <div className="rounded-2xl border bg-card space-y-6">
       {/* Header */}
-      <TasksHeader taskCount={tasks?.length || 0} />
+      <TasksHeader taskCount={total} />
       <TasksToolbar
         filters={filters}
         view={view}
@@ -85,25 +51,31 @@ const TasksPage = () => {
         clearFilters={clearFilters}
       />
 
-      {/* Empty state */}
-      {!isLoading && !isError && !tasks.length ? (
-        <EmptyTasksState />
-      ) : !isLoading && !isError && !filteredTasks.length ? (
-        <p className="px-6 py-12 text-center text-muted-foreground">
-          No tasks match your filters.
+      {!isLoading && !isError && (
+        <p aria-live="polite" className="px-6 text-sm text-muted-foreground">
+          Showing {tasks.length} of {total} tasks
         </p>
+      )}
+      {/* Empty state */}
+      {!isLoading && !isError && !total ? (
+        <EmptyTasksState />
+      ) : !isLoading && !isError && !tasks.length ? (
+        <div className="px-6 py-12 text-center text-muted-foreground">
+          <p>No tasks match your filters.</p>
+          <button type="button" onClick={clearFilters} className="mt-3 text-primary">Clear filters</button>
+        </div>
       ) : (
         <>
           {view === "list" ? (
             <TaskList
-              tasks={filteredTasks}
+              tasks={tasks}
               isLoading={isLoading}
               isError={isError}
             />
           ) : (
             // <TaskList />
             <TaskKanban
-              tasks={filteredTasks}
+              tasks={tasks}
               isLoading={isLoading}
               isError={isError}
             />

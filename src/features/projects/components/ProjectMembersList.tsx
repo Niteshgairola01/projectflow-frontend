@@ -1,3 +1,8 @@
+import { projectMemberKeys } from "../constants/projectMember..keys";
+import type { ProjectMember } from "../types/projectMember.types";
+import { useMemberList } from "../../../shared/hooks/useMemberList";
+import MemberPagination from "../../../shared/components/members/MemberPagination";
+import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { Users } from "lucide-react";
 
@@ -21,7 +26,10 @@ const ProjectMembersList = ({ workspaceMembers }: ProjectMembersListProps) => {
   );
   const { user: loggedInUser } = useAppSelector((state) => state.auth);
 
-  const { data: projectMembers = [], isLoading } = useProjectMembers();
+  const { data: projectMembers = [], isLoading, isError } = useProjectMembers();
+
+  const { workspaceId, projectId } = useParams();
+  const list = useMemberList<ProjectMember>(`/workspaces/${workspaceId}/projects/${projectId}/members`, projectMemberKeys.list(workspaceId ?? "", projectId ?? ""));
 
   if (isLoading) {
     return (
@@ -30,6 +38,8 @@ const ProjectMembersList = ({ workspaceMembers }: ProjectMembersListProps) => {
       </Card>
     );
   }
+
+  if (isError) return <Card className="p-6">Failed to load project members. Please try again.</Card>;
 
   const loggedInUserRole =
     workspaceMembers.find((member) => member.user?._id === loggedInUser?._id)
@@ -50,6 +60,8 @@ const ProjectMembersList = ({ workspaceMembers }: ProjectMembersListProps) => {
       <ProjectMembersHeader
         workspaceMembers={workspaceMembers}
         projectMembers={projectMembers}
+        search={list.search}
+        onSearchChange={list.setSearch}
       />
 
       <div className="w-full overflow-x-auto">
@@ -71,7 +83,7 @@ const ProjectMembersList = ({ workspaceMembers }: ProjectMembersListProps) => {
           </thead>
 
           <tbody className="divide-y">
-            {projectMembers.map((member) => (
+            {!list.isLoading && !list.isError && list.members.map((member) => (
               <ProjectMembersListItem
                 key={member.user._id}
                 member={member}
@@ -84,31 +96,27 @@ const ProjectMembersList = ({ workspaceMembers }: ProjectMembersListProps) => {
           </tbody>
         </table>
 
-        {projectMembers.length === 0 && (
+        {list.isLoading && <p className="p-6">Loading members…</p>}
+        {list.isError && <p className="p-6">Failed to load members. Please try again.</p>}
+        {!list.isLoading && !list.isError && list.total === 0 && (
           <div className="flex flex-col items-center justify-center px-6 py-12 text-center">
             <div className="flex h-11 w-11 items-center justify-center rounded-full bg-muted">
               <Users className="h-5 w-5 text-muted-foreground" />
             </div>
 
             <h3 className="mt-4 text-sm font-semibold text-foreground">
-              No project members
+              {projectMembers.length ? "No members match your search" : "No project members"}
             </h3>
 
             <p className="mt-1 text-sm text-muted-foreground">
-              Add workspace members to start collaborating on this project.
+              {projectMembers.length ? "Try a different name or email, or clear your search." : "Add workspace members to start collaborating on this project."}
             </p>
           </div>
         )}
       </div>
 
-      {projectMembers.length > 0 && (
-        <div className="border-t bg-muted/20 px-4 py-3 sm:px-6">
-          <p className="text-sm text-muted-foreground">
-            {projectMembers.length}{" "}
-            {projectMembers.length === 1 ? "member" : "members"}
-          </p>
-        </div>
-      )}
+      {!list.isLoading && !list.isError && <MemberPagination {...list} onPageChange={list.setPage} />}
+
     </Card>
   );
 };

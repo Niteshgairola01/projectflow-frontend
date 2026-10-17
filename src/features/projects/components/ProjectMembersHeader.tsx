@@ -1,7 +1,7 @@
+import MemberSearch from "../../../shared/components/members/MemberSearch";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { Plus, Search, Users } from "lucide-react";
-import { Input } from "../../../shared/components/ui/Input/Input";
+import { Plus, Users } from "lucide-react";
 import { Button } from "../../../shared/components/ui/Button/Button";
 import AddProjectMemberForm from "./AddMemberForm";
 import type { WorkspaceMember } from "../../workspace/types/workspace.types";
@@ -10,6 +10,8 @@ import Can from "../../../shared/components/auth/Can";
 import { PERMISSIONS } from "../../../shared/constants/permissions";
 
 interface ProjectMembersHeaderProps {
+  search: string;
+  onSearchChange: (value: string) => void;
   workspaceMembers: WorkspaceMember[];
   projectMembers: ProjectMember[];
 }
@@ -17,6 +19,8 @@ interface ProjectMembersHeaderProps {
 const ProjectMembersHeader = ({
   workspaceMembers,
   projectMembers,
+  search,
+  onSearchChange,
 }: ProjectMembersHeaderProps) => {
   const [isAddOpen, setIsAddOpen] = useState(false);
   const { workspaceId, projectId } = useParams();
@@ -27,7 +31,7 @@ const ProjectMembersHeader = ({
         <div className="flex items-center gap-2">
           <Users className="h-5 w-5 text-primary" />
 
-          <h2 className="font-semibold text-foreground">Project Members</h2>
+          <h2 className="font-semibold text-foreground">Project Members ({projectMembers.length})</h2>
         </div>
 
         <p className="mt-1 text-sm text-muted-foreground">
@@ -36,11 +40,7 @@ const ProjectMembersHeader = ({
       </div>
 
       <div className="flex w-full flex-col gap-3 sm:flex-row lg:w-auto">
-        <div className="relative w-full sm:w-64">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-
-          <Input className="w-full pl-9" placeholder="Search members..." />
-        </div>
+        <MemberSearch value={search} onChange={onSearchChange} />
 
         <Can permission={PERMISSIONS.ADD_MEMBER_TO_PROJECT}>
           <Button
