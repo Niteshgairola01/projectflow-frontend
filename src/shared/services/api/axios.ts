@@ -10,7 +10,8 @@ interface RetryableRequestConfig extends InternalAxiosRequestConfig {
 }
 
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
+  // Vercel proxies production API calls so refresh cookies stay first-party.
+  baseURL: import.meta.env.PROD ? "/api/v1" : import.meta.env.VITE_API_BASE_URL,
   withCredentials: true,
 });
 
