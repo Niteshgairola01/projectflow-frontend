@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { AuthShowcase } from "./AuthShowcase";
 import { Logo } from "../../../shared/components/ui/Logo/Logo";
 
 interface Props {
@@ -24,32 +25,8 @@ export function AuthLayout({ children, title, subtitle }: Props) {
         </div>
       </div>
 
-      <div className=" hidden lg:flex flex-1 items-center justify-center bg-linear-to-br from-[#6C63FF] to-[#4F46E5] p-12">
-        <div className="max-w-lg text-white">
-          <h2 className="text-5xl font-bold leading-tight">
-            Plan.
-            <br />
-            Collaborate.
-            <br />
-            Deliver.
-          </h2>
+      <AuthShowcase />
 
-          <p className="mt-6 text-lg text-white/80">
-            The all-in-one project management platform for modern teams.
-          </p>
-
-          <div className="mt-12 rounded-2xl bg-white/10 p-6 backdrop-blur">
-            <div className="grid grid-cols-3 gap-3">
-              <div className="h-16 rounded bg-white/20" />
-              <div className="h-16 rounded bg-white/20" />
-              <div className="h-16 rounded bg-white/20" />
-              <div className="h-16 rounded bg-white/20" />
-              <div className="h-16 rounded bg-white/20" />
-              <div className="h-16 rounded bg-white/20" />
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

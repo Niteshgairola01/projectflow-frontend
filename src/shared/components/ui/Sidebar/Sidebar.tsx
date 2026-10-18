@@ -1,3 +1,4 @@
+import { Logo } from "../Logo/Logo";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { ROUTES } from "../../../constants/routes";
 import { useAppSelector } from "../../../hooks/useAppSelector";
@@ -57,7 +58,7 @@ const Sidebar = () => {
     <aside className="flex h-full w-64 flex-col border-r bg-card">
       {/* Logo / Brand */}
       <div className="flex h-16 items-center border-b px-6">
-        <h1 className="text-xl font-bold text-primary">ProjectFlow</h1>
+        <Logo />
       </div>
 
       {/* Navigation */}
