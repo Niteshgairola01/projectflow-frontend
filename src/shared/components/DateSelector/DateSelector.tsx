@@ -1,7 +1,8 @@
 import { CalendarDays, X } from "lucide-react";
 import { DayPicker } from "@daypicker/react";
 import "@daypicker/react/style.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 interface DatePickerProps {
   value: Date | null;
@@ -84,6 +85,47 @@ const DateSelector = ({
 
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const calendarRef = useRef<HTMLDivElement>(null);
+  const [calendarHost, setCalendarHost] = useState<HTMLElement | null>(null);
+
+  useLayoutEffect(() => {
+    if (!open || disabled) return;
+
+    const host = containerRef.current?.closest<HTMLElement>("[data-modal-card]");
+    // Render modal calendars directly inside the card, outside its scrolling body.
+    setCalendarHost(host ?? null);
+
+    const positionCalendar = () => {
+      const calendar = calendarRef.current;
+      const anchor = inputRef.current?.getBoundingClientRect();
+      if (!host || !calendar || !anchor) return;
+
+      const bounds = host.getBoundingClientRect();
+      const inset = 12;
+      const gap = 8;
+      const below = Math.max(0, bounds.bottom - anchor.bottom - gap - inset);
+      const above = Math.max(0, anchor.top - bounds.top - gap - inset);
+      const height = calendar.scrollHeight;
+      const openAbove = below < height && above > below;
+      const available = openAbove ? above : below;
+
+      calendar.style.maxWidth = `${Math.max(0, host.clientWidth - inset * 2)}px`;
+      calendar.style.maxHeight = `${available}px`;
+      calendar.style.left = `${Math.max(inset, Math.min(anchor.right - bounds.left - calendar.offsetWidth, host.clientWidth - calendar.offsetWidth - inset))}px`;
+      calendar.style.top = `${openAbove ? anchor.top - bounds.top - gap - Math.min(height, available) : anchor.bottom - bounds.top + gap}px`;
+    };
+
+    positionCalendar();
+    window.addEventListener("resize", positionCalendar);
+    window.addEventListener("scroll", positionCalendar, true);
+    const observer = new ResizeObserver(positionCalendar);
+    if (host) observer.observe(host);
+    return () => {
+      window.removeEventListener("resize", positionCalendar);
+      window.removeEventListener("scroll", positionCalendar, true);
+      observer.disconnect();
+    };
+  }, [open, disabled, calendarHost]);
 
   // Keep input in sync when value changes externally
   useEffect(() => {
@@ -97,7 +139,8 @@ const DateSelector = ({
     const handleClickOutside = (event: MouseEvent) => {
       if (
         containerRef.current &&
-        !containerRef.current.contains(event.target as Node)
+        !containerRef.current.contains(event.target as Node) &&
+        !calendarRef.current?.contains(event.target as Node)
       ) {
         setOpen(false);
       }
@@ -115,10 +158,10 @@ const DateSelector = ({
 
     onChange(selectedDate);
     setInputValue(formatDate(selectedDate));
-    setOpen(false);
 
-    // Optional: keep focus on input
+    // Focus first because the input's focus handler opens the calendar.
     inputRef.current?.focus();
+    setOpen(false);
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -209,6 +252,25 @@ const DateSelector = ({
     inputRef.current?.focus();
   };
 
+  const calendar = (
+    <div
+      ref={calendarRef}
+      className={calendarHost
+        ? "absolute z-50 w-max overflow-auto overscroll-contain rounded-xl border bg-background p-3 shadow-lg"
+        : "absolute right-0 top-full z-50 mt-2 w-max max-w-[calc(100vw-4.5rem)] overflow-auto rounded-xl border bg-background p-3 shadow-lg"}
+    >
+      <DayPicker
+        mode="single"
+        selected={value ?? undefined}
+        onSelect={handleSelect}
+        disabled={[
+          ...(minDate ? [{ before: minDate }] : []),
+          ...(maxDate ? [{ after: maxDate }] : []),
+        ]}
+      />
+    </div>
+  );
+
   return (
     <div ref={containerRef} className="relative">
       {/* Label */}
@@ -267,17 +329,7 @@ const DateSelector = ({
 
       {/* Calendar popover */}
       {open && !disabled && (
-        <div className="absolute left-0 top-full z-50 mt-2 rounded-xl border bg-background p-3 shadow-lg">
-          <DayPicker
-            mode="single"
-            selected={value ?? undefined}
-            onSelect={handleSelect}
-            disabled={[
-              ...(minDate ? [{ before: minDate }] : []),
-              ...(maxDate ? [{ after: maxDate }] : []),
-            ]}
-          />
-        </div>
+        calendarHost ? createPortal(calendar, calendarHost) : calendar
       )}
 
       {/* Error */}
