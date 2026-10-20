@@ -13,14 +13,14 @@ export const Textarea = forwardRef<HTMLTextAreaElement, Props>(
     return (
       <div className="min-w-0 space-y-1">
         {label && (
-          <label className="text-sm font-medium text-gray-700">{label}</label>
+          <label className="text-sm font-medium text-foreground">{label}</label>
         )}
 
         <textarea
           ref={ref}
           {...props}
           className={clsx(
-            "min-h-24 w-full rounded-lg border px-3 py-2 outline-none focus:ring-2 focus:ring-primary/20",
+            "min-h-24 w-full rounded-lg border bg-background px-3 text-foreground placeholder:text-muted-foreground py-2 outline-none focus:ring-2 focus:ring-primary/20",
             className
           )}
         />

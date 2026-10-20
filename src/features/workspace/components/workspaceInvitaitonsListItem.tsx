@@ -15,19 +15,19 @@ interface WorkspaceInvitaitonsListItemProps {
 
 const invitationStatusStyles = {
   PENDING: {
-    badge: "bg-amber-50 text-amber-700 ring-amber-600/10",
+    badge: "bg-amber-50 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300 ring-amber-600/10",
     dot: "bg-amber-500",
   },
   ACCEPTED: {
-    badge: "bg-emerald-50 text-emerald-700 ring-emerald-600/10",
+    badge: "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300 ring-emerald-600/10",
     dot: "bg-emerald-500",
   },
   EXPIRED: {
-    badge: "bg-slate-100 text-slate-600 ring-slate-500/10",
+    badge: "bg-slate-100 text-slate-600 dark:bg-muted dark:text-muted-foreground ring-slate-500/10",
     dot: "bg-slate-400",
   },
   CANCELLED: {
-    badge: "bg-red-50 text-red-700 ring-red-600/10",
+    badge: "bg-red-50 text-red-700 dark:bg-red-500/15 dark:text-red-300 ring-red-600/10",
     dot: "bg-red-500",
   },
 };

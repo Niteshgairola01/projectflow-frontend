@@ -1,4 +1,5 @@
 import { Sparkles } from "lucide-react";
+import ThemeToggle from "../../../shared/components/ui/ThemeToggle/ThemeToggle";
 
 import { Card } from "../../../shared/components/ui/Card/Card";
 import { useGetInvitationByToken } from "../hooks/useGetInvitationByToken";
@@ -40,6 +41,7 @@ const InvitationPage = () => {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-background px-4 py-10">
+      <div className="absolute right-4 top-4 z-10"><ThemeToggle /></div>
       {/* Decorative background */}
 
       <div className="pointer-events-none absolute inset-0">

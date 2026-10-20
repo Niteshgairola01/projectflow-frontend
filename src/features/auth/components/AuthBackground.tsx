@@ -1,9 +1,9 @@
 export function AuthBackground() {
   return (
     <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-      <div className="absolute inset-0 bg-linear-to-br from-violet-100 via-slate-50 to-indigo-100" />
-      <div className="absolute -left-32 -top-24 size-96 rounded-full bg-violet-300/35 blur-3xl" />
-      <div className="absolute -bottom-24 -right-32 size-96 rounded-full bg-indigo-300/30 blur-3xl" />
+      <div className="absolute inset-0 bg-linear-to-br from-violet-100 via-slate-50 to-indigo-100 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950" />
+      <div className="absolute -left-32 -top-24 size-96 rounded-full bg-violet-300/35 blur-3xl dark:bg-violet-500/15" />
+      <div className="absolute -bottom-24 -right-32 size-96 rounded-full bg-indigo-300/30 blur-3xl dark:bg-indigo-500/15" />
       <div className="absolute inset-0 opacity-40 [background-image:radial-gradient(#a5a0da_1px,transparent_1px)] [background-size:24px_24px] [mask-image:linear-gradient(to_bottom,black,transparent_45%,black)]" />
 
       <svg className="absolute -right-12 top-8 h-56 w-64 text-violet-400/35 sm:right-8 sm:top-12" viewBox="0 0 256 224" fill="none">

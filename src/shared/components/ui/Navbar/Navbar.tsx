@@ -9,6 +9,7 @@ import { setUser } from "../../../../features/auth/store/authSlice";
 
 import { useAppSelector } from "../../../hooks/useAppSelector";
 import { tokenManager } from "../../../services/auth/tokenManager";
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
 
 interface NavbarProps {
   onToggleSidebar: () => void;
@@ -33,19 +34,20 @@ const Navbar = ({ onToggleSidebar, sidebarOpen }: NavbarProps) => {
   };
 
   return (
-    <header className="flex h-16 shrink-0 items-center justify-between gap-2 border-b border-gray-200 bg-card px-3 sm:px-6">
+    <header className="flex h-16 shrink-0 items-center justify-between gap-2 border-b bg-card px-3 sm:px-6">
       {/* Left */}
 
       <div className="flex min-w-0 items-center gap-2 sm:gap-4">
         <button type="button" onClick={onToggleSidebar} aria-label="Open navigation menu" aria-expanded={sidebarOpen} aria-controls={sidebarOpen ? "mobile-sidebar" : undefined} className="flex size-10 shrink-0 items-center justify-center rounded-lg hover:bg-muted lg:hidden">
           <Menu size={22} />
         </button>
-        <h1 className="font-semibold">ProjectFlow</h1>
+        <h1 className="truncate text-sm font-semibold sm:text-base">ProjectFlow</h1>
       </div>
 
       {/* Right */}
 
-      <div className="flex shrink-0 items-center gap-2 sm:gap-4">
+      <div className="flex shrink-0 items-center gap-1 sm:gap-4">
+        <ThemeToggle />
         <button
           type="button"
           disabled={isPending}

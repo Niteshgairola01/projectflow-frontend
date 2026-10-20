@@ -17,13 +17,13 @@ const ProjectInfoCard = ({ project }: ProjectInfoCardProps) => {
       label: "Start Date",
       value: project.startDate ? formatDate(project.startDate) : "Not set",
       icon: CalendarDays,
-      iconClass: "bg-blue-100 text-blue-600",
+      iconClass: "bg-blue-100 text-blue-600 dark:bg-blue-500/15 dark:text-blue-300",
     },
     {
       label: "End Date",
       value: project.endDate ? formatDate(project.endDate) : "No deadline",
       icon: CalendarCheck2,
-      iconClass: "bg-amber-100 text-amber-600",
+      iconClass: "bg-amber-100 text-amber-600 dark:bg-amber-500/15 dark:text-amber-300",
     },
     {
       label: "Created By",
@@ -35,7 +35,7 @@ const ProjectInfoCard = ({ project }: ProjectInfoCardProps) => {
       label: "Created At",
       value: project.createdAt ? formatDate(project.createdAt) : "Unknown",
       icon: Clock3,
-      iconClass: "bg-emerald-100 text-emerald-600",
+      iconClass: "bg-emerald-100 text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-300",
     },
   ];
 

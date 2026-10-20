@@ -3,10 +3,12 @@ import { ArrowLeft, CircleAlert, MailX, ShieldCheck } from "lucide-react";
 import { Button } from "../../../shared/components/ui/Button/Button";
 import { Card } from "../../../shared/components/ui/Card/Card";
 import { Link } from "react-router-dom";
+import ThemeToggle from "../../../shared/components/ui/ThemeToggle/ThemeToggle";
 
 const InvitationNotFound = () => {
   return (
     <div className="relative min-h-screen overflow-hidden bg-background px-4 py-10">
+      <div className="absolute right-4 top-4 z-10"><ThemeToggle /></div>
       {/* Decorative Background */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-1/2 top-[-180px] h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-primary/10 blur-3xl" />

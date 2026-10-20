@@ -17,7 +17,7 @@ const WorkspaceInvitationPageSummarySection = ({
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       <Card className="bg-card p-5">
         <div className="flex items-center gap-4">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-amber-50 text-amber-600">
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-amber-50 text-amber-600 dark:bg-amber-500/15 dark:text-amber-300">
             <Mail className="h-5 w-5" />
           </div>
 

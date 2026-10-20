@@ -19,7 +19,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
     return (
       <div className="min-w-0 max-w-full space-y-1">
         {label && (
-          <label className="text-sm font-medium text-gray-700">{label}</label>
+          <label className="text-sm font-medium text-foreground">{label}</label>
         )}
 
         <div className="relative">
@@ -45,7 +45,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
               <option
                 key={option.value}
                 value={option.value}
-                className="bg-white cursor-pointer py-2 border-b"
+                className="bg-card cursor-pointer py-2 border-b"
               >
                 {option.label}
               </option>
