@@ -24,7 +24,7 @@ const WorkspaceInfoCard = ({ workspace, role }: WorkspaceInfoCardProps) => {
         <div>
           <p className="text-sm text-muted-foreground">Your Role</p>
 
-          <span className="mt-1 inline-flex rounded-lg bg-indigo-100 px-3 py-1 text-sm font-medium text-indigo-700">
+          <span className="mt-1 inline-flex rounded-lg bg-indigo-100 px-3 py-1 text-sm font-medium text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-300">
             {role}
           </span>
         </div>

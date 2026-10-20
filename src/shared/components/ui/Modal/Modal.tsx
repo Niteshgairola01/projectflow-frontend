@@ -14,7 +14,7 @@ const Modal = ({ title, description, open, onClose, children }: ModalProps) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-3 backdrop-blur-sm sm:p-6">
-      <div data-modal-card className="relative flex max-h-[calc(100dvh-1.5rem)] w-full max-w-lg flex-col overflow-hidden rounded-3xl border bg-white shadow-xl sm:max-h-[calc(100dvh-3rem)]">
+      <div data-modal-card className="relative flex max-h-[calc(100dvh-1.5rem)] w-full max-w-lg flex-col overflow-hidden rounded-3xl border bg-card text-card-foreground shadow-xl sm:max-h-[calc(100dvh-3rem)]">
         <div className="flex shrink-0 items-start justify-between gap-3 border-b p-4 sm:p-6">
           <div className="min-w-0 [overflow-wrap:anywhere]">
             <h2 className="text-xl font-semibold">{title}</h2>

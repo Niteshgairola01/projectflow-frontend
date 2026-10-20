@@ -50,13 +50,13 @@ const TaskListItem = ({ task }: TaskListItemProps) => {
         return "bg-muted text-muted-foreground";
 
       case "IN_PROGRESS":
-        return "bg-blue-100 text-blue-700";
+        return "bg-blue-100 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300";
 
       case "IN_REVIEW":
-        return "bg-purple-100 text-purple-700";
+        return "bg-purple-100 text-purple-700 dark:bg-purple-500/15 dark:text-purple-300";
 
       case "DONE":
-        return "bg-green-100 text-green-700";
+        return "bg-green-100 text-green-700 dark:bg-green-500/15 dark:text-green-300";
 
       default:
         return "bg-muted text-muted-foreground";
@@ -66,13 +66,13 @@ const TaskListItem = ({ task }: TaskListItemProps) => {
   const getPriorityStyles = (priority: Task["priority"]) => {
     switch (priority) {
       case "HIGH":
-        return "bg-red-100 text-red-700";
+        return "bg-red-100 text-red-700 dark:bg-red-500/15 dark:text-red-300";
 
       case "MEDIUM":
-        return "bg-yellow-100 text-yellow-700";
+        return "bg-yellow-100 text-yellow-700 dark:bg-yellow-500/15 dark:text-yellow-300";
 
       case "LOW":
-        return "bg-green-100 text-green-700";
+        return "bg-green-100 text-green-700 dark:bg-green-500/15 dark:text-green-300";
 
       default:
         return "bg-muted text-muted-foreground";

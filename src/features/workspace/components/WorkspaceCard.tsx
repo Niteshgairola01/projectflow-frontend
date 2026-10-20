@@ -9,9 +9,9 @@ interface WorkspaceCardProps {
 }
 
 const roleStyles = {
-  Owner: "bg-indigo-100 text-indigo-700",
-  Admin: "bg-emerald-100 text-emerald-700",
-  Member: "bg-slate-100 text-slate-700",
+  Owner: "bg-indigo-100 text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-300",
+  Admin: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300",
+  Member: "bg-slate-100 text-slate-700 dark:bg-muted dark:text-muted-foreground",
 };
 
 const WorkspaceCard = ({ name, members, role, color }: WorkspaceCardProps) => {

@@ -3,8 +3,8 @@ import type { WorkspaceMemberRole } from "../types/workspace.types";
 const WorkspaceMemberBadge = ({ role }: { role: WorkspaceMemberRole }) => {
   const roleStyles: Record<WorkspaceMemberRole, string> = {
     OWNER: "bg-violet-50 text-violet-700 ring-violet-600/10",
-    ADMIN: "bg-blue-50 text-blue-700 ring-blue-600/10",
-    MEMBER: "bg-slate-100 text-slate-700 ring-slate-600/10",
+    ADMIN: "bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300 ring-blue-600/10",
+    MEMBER: "bg-slate-100 text-slate-700 dark:bg-muted dark:text-muted-foreground ring-slate-600/10",
   };
 
   const roleLabels: Record<WorkspaceMemberRole, string> = {

@@ -58,7 +58,7 @@ const RegisterForm = () => {
       {/* Password */}
 
       <div>
-        <label className="mb-1 block text-sm font-medium text-slate-700">
+        <label className="mb-1 block text-sm font-medium text-foreground">
           Password
         </label>
 
@@ -72,7 +72,8 @@ const RegisterForm = () => {
               w-full
               rounded-lg
               border
-              border-slate-200
+              border-border
+              bg-background
               px-3
               pr-10
               text-sm
@@ -90,7 +91,7 @@ const RegisterForm = () => {
               right-3
               top-1/2
               -translate-y-1/2
-              text-slate-400
+              text-muted-foreground
             "
           >
             {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -112,11 +113,11 @@ const RegisterForm = () => {
 
       <div className="relative py-2">
         <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-slate-200" />
+          <div className="w-full border-t border-border" />
         </div>
 
         <div className="relative flex justify-center">
-          <span className="bg-white px-3 text-xs text-slate-500">
+          <span className="bg-card px-3 text-xs text-muted-foreground">
             OR REGISTER WITH
           </span>
         </div>
@@ -135,10 +136,10 @@ const RegisterForm = () => {
             gap-2
             rounded-lg
             border
-            border-slate-200
+            border-border
             text-sm
             font-medium
-            hover:bg-slate-50
+            hover:bg-muted
           "
         >
           Google
@@ -154,10 +155,10 @@ const RegisterForm = () => {
             gap-2
             rounded-lg
             border
-            border-slate-200
+            border-border
             text-sm
             font-medium
-            hover:bg-slate-50
+            hover:bg-muted
           "
         >
           GitHub
@@ -166,7 +167,7 @@ const RegisterForm = () => {
 
       {/* Login */}
 
-      <p className="text-center text-sm text-slate-500">
+      <p className="text-center text-sm text-muted-foreground">
         Already have an account?{" "}
         <Link
           to="/login"

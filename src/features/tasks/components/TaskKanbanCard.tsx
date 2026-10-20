@@ -30,13 +30,13 @@ const TaskKanbanCard = ({
   const getPriorityStyles = (priority: Task["priority"]) => {
     switch (priority) {
       case "HIGH":
-        return "bg-red-100 text-red-700";
+        return "bg-red-100 text-red-700 dark:bg-red-500/15 dark:text-red-300";
 
       case "MEDIUM":
-        return "bg-yellow-100 text-yellow-700";
+        return "bg-yellow-100 text-yellow-700 dark:bg-yellow-500/15 dark:text-yellow-300";
 
       case "LOW":
-        return "bg-green-100 text-green-700";
+        return "bg-green-100 text-green-700 dark:bg-green-500/15 dark:text-green-300";
 
       default:
         return "bg-muted text-muted-foreground";

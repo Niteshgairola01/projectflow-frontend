@@ -31,25 +31,25 @@ const ProjectStatsCard = () => {
       label: "To Do",
       value: todo,
       icon: CircleDashed,
-      iconClass: "bg-slate-100 text-slate-600",
+      iconClass: "bg-slate-100 text-slate-600 dark:bg-muted dark:text-muted-foreground",
     },
     {
       label: "In Progress",
       value: inProgress,
       icon: Clock3,
-      iconClass: "bg-blue-100 text-blue-600",
+      iconClass: "bg-blue-100 text-blue-600 dark:bg-blue-500/15 dark:text-blue-300",
     },
     {
       label: "In Review",
       value: inReview,
       icon: TrendingUp,
-      iconClass: "bg-amber-100 text-amber-600",
+      iconClass: "bg-amber-100 text-amber-600 dark:bg-amber-500/15 dark:text-amber-300",
     },
     {
       label: "Completed",
       value: completed,
       icon: CheckCircle2,
-      iconClass: "bg-emerald-100 text-emerald-600",
+      iconClass: "bg-emerald-100 text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-300",
     },
   ];
 

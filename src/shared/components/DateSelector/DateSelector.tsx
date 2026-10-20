@@ -274,7 +274,7 @@ const DateSelector = ({
   return (
     <div ref={containerRef} className="relative">
       {/* Label */}
-      <label className="text-sm font-medium text-gray-700">{label}</label>
+      <label className="text-sm font-medium text-foreground">{label}</label>
 
       {/* Date input */}
       <div
