@@ -1,4 +1,5 @@
-import { createBrowserRouter, Link, Navigate } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
+import NotFoundPage from "../pages/NotFoundPage";
 import LoginPage from "../../features/auth/pages/LoginPage";
 import RegisterPage from "../../features/auth/pages/RegisterPage";
 import { ProtectedRoute } from "./ProtectedRoute";
@@ -26,15 +27,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: (
-      <main className="flex min-h-screen flex-col items-center justify-center gap-4 bg-background p-6 text-center">
-        <h1 className="text-3xl font-bold">Page not found</h1>
-        <p className="text-muted-foreground">The page you’re looking for doesn’t exist.</p>
-        <Link to={ROUTES.HOME} className="rounded-xl bg-primary px-4 py-2 text-white">
-          Go to ProjectFlow
-        </Link>
-      </main>
-    ),
+    element: <NotFoundPage />,
   },
   {
     path: ROUTES.LOGIN,
