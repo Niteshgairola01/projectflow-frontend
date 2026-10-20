@@ -17,7 +17,7 @@ interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(
   ({ label, error, options, placeholder, icon, className, ...props }, ref) => {
     return (
-      <div className="space-y-1">
+      <div className="min-w-0 max-w-full space-y-1">
         {label && (
           <label className="text-sm font-medium text-gray-700">{label}</label>
         )}
@@ -33,7 +33,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             ref={ref}
             {...props}
             className={clsx(
-              `h-11 w-full appearance-none rounded-lg border bg-background px-3 pr-9 text-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50`,
+              `h-11 w-full min-w-0 max-w-full appearance-none rounded-lg border bg-background px-3 pr-9 text-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50`,
               icon && "pl-9",
               error && "border-red-500 focus:border-red-500",
               className

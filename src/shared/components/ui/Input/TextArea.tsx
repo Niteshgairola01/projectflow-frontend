@@ -11,7 +11,7 @@ interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
 export const Textarea = forwardRef<HTMLTextAreaElement, Props>(
   ({ label, error, className, ...props }, ref) => {
     return (
-      <div className="space-y-1">
+      <div className="min-w-0 space-y-1">
         {label && (
           <label className="text-sm font-medium text-gray-700">{label}</label>
         )}

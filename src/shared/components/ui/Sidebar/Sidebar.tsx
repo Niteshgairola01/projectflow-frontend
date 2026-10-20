@@ -55,14 +55,14 @@ const Sidebar = () => {
   };
 
   return (
-    <aside className="flex h-full w-64 flex-col border-r bg-card">
+    <aside className="flex h-full w-full min-w-0 flex-col border-r bg-card">
       {/* Logo / Brand */}
-      <div className="flex h-16 items-center border-b px-6">
+      <div className="flex h-16 shrink-0 items-center border-b px-6 pr-14 lg:pr-6">
         <Logo />
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto space-y-1 p-4">
+      <nav aria-label="Main navigation" className="min-h-0 flex-1 overflow-y-auto space-y-1 p-4">
         {sidebarItems.map((item) => {
           const Icon = item.icon;
 

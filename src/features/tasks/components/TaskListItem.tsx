@@ -104,11 +104,10 @@ const TaskListItem = ({ task }: TaskListItemProps) => {
 
   return (
     <div
-      className="grid min-w-200 grid-cols-[minmax(280px,1fr)_120px_120px_160px_120px_120px] items-center gap-4 px-6 py-4 transition-colors hover:bg-muted/30
-      "
+      className="relative grid grid-cols-2 items-center gap-3 px-4 py-4 transition-colors hover:bg-muted/30 sm:px-6 xl:min-w-[1100px] xl:grid-cols-[minmax(280px,1fr)_120px_120px_160px_120px_120px] xl:gap-4"
     >
       {/* Task */}
-      <NavLink className="min-w-0" to={`${task._id}`}>
+      <NavLink className="col-span-2 min-w-0 pr-12 xl:col-span-1 xl:pr-0" to={`${task._id}`}>
         <p className="truncate text-sm font-medium">{task.title}</p>
 
         {task.description && (
@@ -152,19 +151,19 @@ const TaskListItem = ({ task }: TaskListItemProps) => {
       </div>
 
       {/* Due date */}
-      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-        <CalendarDays size={15} />
+      <div className="flex min-w-0 items-center gap-2 text-xs text-muted-foreground sm:text-sm">
+        <CalendarDays size={15} className="shrink-0" />
 
         <span>{formatDate(task.dueDate)}</span>
       </div>
 
       {/* Action */}
-      <div className="flex justify-end relative">
+      <div className="absolute right-4 top-4 flex justify-end sm:right-6 xl:relative xl:right-auto xl:top-auto">
         <button
           type="button"
           onClick={() => setIsMenuOpen((prev) => !prev)}
           className="rounded-xl border p-2 text-muted-foreground transition hover:bg-muted hover:text-foreground"
-          aria-label="Project actions"
+          aria-label={`Actions for ${task.title}`}
         >
           <MoreVertical size={20} />
         </button>

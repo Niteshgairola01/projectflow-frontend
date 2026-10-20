@@ -32,12 +32,12 @@ const ProjectNavigation = ({ project }: ProjectNavigationProps) => {
 
       {/* Project Header */}
       <div className="rounded-2xl border bg-card">
-        <div className="px-6 pt-6">
+        <div className="px-4 pt-4 sm:px-6 sm:pt-6">
           <ProjectHeader project={project} />
         </div>
 
         {/* Project Navigation */}
-        <nav className="mt-6 flex gap-6 border-t px-6">
+        <nav aria-label="Project navigation" className="mt-6 flex gap-4 overflow-x-auto border-t px-4 sm:gap-6 sm:px-6">
           <Can permission={PERMISSIONS.PROJECT_READ}>
             <ProjectNavigationItem title="Overview" path={overviewPath}>
               <LayoutDashboard size={17} />

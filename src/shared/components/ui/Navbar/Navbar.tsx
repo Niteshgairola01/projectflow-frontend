@@ -1,6 +1,6 @@
 // shared/components/navbar/Navbar.tsx
 
-import { LogOut } from "lucide-react";
+import { LogOut, Menu } from "lucide-react";
 import { useLogout } from "../../../../features/auth/hooks/useLogout";
 import { getErrorMessage } from "../../../utils/getErrorMessage";
 import { notify } from "../../../utils/toast";
@@ -10,7 +10,12 @@ import { setUser } from "../../../../features/auth/store/authSlice";
 import { useAppSelector } from "../../../hooks/useAppSelector";
 import { tokenManager } from "../../../services/auth/tokenManager";
 
-const Navbar = () => {
+interface NavbarProps {
+  onToggleSidebar: () => void;
+  sidebarOpen: boolean;
+}
+
+const Navbar = ({ onToggleSidebar, sidebarOpen }: NavbarProps) => {
   const user = useAppSelector((state) => state.auth.user);
   const dispatch = useAppDispatch();
   const { mutateAsync, isPending } = useLogout();
@@ -28,23 +33,27 @@ const Navbar = () => {
   };
 
   return (
-    <header className="h-16 border-b border-gray-200 bg-card px-6 flex items-center justify-between">
+    <header className="flex h-16 shrink-0 items-center justify-between gap-2 border-b border-gray-200 bg-card px-3 sm:px-6">
       {/* Left */}
 
-      <div className="flex items-center gap-4">
+      <div className="flex min-w-0 items-center gap-2 sm:gap-4">
+        <button type="button" onClick={onToggleSidebar} aria-label="Open navigation menu" aria-expanded={sidebarOpen} aria-controls={sidebarOpen ? "mobile-sidebar" : undefined} className="flex size-10 shrink-0 items-center justify-center rounded-lg hover:bg-muted lg:hidden">
+          <Menu size={22} />
+        </button>
         <h1 className="font-semibold">ProjectFlow</h1>
       </div>
 
       {/* Right */}
 
-      <div className="flex items-center gap-4">
+      <div className="flex shrink-0 items-center gap-2 sm:gap-4">
         <button
           type="button"
           disabled={isPending}
           className="h-10 px-3 rounded-xl border flex items-center justify-center gap-3 disabled:opacity-50"
           onClick={handleLogout}
+          aria-label={isPending ? "Logging out" : "Logout"}
         >
-          {isPending ? "Logging out…" : "Logout"}
+          <span className="hidden sm:inline">{isPending ? "Logging out…" : "Logout"}</span>
           <LogOut size={18} />
         </button>
 

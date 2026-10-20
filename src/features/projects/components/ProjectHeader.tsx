@@ -29,7 +29,7 @@ const ProjectHeader = ({ project }: ProjectHeaderProps) => {
     <div className="space-y-5">
       {/* Header */}
       <div className="flex items-start justify-between gap-4">
-        <div className="flex items-start gap-4">
+        <div className="flex min-w-0 items-start gap-3 sm:gap-4">
           {/* Project Icon */}
           <div
             className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl text-xl font-semibold text-white shadow-sm"
@@ -40,9 +40,9 @@ const ProjectHeader = ({ project }: ProjectHeaderProps) => {
             {project.name.charAt(0).toUpperCase()}
           </div>
 
-          <div>
+          <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-3">
-              <h1 className="text-3xl font-bold tracking-tight">
+              <h1 className="text-xl font-bold tracking-tight [overflow-wrap:anywhere] sm:text-3xl">
                 {project.name}
               </h1>
 
@@ -62,7 +62,7 @@ const ProjectHeader = ({ project }: ProjectHeaderProps) => {
         </div>
 
         {/* Actions */}
-        <div className="relative">
+        <div className="relative shrink-0">
           <button
             type="button"
             onClick={() => setIsMenuOpen((prev) => !prev)}

@@ -14,7 +14,7 @@ const TasksHeader = ({ taskCount = 0 }: TasksHeaderProps) => {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
 
   return (
-    <div className="flex items-center justify-between border-b px-6 py-5">
+    <div className="flex flex-col gap-4 border-b px-4 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
       {/* Left */}
       <div className="min-w-0">
         <div className="flex items-center gap-3">
@@ -33,7 +33,7 @@ const TasksHeader = ({ taskCount = 0 }: TasksHeaderProps) => {
       {/* Right */}
       <Can permission={PERMISSIONS.TASK_CREATE}>
         <Button
-          className="inline-flex items-center gap-2 text-sm"
+          className="inline-flex shrink-0 items-center justify-center gap-2 text-sm"
           onClick={() => setIsCreateOpen(true)}
         >
           <Plus size={16} />

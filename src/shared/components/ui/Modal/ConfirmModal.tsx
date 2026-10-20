@@ -27,7 +27,7 @@ const ConfirmModal = ({
       <div className="space-y-6">
         <p className="text-sm text-center text-muted-foreground">{description}</p>
 
-        <div className="flex justify-end gap-3">
+        <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
           <button
             type="button"
             onClick={onCancel}

@@ -56,18 +56,18 @@ const CreateInvitationForm = ({ open, onClose }: CreateInvitationFormProps) => {
           placeholder="user@gmail.com"
         />
 
-        <div className="flex items-center justify-end gap-3 border-t pt-5">
+        <div className="flex flex-col-reverse gap-3 border-t pt-5 sm:flex-row sm:items-center sm:justify-end">
           <button
             type="button"
             onClick={onCancel}
-            className="rounded-xl border px-4 py-2"
+            className="h-11 shrink-0 rounded-lg border px-4 text-sm font-medium"
           >
             Cancel
           </button>
 
           <Button
             type="submit"
-            className="inline-flex justify-center items-center gap-3 w-100"
+            className="inline-flex w-full shrink-0 items-center justify-center gap-2 sm:w-auto"
             disabled={isPending}
           >
             <Send size={18} />

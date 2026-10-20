@@ -116,7 +116,7 @@ const TaskForm = ({
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-end gap-3 border-t pt-5">
+      <div className="flex flex-col-reverse gap-3 border-t pt-5 sm:flex-row sm:items-center sm:justify-end">
         <button
           type="button"
           onClick={onCancel}

@@ -64,11 +64,11 @@ const TaskKanban = ({ tasks, isLoading, isError }: TaskKanbanProps) => {
 
   if (isLoading) {
     return (
-      <div className="grid gap-4 overflow-x-auto p-6 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid auto-cols-[minmax(15rem,1fr)] grid-flow-col gap-3 overflow-x-auto p-4 sm:gap-4 sm:p-6">
         {columns.map((column) => (
           <div
             key={column.id}
-            className="min-h-125 min-w-70 rounded-xl bg-muted/40 p-3"
+            className="min-h-80 min-w-0 rounded-xl bg-muted/40 p-3 sm:min-h-125"
           >
             <div className="mb-4 h-5 w-24 animate-pulse rounded bg-muted" />
 
@@ -165,7 +165,7 @@ const TaskKanban = ({ tasks, isLoading, isError }: TaskKanbanProps) => {
         onDragEnd={handleDragEnd}
         onDragCancel={handleDragCancel}
       >
-        <div className="grid min-w-287.5 grid-cols-4 gap-4 p-6">
+        <div className="grid auto-cols-[minmax(15rem,1fr)] grid-flow-col gap-3 p-4 sm:gap-4 sm:p-6">
           {columns.map((column) => (
             <TaskKanbanColumn
               key={column.id}

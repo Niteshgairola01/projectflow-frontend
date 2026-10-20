@@ -60,7 +60,7 @@ const TaskList = ({ tasks, isLoading, isError }: TaskListProps) => {
   return (
     <div className="overflow-x-auto">
       {/* Header */}
-      <div className="grid min-w-200 grid-cols-[minmax(280px,1fr)_120px_120px_160px_120px_120px] items-center gap-4 border-b bg-muted/30 px-6 py-3 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+      <div className="hidden min-w-[1100px] grid-cols-[minmax(280px,1fr)_120px_120px_160px_120px_120px] items-center gap-4 border-b bg-muted/30 px-6 py-3 text-xs font-medium uppercase tracking-wide text-muted-foreground xl:grid">
         <span>Task</span>
         <span>Status</span>
         <span>Priority</span>

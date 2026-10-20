@@ -74,4 +74,5 @@ body,
 body {
   background: #f8fafc;
   color: #111827;
+  overflow-wrap: anywhere;
 }

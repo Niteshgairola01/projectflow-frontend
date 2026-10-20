@@ -102,7 +102,7 @@ export const LoginForm = () => {
 
       {/* Remember + Forgot */}
 
-      <div className="flex items-center justify-between text-sm">
+      <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
         <label className="flex items-center gap-2 text-slate-600">
           <input type="checkbox" className="rounded" />
           Remember me
