@@ -43,11 +43,11 @@ const TasksToolbar = ({
     filters.search || filters.status || filters.priority || filters.assignee;
 
   return (
-    <div className="flex flex-col gap-4 border-b px-6 pb-4 lg:flex-row lg:items-center lg:justify-between">
+    <div className="flex min-w-0 flex-col gap-4 border-b px-4 pb-4 sm:px-6 2xl:flex-row 2xl:items-center 2xl:justify-between">
       {/* Left - Filters */}
-      <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
+      <div className="grid min-w-0 flex-1 grid-cols-1 items-center gap-2 sm:flex sm:flex-wrap">
         {/* Search */}
-        <div className="relative min-w-55 flex-1 lg:max-w-xs">
+        <div className="relative min-w-0 sm:min-w-48 sm:flex-1 sm:basis-full xl:basis-auto xl:max-w-xs">
           <Search
             size={16}
             className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
@@ -80,7 +80,7 @@ const TasksToolbar = ({
             placeholder="All Status"
             icon={<CheckCircle2 size={14} />}
             options={taskStatusOptions}
-            className="h-9 w-auto min-w-32.5"
+            className="h-10 w-full sm:w-36"
           />{" "}
         </div>
 
@@ -96,7 +96,7 @@ const TasksToolbar = ({
           }}
           placeholder="All Priority"
           options={taskPriorityOptions}
-          className="h-9 w-auto min-w-32.5"
+          className="h-10 w-full sm:w-36"
         />
         {/* Assignee */}
         <Select
@@ -105,7 +105,7 @@ const TasksToolbar = ({
           onChange={(e) => updateFilter("assignee", e.target.value)}
           placeholder="Anyone"
           options={assigneeOptions}
-          className="h-9 w-auto min-w-35"
+          className="h-10 w-full sm:w-48"
         />
 
         {/* Filter indicator */}
@@ -122,9 +122,11 @@ const TasksToolbar = ({
       </div>
 
       {/* Right - View switcher */}
-      <div className="flex shrink-0 items-center rounded-lg border bg-muted/40 p-1">
+      <div className="flex shrink-0 items-center self-start rounded-lg border bg-muted/40 p-1">
         <button
           type="button"
+          aria-label="List"
+          aria-pressed={view === "list"}
           onClick={() => onViewChange("list")}
           className={`inline-flex h-8 items-center gap-2 rounded-md px-3 text-sm font-medium transition
             ${
@@ -140,6 +142,8 @@ const TasksToolbar = ({
 
         <button
           type="button"
+          aria-label="Board"
+          aria-pressed={view === "kanban"}
           onClick={() => onViewChange("kanban")}
           className={`inline-flex h-8 items-center gap-2 rounded-md px-3 text-sm font-medium transition
             ${

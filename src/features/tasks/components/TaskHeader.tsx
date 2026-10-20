@@ -98,7 +98,7 @@ const TaskHeader = ({ task }: TaskHeaderProps) => {
   };
 
   return (
-    <div className="border-b px-6 py-6">
+    <div className="border-b px-4 py-5 sm:px-6 sm:py-6">
       <button
         type="button"
         onClick={() => navigate(-1)}
@@ -109,9 +109,9 @@ const TaskHeader = ({ task }: TaskHeaderProps) => {
       </button>
 
       {/* Top section */}
-      <div className="flex items-start justify-between gap-6">
+      <div className="flex items-start justify-between gap-3 sm:gap-6">
         <div className="min-w-0 flex-1">
-          <h1 className="text-2xl font-bold tracking-tight">{task.title}</h1>
+          <h1 className="text-xl font-bold tracking-tight sm:text-2xl">{task.title}</h1>
 
           {task.description && (
             <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">

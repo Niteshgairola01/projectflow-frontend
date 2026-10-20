@@ -10,7 +10,7 @@ const ProjectsHeader = () => {
 
   return (
     <>
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-3xl font-bold">Projects</h1>
 
@@ -21,7 +21,7 @@ const ProjectsHeader = () => {
 
         <Can permission={PERMISSIONS.PROJECT_CREATE}>
           <Button
-            className="inline-flex items-center gap-2"
+            className="inline-flex shrink-0 items-center justify-center gap-2"
             onClick={() => setIsCreateOpen(true)}
           >
             <Plus size={18} />

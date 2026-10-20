@@ -20,10 +20,10 @@ const WorkspaceCard = ({ name, members, role, color }: WorkspaceCardProps) => {
     : roleStyles.Member;
 
   return (
-    <div className="flex items-center justify-between px-6 py-5 border-b hover:bg-muted/40 transition-colors cursor-pointer">
-      <div className="flex items-center gap-4">
+    <div className="flex flex-wrap items-center justify-between gap-3 border-b px-4 py-5 transition-colors hover:bg-muted/40 cursor-pointer sm:px-6">
+      <div className="flex min-w-0 items-center gap-4">
         <div
-          className="h-12 w-12 rounded-xl flex items-center justify-center text-white font-semibold"
+          className="h-12 w-12 shrink-0 rounded-xl flex items-center justify-center text-white font-semibold"
           style={{
             backgroundColor: color ?? "#6366F1",
           }}
@@ -31,7 +31,7 @@ const WorkspaceCard = ({ name, members, role, color }: WorkspaceCardProps) => {
           {name.charAt(0)}
         </div>
 
-        <div>
+        <div className="min-w-0">
           <h3 className="font-medium text-sm">{name}</h3>
 
           <p className="text-xs text-muted-foreground mt-1">

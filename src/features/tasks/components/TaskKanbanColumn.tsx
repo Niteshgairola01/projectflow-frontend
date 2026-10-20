@@ -54,7 +54,7 @@ const TaskKanbanColumn = ({
     <div
       ref={setNodeRef}
       className={
-        `flex min-h-125 min-w-0 flex-col rounded-xl border p-3 ${
+        `flex min-h-80 min-w-0 flex-col rounded-xl border p-3 sm:min-h-125 ${
           isOver ? 'border-muted bg-muted/60' : 'border-muted/10'
         }`
       }

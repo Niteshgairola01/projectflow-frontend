@@ -7,7 +7,7 @@ const ProjectOverviewPage = () => {
 
   return (
     <div className="space-y-6">
-      <div className="grid gap-6 lg:grid-cols-3 h-100">
+      <div className="grid min-w-0 gap-4 xl:grid-cols-3 sm:gap-6">
         <ProjectInfoCard project={project} />
 
         <ProjectStatsCard />

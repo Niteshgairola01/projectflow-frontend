@@ -106,13 +106,13 @@ const ProjectForm = ({
       <div>
         <label className="mb-3 block text-sm font-medium">Workspace Icon</label>
 
-        <div className="flex gap-3">
+        <div className="flex flex-wrap gap-3">
           {colors.map((color) => (
             <button
               key={color}
               type="button"
               onClick={() => setSelectedColor(color)}
-              className="h-10 w-10 rounded-full border-2 transition"
+              className="h-10 w-10 shrink-0 rounded-full border-2 transition"
               style={{
                 backgroundColor: color,
                 borderColor:
@@ -124,7 +124,7 @@ const ProjectForm = ({
       </div>
 
       {/* actions */}
-      <div className="flex justify-end gap-3 pt-4">
+      <div className="flex flex-col-reverse gap-3 pt-4 sm:flex-row sm:justify-end">
         <button
           type="button"
           onClick={onCancel}

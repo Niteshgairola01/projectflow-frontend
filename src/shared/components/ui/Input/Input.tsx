@@ -11,7 +11,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 export const Input = forwardRef<HTMLInputElement, Props>(
   ({ label, error, className, ...props }, ref) => {
     return (
-      <div className="space-y-1">
+      <div className="min-w-0 space-y-1">
         {label && (
           <label className="text-sm font-medium text-gray-700">{label}</label>
         )}
@@ -20,7 +20,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
           ref={ref}
           {...props}
           className={clsx(
-            "h-11 w-full rounded-lg border px-3 outline-none focus:focus:ring-2 focus:ring-primary/20",
+            "h-11 w-full min-w-0 max-w-full rounded-lg border px-3 outline-none focus:focus:ring-2 focus:ring-primary/20",
             className
           )}
         />
