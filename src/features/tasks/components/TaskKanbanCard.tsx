@@ -1,7 +1,8 @@
-import { CalendarDays, MoreHorizontal, User } from "lucide-react";
+import { CalendarDays, User } from "lucide-react";
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
 
+import TaskCardActions from "./TaskCardActions";
 import type { Task } from "../types/task.types";
 
 interface TaskKanbanCardProps {
@@ -25,7 +26,7 @@ const TaskKanbanCard = ({
     data: {
       status: task.status,
     },
-  });  
+  });
 
   const getPriorityStyles = (priority: Task["priority"]) => {
     switch (priority) {
@@ -96,15 +97,7 @@ const TaskKanbanCard = ({
           {getPriorityLabel(task.priority)}
         </span>
 
-        <button
-          type="button"
-          onClick={(event) => {
-            event.stopPropagation();
-          }}
-          className="rounded-md p-1 text-muted-foreground opacity-0 transition hover:bg-muted hover:text-foreground group-hover:opacity-100"
-        >
-          <MoreHorizontal size={16} />
-        </button>
+        {!isPlaceholder && !isDragging && <TaskCardActions task={task} />}
       </div>
 
       {/* Title */}

@@ -4,14 +4,16 @@ import { notify } from "../../../shared/utils/toast";
 import { useCreateTask } from "../hooks/useCreateTask";
 import type { CreateTaskPayload } from "../schema/createTaskSchema";
 import TaskForm from "./TaskForm";
+import type { TaskStatus } from "../types/task.types";
 import { useProjectMembers } from "../../projects/hooks/useProjecMembers";
 
 interface CreateTaskModalProps {
   open: boolean;
   onClose: () => void;
+  initialStatus?: TaskStatus;
 }
 
-const CreateTaskModal = ({ open, onClose }: CreateTaskModalProps) => {
+const CreateTaskModal = ({ open, onClose, initialStatus }: CreateTaskModalProps) => {
   const { data: members = [] } = useProjectMembers();
 
   const { mutateAsync, isPending } = useCreateTask();
@@ -35,6 +37,7 @@ const CreateTaskModal = ({ open, onClose }: CreateTaskModalProps) => {
   return (
     <Modal title="Create Task" open={open} onClose={onClose}>
       <TaskForm
+        defaultValues={{ title: "", status: initialStatus }}
         onSubmit={onSubmit}
         onCancel={onClose}
         workspaceMembers={workspaceMembers}

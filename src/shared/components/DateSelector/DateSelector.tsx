@@ -272,7 +272,20 @@ const DateSelector = ({
   );
 
   return (
-    <div ref={containerRef} className="relative">
+    <div
+      ref={containerRef}
+      className="relative"
+      onBlur={(event) => {
+        const nextFocus = event.relatedTarget as Node | null;
+        // Calendar focus also belongs to this picker when rendered in a portal.
+        if (
+          !containerRef.current?.contains(nextFocus) &&
+          !calendarRef.current?.contains(nextFocus)
+        ) {
+          setOpen(false);
+        }
+      }}
+    >
       {/* Label */}
       <label className="text-sm font-medium text-foreground">{label}</label>
 

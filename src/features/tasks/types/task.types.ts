@@ -17,7 +17,7 @@ export interface Task {
   assignedTo?: TaskAssignee | null;
   status: TaskStatus;
   priority: TaskPriority;
-  dueDate?: string;
+  dueDate?: string | null;
   createdAt: string;
   updatedAt: string;
 }
