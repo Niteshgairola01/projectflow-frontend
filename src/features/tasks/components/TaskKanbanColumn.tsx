@@ -107,6 +107,7 @@ const TaskKanbanColumn = ({
       {isCreateOpen && (
         <CreateTaskModal
           open={isCreateOpen}
+          initialStatus={status}
           onClose={() => setIsCreateOpen(false)}
         />
       )}
