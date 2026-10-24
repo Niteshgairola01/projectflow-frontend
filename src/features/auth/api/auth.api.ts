@@ -1,3 +1,4 @@
+import { tokenManager } from "../../../shared/services/auth/tokenManager";
 import { api } from "../../../shared/services/api/axios";
 import type {
   LoginPayload,
@@ -8,6 +9,8 @@ import type {
   User,
 } from "../types/auth.types";
 import type { ApiResponse } from "../../../shared/types/api.types";
+
+let refreshPromise: Promise<RefreshTokenResponse> | null = null;
 
 export const authApi = {
   // register
@@ -34,9 +37,17 @@ export const authApi = {
   },
 
   // refresh token
-  refreshToken: async (): Promise<RefreshTokenResponse> => {
-    const response = await api.post<ApiResponse<RefreshTokenResponse>>("/auth/refresh");
-    return response.data.data;
+  refreshToken: (): Promise<RefreshTokenResponse> => {
+    // Startup and expired API requests must share the same refresh attempt.
+    if (!refreshPromise) {
+      refreshPromise = api.post<ApiResponse<RefreshTokenResponse>>("/auth/refresh")
+        .then((response) => {
+          tokenManager.setToken(response.data.data.accessToken);
+          return response.data.data;
+        })
+        .finally(() => { refreshPromise = null; });
+    }
+    return refreshPromise;
   },
 
   // get user by id
