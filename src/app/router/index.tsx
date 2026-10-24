@@ -18,12 +18,13 @@ import WorkspaceDetailsPage from "../../features/workspace/pages/WorkspaceDetail
 import WorkspacePendingInvitationsPage from "../../features/workspace/pages/WorkspacePendingInvitationsPage";
 import ProjectMembersPage from "../../features/projects/pages/ProjectMembersPage";
 import RequirePermission from "../../shared/components/auth/RequirePermission";
+import Dashboard from "../../features/dashboard/pages/Dashboard";
 import { PERMISSIONS } from "../../shared/constants/permissions";
 
 export const router = createBrowserRouter([
   {
     path: ROUTES.HOME,
-    element: <Navigate to={ROUTES.WORKSPACES} replace />,
+    element: <Navigate to={ROUTES.DASHBOARD} replace />,
   },
   {
     path: "*",
@@ -56,6 +57,7 @@ export const router = createBrowserRouter([
       </ProtectedRoute>
     ),
     children: [
+      { path: ROUTES.DASHBOARD, element: <Dashboard /> },
       {
         path: ROUTES.WORKSPACES,
         element: <WorkspacesPage />,
