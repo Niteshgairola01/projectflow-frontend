@@ -79,7 +79,7 @@ const TaskListItem = ({ task }: TaskListItemProps) => {
     }
   };
 
-  const formatDate = (date?: string) => {
+  const formatDate = (date?: string | null) => {
     if (!date) {
       return "—";
     }

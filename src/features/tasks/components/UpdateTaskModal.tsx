@@ -43,7 +43,7 @@ const UpdateTaskModal = ({ open, onClose, task }: UpdateTaskModalProps) => {
         defaultValues={{
           title: task.title,
           description: task?.description,
-          dueDate: task.dueDate,
+          dueDate: task.dueDate ?? "",
           assignedTo: task?.assignedTo?._id,
           status: task?.status,
           priority: task?.priority,
