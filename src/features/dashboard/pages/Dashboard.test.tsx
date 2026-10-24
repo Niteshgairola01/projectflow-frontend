@@ -5,7 +5,11 @@ import Dashboard from "./Dashboard";
 
 const mocks = vi.hoisted(() => ({ workspaces: vi.fn(), projects: vi.fn(), tasks: vi.fn() }));
 vi.mock("../../workspace/hooks/useWorkspaces", () => ({ useWorkspaces: mocks.workspaces }));
-vi.mock("@tanstack/react-query", () => ({ useQuery: mocks.projects, useQueries: mocks.tasks }));
+vi.mock("@tanstack/react-query", async (importOriginal) => ({
+  ...await importOriginal<typeof import("@tanstack/react-query")>(),
+  useQuery: mocks.projects,
+  useQueries: mocks.tasks,
+}));
 vi.mock("../../../shared/hooks/useAppSelector", () => ({ useAppSelector: (select: (state: unknown) => unknown) => select({ auth: { user: { _id: "me", name: "Alex Kim" } }, workspace: { currentWorkspace: null } }) }));
 const result = (data: unknown) => ({ data, isPending: false, isError: false, refetch: vi.fn() });
 const workspace = { _id: "w1", name: "Design team", members: [{ user: { _id: "me" } }] };

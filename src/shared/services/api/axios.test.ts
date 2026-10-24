@@ -9,13 +9,15 @@ import { api } from "./axios";
 import { tokenManager } from "../auth/tokenManager";
 import { authApi } from "../../../features/auth/api/auth.api";
 import { store } from "../../../app/store/store";
+import { queryClient } from "./queryClient";
+import { clearSession } from "../auth/clearSession";
+import { setCurrentWorkspace } from "../../../features/workspace/store/workspaceSlice";
 import { setUser } from "../../../features/auth/store/authSlice";
 
 const originalAdapter = api.defaults.adapter;
 afterEach(() => {
   api.defaults.adapter = originalAdapter;
-  tokenManager.clearToken();
-  store.dispatch(setUser(null));
+  clearSession();
 });
 function response(
   config: InternalAxiosRequestConfig,
@@ -79,6 +81,11 @@ it("clears the authenticated UI when the refresh cookie is missing", async () =>
   store.dispatch(
     setUser({ _id: "1", name: "Test", email: "test@example.com" }),
   );
+  store.dispatch(setCurrentWorkspace({
+    _id: "old-workspace", name: "Old workspace", owner: "1", members: [],
+    createdAt: "2026-10-24", updatedAt: "2026-10-24",
+  }));
+  queryClient.setQueryData(["projects", "old-workspace"], ["old-project"]);
   let refreshes = 0;
   api.defaults.adapter = async (config) => {
     if (config.url === "/auth/refresh") refreshes++;
@@ -88,6 +95,8 @@ it("clears the authenticated UI when the refresh cookie is missing", async () =>
   expect(refreshes).toBe(1);
   expect(tokenManager.getToken()).toBeNull();
   expect(store.getState().auth.isAuthenticated).toBe(false);
+  expect(store.getState().workspace.currentWorkspace).toBeNull();
+  expect(queryClient.getQueryCache().getAll()).toHaveLength(0);
 });
 
 it("keeps the session on temporary refresh failures and allows a later attempt", async () => {

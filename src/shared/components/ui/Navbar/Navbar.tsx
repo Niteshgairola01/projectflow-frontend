@@ -4,11 +4,8 @@ import { LogOut, Menu } from "lucide-react";
 import { useLogout } from "../../../../features/auth/hooks/useLogout";
 import { getErrorMessage } from "../../../utils/getErrorMessage";
 import { notify } from "../../../utils/toast";
-import { useAppDispatch } from "../../../hooks/useAppDispatch";
-import { setUser } from "../../../../features/auth/store/authSlice";
 
 import { useAppSelector } from "../../../hooks/useAppSelector";
-import { tokenManager } from "../../../services/auth/tokenManager";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
 
 interface NavbarProps {
@@ -18,15 +15,12 @@ interface NavbarProps {
 
 const Navbar = ({ onToggleSidebar, sidebarOpen }: NavbarProps) => {
   const user = useAppSelector((state) => state.auth.user);
-  const dispatch = useAppDispatch();
   const { mutateAsync, isPending } = useLogout();
 
   const handleLogout = async () => {
     try {
       await mutateAsync();
-      tokenManager.clearToken();
       notify.success("Logged out successfully");
-      dispatch(setUser(null));
     } catch (error) {
       const errorMessage = getErrorMessage(error);
       notify.error(errorMessage);
@@ -38,10 +32,19 @@ const Navbar = ({ onToggleSidebar, sidebarOpen }: NavbarProps) => {
       {/* Left */}
 
       <div className="flex min-w-0 items-center gap-2 sm:gap-4">
-        <button type="button" onClick={onToggleSidebar} aria-label="Open navigation menu" aria-expanded={sidebarOpen} aria-controls={sidebarOpen ? "mobile-sidebar" : undefined} className="flex size-10 shrink-0 items-center justify-center rounded-lg hover:bg-muted lg:hidden">
+        <button
+          type="button"
+          onClick={onToggleSidebar}
+          aria-label="Open navigation menu"
+          aria-expanded={sidebarOpen}
+          aria-controls={sidebarOpen ? "mobile-sidebar" : undefined}
+          className="flex size-10 shrink-0 items-center justify-center rounded-lg hover:bg-muted lg:hidden"
+        >
           <Menu size={22} />
         </button>
-        <h1 className="truncate text-sm font-semibold sm:text-base">ProjectFlow</h1>
+        <h1 className="truncate text-sm font-semibold sm:text-base">
+          ProjectFlow
+        </h1>
       </div>
 
       {/* Right */}
@@ -55,17 +58,22 @@ const Navbar = ({ onToggleSidebar, sidebarOpen }: NavbarProps) => {
           onClick={handleLogout}
           aria-label={isPending ? "Logging out" : "Logout"}
         >
-          <span className="hidden sm:inline">{isPending ? "Logging out…" : "Logout"}</span>
+          <span className="hidden sm:inline">
+            {isPending ? "Logging out…" : "Logout"}
+          </span>
           <LogOut size={18} />
         </button>
 
         {/* User */}
 
-        <div title={user?.name} aria-label={user ? `Signed in as ${user.name}` : "User"} className="flex items-center gap-2">
+        <div
+          title={user?.name}
+          aria-label={user ? `Signed in as ${user.name}` : "User"}
+          className="flex items-center gap-2"
+        >
           <div className="h-10 w-10 rounded-full bg-primary text-white flex items-center justify-center font-medium">
             {user?.name.trim().charAt(0).toUpperCase() || "?"}
           </div>
-
         </div>
       </div>
     </header>
