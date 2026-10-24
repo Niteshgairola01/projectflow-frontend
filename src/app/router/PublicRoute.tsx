@@ -18,7 +18,7 @@ export const PublicRoute = ({ children }: PublicRouteProps) => {
       return <Navigate to={`/invitations/${invitationToken}`} replace />;
     }
 
-    return <Navigate to={ROUTES.WORKSPACES} replace />;
+    return <Navigate to={ROUTES.DASHBOARD} replace />;
   }
 
   return <>{children}</>;

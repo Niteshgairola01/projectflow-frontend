@@ -22,6 +22,8 @@ const Sidebar = () => {
 
   const getItemPath = (key: string): string | null => {
     switch (key) {
+      case "dashboard":
+        return ROUTES.DASHBOARD;
       case "workspaces":
         return ROUTES.WORKSPACES;
 
