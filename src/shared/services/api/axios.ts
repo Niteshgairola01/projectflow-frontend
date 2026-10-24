@@ -5,8 +5,7 @@ import axios, {
 import { tokenManager } from "../auth/tokenManager";
 import { authApi } from "../../../features/auth/api/auth.api";
 
-import { store } from "../../../app/store/store";
-import { setUser } from "../../../features/auth/store/authSlice";
+import { clearSession } from "../auth/clearSession";
 
 interface RetryableRequestConfig extends InternalAxiosRequestConfig {
   _retry?: boolean;
@@ -77,8 +76,7 @@ api.interceptors.response.use(
       return api(originalRequest);
     } catch (refreshError) {
       if (axios.isAxiosError(refreshError) && refreshError.response?.status === 401) {
-        tokenManager.clearToken();
-        store.dispatch(setUser(null));
+        clearSession();
       }
 
       return Promise.reject(refreshError);
