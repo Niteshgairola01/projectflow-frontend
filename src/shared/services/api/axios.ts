@@ -46,11 +46,11 @@ api.interceptors.response.use(
     const isUnauthorized = error.response?.status === 401;
 
     const isAuthRequest =
-      ["/auth/refresh", "/auth/login", "/auth/register"].includes(originalRequest.url ?? "");
+      ["/auth/refresh", "/auth/login", "/auth/register", "/auth/forgot-password", "/auth/reset-password"].includes(originalRequest.url ?? "");
 
     // Don't refresh if:
     // 1. It's not a 401
-    // 2. This is a refresh, login, or registration request
+    // 2. This is a public authentication request
     // 3. We already retried this request
     if (
       !isUnauthorized ||

@@ -1,6 +1,8 @@
 import { tokenManager } from "../../../shared/services/auth/tokenManager";
 import { api } from "../../../shared/services/api/axios";
 import type {
+  ForgotPasswordPayload,
+  ResetPasswordPayload,
   LoginPayload,
   LoginResponse,
   RegisterPayload,
@@ -13,6 +15,14 @@ import type { ApiResponse } from "../../../shared/types/api.types";
 let refreshPromise: Promise<RefreshTokenResponse> | null = null;
 
 export const authApi = {
+  forgotPassword: async (data: ForgotPasswordPayload): Promise<void> => {
+    await api.post("/auth/forgot-password", data);
+  },
+
+  resetPassword: async (data: ResetPasswordPayload): Promise<void> => {
+    await api.post("/auth/reset-password", data);
+  },
+
   // register
   register: async (data: RegisterPayload): Promise<RegisterResponse> => {
     const response = await api.post<ApiResponse<RegisterResponse>>("/auth/register", data);
