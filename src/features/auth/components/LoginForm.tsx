@@ -1,3 +1,4 @@
+import { ROUTES } from "../../../shared/constants/routes";
 import { Link } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
@@ -110,7 +111,7 @@ export const LoginForm = () => {
         </label>
 
         <Link
-          to="/forgot-password"
+          to={ROUTES.FORGOT_PASSWORD}
           className="
             font-medium
             text-primary
