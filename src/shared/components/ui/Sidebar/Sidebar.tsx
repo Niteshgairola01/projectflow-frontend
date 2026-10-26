@@ -1,3 +1,7 @@
+import { LogOut } from "lucide-react";
+import { useLogout } from "../../../../features/auth/hooks/useLogout";
+import { getErrorMessage } from "../../../utils/getErrorMessage";
+import { notify } from "../../../utils/toast";
 import { Logo } from "../Logo/Logo";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { ROUTES } from "../../../constants/routes";
@@ -8,6 +12,17 @@ import ProjectSideNavigation from "../../../../features/projects/components/Proj
 
 const Sidebar = () => {
   const navigate = useNavigate();
+  const user = useAppSelector((state) => state.auth.user);
+  const { mutateAsync: logout, isPending: isLoggingOut } = useLogout();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      notify.success("Logged out successfully");
+    } catch (error) {
+      notify.error(getErrorMessage(error));
+    }
+  };
   const location = useLocation();
 
   const { projectId } = useParams();
@@ -113,27 +128,27 @@ const Sidebar = () => {
         {projectId && project && <ProjectSideNavigation project={project} />}
       </nav>
 
-      {/* Current Workspace */}
-      {currentWorkspace && (
-        <div className="border-t p-4">
-          <p className="mb-2 px-2 text-xs font-medium text-muted-foreground">
-            Current Workspace
-          </p>
-
-          <div className="flex items-center gap-3 rounded-xl bg-muted/50 px-3 py-3">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary text-sm font-semibold text-white">
-              {currentWorkspace.name.charAt(0).toUpperCase()}
-            </div>
-
+      {user && (
+        <section aria-label="Account details" className="shrink-0 border-t p-4">
+          <div className="flex min-w-0 items-center gap-3">
+            <span aria-hidden="true" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-semibold text-white">
+              {user.name.trim().charAt(0).toUpperCase() || "?"}
+            </span>
             <div className="min-w-0">
-              <p className="truncate text-sm font-medium">
-                {currentWorkspace.name}
-              </p>
-
-              <p className="text-xs text-muted-foreground">Active workspace</p>
+              <p className="break-words text-sm font-medium">{user.name}</p>
+              <p className="mt-0.5 break-all text-xs text-muted-foreground">{user.email}</p>
             </div>
           </div>
-        </div>
+          <button
+            type="button"
+            onClick={handleLogout}
+            disabled={isLoggingOut}
+            className="mt-3 flex h-10 w-full items-center gap-2 rounded-lg px-3 text-sm text-red-600 transition hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50 dark:text-red-400"
+          >
+            <LogOut aria-hidden="true" size={18} />
+            {isLoggingOut ? "Logging out…" : "Logout"}
+          </button>
+        </section>
       )}
     </aside>
   );
