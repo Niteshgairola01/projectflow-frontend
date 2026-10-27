@@ -1,5 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import NotFoundPage from "../pages/NotFoundPage";
+import PrivacyPolicyPage from "../pages/PrivacyPolicyPage";
 import ForgotPasswordPage from "../../features/auth/pages/ForgotPasswordPage";
 import ResetPasswordPage from "../../features/auth/pages/ResetPasswordPage";
 import LoginPage from "../../features/auth/pages/LoginPage";
@@ -24,6 +25,7 @@ import Dashboard from "../../features/dashboard/pages/Dashboard";
 import { PERMISSIONS } from "../../shared/constants/permissions";
 
 export const router = createBrowserRouter([
+  { path: ROUTES.PRIVACY, element: <PrivacyPolicyPage /> },
   { path: ROUTES.FORGOT_PASSWORD, element: <ForgotPasswordPage /> },
   { path: ROUTES.RESET_PASSWORD, element: <ResetPasswordPage /> },
   {
