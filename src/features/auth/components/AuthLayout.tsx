@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import { Link } from "react-router-dom";
+import { ROUTES } from "../../../shared/constants/routes";
 import { AuthBackground } from "./AuthBackground";
 import { AuthShowcase } from "./AuthShowcase";
 import { Logo } from "../../../shared/components/ui/Logo/Logo";
@@ -27,6 +29,9 @@ export function AuthLayout({ children, title, subtitle }: Props) {
             <p className="mt-2 text-muted-foreground">{subtitle}</p>
 
             <div className="mt-8">{children}</div>
+            <p className="mt-6 text-center text-xs text-muted-foreground">
+              <Link to={ROUTES.PRIVACY} className="underline underline-offset-4 hover:text-primary">Privacy policy</Link>
+            </p>
           </div>
         </div>
       </div>

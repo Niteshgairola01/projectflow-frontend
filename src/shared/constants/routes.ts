@@ -1,4 +1,5 @@
 export const ROUTES = {
+  PRIVACY: "/privacy",
   FORGOT_PASSWORD: "/forgot-password",
   RESET_PASSWORD: "/reset-password",
   HOME: "/",
