@@ -1,4 +1,5 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
+import HomePage from "../pages/HomePage";
 import NotFoundPage from "../pages/NotFoundPage";
 import PrivacyPolicyPage from "../pages/PrivacyPolicyPage";
 import ForgotPasswordPage from "../../features/auth/pages/ForgotPasswordPage";
@@ -30,7 +31,7 @@ export const router = createBrowserRouter([
   { path: ROUTES.RESET_PASSWORD, element: <ResetPasswordPage /> },
   {
     path: ROUTES.HOME,
-    element: <Navigate to={ROUTES.DASHBOARD} replace />,
+    element: <HomePage />,
   },
   {
     path: "*",
