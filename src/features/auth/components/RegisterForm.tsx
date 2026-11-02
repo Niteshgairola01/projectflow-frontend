@@ -11,6 +11,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import { Button } from "../../../shared/components/ui/Button/Button.tsx";
 
+import { DemoAccountCard } from "./DemoAccountCard";
+import { ROUTES } from "../../../shared/constants/routes";
+
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -38,6 +41,16 @@ const RegisterForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+      <DemoAccountCard>
+        <Link
+          to={ROUTES.LOGIN}
+          state={{ useDemoAccount: true }}
+          className="mt-3 inline-block rounded font-semibold text-primary hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        >
+          Try demo account
+        </Link>
+      </DemoAccountCard>
+
       {/* name */}
       <Input
         label="Name"
