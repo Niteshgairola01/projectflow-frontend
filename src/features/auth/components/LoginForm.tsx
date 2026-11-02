@@ -1,5 +1,6 @@
 import { ROUTES } from "../../../shared/constants/routes";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { DemoAccountCard, DEMO_CREDENTIALS } from "./DemoAccountCard";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -18,6 +19,7 @@ import { tokenManager } from "../../../shared/services/auth/tokenManager";
 
 export const LoginForm = () => {
   const dispatch = useAppDispatch();
+  const { state } = useLocation();
   const [showPassword, setShowPassword] = useState(false);
 
   const { mutateAsync, isPending } = useLogin();
@@ -25,9 +27,11 @@ export const LoginForm = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
+    defaultValues: state?.useDemoAccount === true ? DEMO_CREDENTIALS : undefined,
   });
 
   const onSubmit = async (data: LoginFormData) => {
@@ -44,6 +48,26 @@ export const LoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+      <DemoAccountCard>
+        <button
+          type="button"
+          disabled={isPending}
+          onClick={() => {
+            setValue("email", DEMO_CREDENTIALS.email, {
+              shouldValidate: true,
+              shouldDirty: true,
+            });
+            setValue("password", DEMO_CREDENTIALS.password, {
+              shouldValidate: true,
+              shouldDirty: true,
+            });
+          }}
+          className="mt-3 rounded font-semibold text-primary hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:opacity-50"
+        >
+          Use demo credentials
+        </button>
+      </DemoAccountCard>
+
       {/* Email */}
 
       <Input
