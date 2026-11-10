@@ -14,6 +14,11 @@ export const PERMISSIONS = {
   TASK_UPDATE: "task:update",
   TASK_DELETE: "task:delete",
 
+  COMMENT_ADD: "comment:add",
+  COMMENT_EDIT: "comment:edit",
+  COMMENT_READ: "comment:read",
+  COMMENT_DELETE: "comment:delete",
+
   WORKSPACE_CREATE: "workspace:create",
   MANAGE_WORKSPACE_MEMBER: "workspace:manage-member",
 } as const;
