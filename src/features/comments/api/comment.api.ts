@@ -2,7 +2,7 @@ import { api } from "../../../shared/services/api/axios";
 import type { ApiResponse } from "../../../shared/types/api.types";
 import type { AddCommentPayload } from "../schemas/addCommentSchema";
 import type { EditCommentPayload } from "../schemas/editCommentSchema";
-import type { Comment } from "../types/comment.types";
+import type { Comment, CommentResponse } from "../types/comment.types";
 
 const base = "/workspaces";
 export const commentApis = {
@@ -39,8 +39,8 @@ export const commentApis = {
     workspaceId: string,
     projectId: string,
     taskId: string,
-  ): Promise<Comment[]> => {
-    const response = await api.get<ApiResponse<Comment[]>>(
+  ): Promise<CommentResponse[]> => {
+    const response = await api.get<ApiResponse<CommentResponse[]>>(
       `${base}/${workspaceId}/projects/${projectId}/tasks/${taskId}/comment`,
     );
 

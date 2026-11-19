@@ -45,13 +45,12 @@ export const useEditComment = () => {
       );
     },
 
-    onSuccess: (_, variables) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: commentKeys.detail(
+        queryKey: commentKeys.list(
           workspaceId ?? "",
           projectId ?? "",
           taskId ?? "",
-          variables?.commentId ?? "",
         ),
       });
     },

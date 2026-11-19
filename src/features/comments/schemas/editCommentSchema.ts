@@ -3,6 +3,7 @@ import z from "zod";
 export const editComentSchema = z.object({
   content: z
     .string()
+    .trim()
     .min(2, "Comment must be atleast 2 characters")
     .max(5000, "Comment is too long"),
 });

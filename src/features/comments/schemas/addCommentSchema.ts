@@ -1,12 +1,13 @@
 import z from "zod";
 
-export const createTaskSchema = z.object({
+export const addCommentSchema = z.object({
   content: z
     .string()
+    .trim()
     .min(2, "Comment must be atleast 2 characters")
     .max(5000, "Comment is too long"),
 
   parentComment: z.string().optional(),
 });
 
-export type AddCommentPayload = z.infer<typeof createTaskSchema>;
+export type AddCommentPayload = z.infer<typeof addCommentSchema>;

@@ -1,12 +1,34 @@
-const TaskComments = () => (
-  <section aria-labelledby="task-comments-heading" className="space-y-2">
-    <h2 id="task-comments-heading" className="text-sm font-semibold text-foreground">
-      Comments
-    </h2>
-    <p className="text-sm text-muted-foreground">
-      Task comments will appear here.
-    </p>
-  </section>
-);
+import { useState } from "react";
+import AddComment from "./AddComment";
+import CommentsList from "./CommentsList";
+import type { CommentResponse } from "../types/comment.types";
+import EditComment from "./EditComment";
+
+const TaskComments = () => {
+  const [editingComment, setEditingComment] = useState<CommentResponse | null>(
+    null,
+  );
+
+  return (
+    <div>
+      {/* Comments List View */}
+      <CommentsList setEditingComment={setEditingComment} />
+
+      {/* Form Section */}
+      <div className="mt-5">
+        <hr className="mb-2" />
+        {editingComment ? (
+          <EditComment
+            initialData={editingComment}
+            setEditingComment={setEditingComment}
+            key={editingComment._id}
+          />
+        ) : (
+          <AddComment />
+        )}
+      </div>
+    </div>
+  );
+};
 
 export default TaskComments;
