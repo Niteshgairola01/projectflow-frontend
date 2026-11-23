@@ -3,8 +3,15 @@ import { useTask } from "../hooks/useTask";
 import AppLoader from "../../../shared/components/ui/Loader/AppLoader";
 import { formatDate } from "../../../shared/utils/formateDate";
 import { useGetUserById } from "../../auth/hooks/useGetUserById";
+import { useSearchParams } from "react-router-dom";
+import TaskNavigation, { type TaskSection } from "../components/TaskNavigation";
+import TaskComments from "../../comments/components/TaskComments";
 
 const TaskDetailsPage = () => {
+  const [searchParams] = useSearchParams();
+  const section = searchParams.get("section");
+  const activeSection: TaskSection =
+    section === "comments" || section === "activity" ? section : "details";
   const { data: task, isLoading, isError } = useTask();
 
   const { data: user } = useGetUserById(task?.createdBy);
@@ -14,13 +21,15 @@ const TaskDetailsPage = () => {
   }
 
   if (isError) {
-    <div className="rounded-2xl border bg-card p-8 text-center">
-      <p className="font-medium">Failed to load task</p>
-
-      <p className="mt-1 text-sm text-muted-foreground">
-        Something went wrong while loading this task.
-      </p>
-    </div>;
+    return (
+      <div className="rounded-2xl border bg-card p-8 text-center">
+        <p className="font-medium">Failed to load task</p>
+  
+        <p className="mt-1 text-sm text-muted-foreground">
+          Something went wrong while loading this task.
+        </p>
+      </div>
+    );
   }
 
   if (!task) {
@@ -42,63 +51,80 @@ const TaskDetailsPage = () => {
         {/* Header */}
         <TaskHeader task={task} />
 
+        <TaskNavigation activeSection={activeSection} />
+
         {/* Content */}
         <div className="space-y-8 p-6">
-          {/* Description */}
-          <section>
-            <h2 className="text-sm font-semibold text-foreground">
-              Description
-            </h2>
+          {activeSection === "comments" && <TaskComments />}
+          {activeSection === "activity" && (
+            <section aria-labelledby="task-activity-heading" className="space-y-2">
+              <h2 id="task-activity-heading" className="text-sm font-semibold text-foreground">
+                Activity
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                Task activity is coming soon.
+              </p>
+            </section>
+          )}
+          {activeSection === "details" && (
+            <>
+              {/* Description */}
+              <section>
+                <h2 className="text-sm font-semibold text-foreground">
+                  Description
+                </h2>
 
-            <div className="mt-3 rounded-xl bg-muted/30 p-4">
-              {task.description ? (
-                <p className="whitespace-pre-wrap text-sm leading-6 text-muted-foreground">
-                  {task.description}
-                </p>
-              ) : (
-                <p className="text-sm italic text-muted-foreground">
-                  No description provided.
-                </p>
-              )}
-            </div>
-          </section>
-
-          {/* Metadata */}
-          <section>
-            <h2 className="text-sm font-semibold text-foreground">Details</h2>
-
-            <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              <div>
-                <p className="text-xs text-muted-foreground">Created by</p>
-                {/* user */}
-                <div>
-                  <p className="mt-1 text-sm font-medium">{user?.name}</p>
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    {user?.email || ""}
-                  </p>
+                <div className="mt-3 rounded-xl bg-muted/30 p-4">
+                  {task.description ? (
+                    <p className="whitespace-pre-wrap text-sm leading-6 text-muted-foreground">
+                      {task.description}
+                    </p>
+                  ) : (
+                    <p className="text-sm italic text-muted-foreground">
+                      No description provided.
+                    </p>
+                  )}
                 </div>
-              </div>
+              </section>
 
-              <div>
-                <p className="text-xs text-muted-foreground">Created</p>
-                <p className="mt-1 text-sm font-medium">
-                  {formatDate(task.createdAt)}
-                </p>
-              </div>
+              {/* Metadata */}
+              <section>
+                <h2 className="text-sm font-semibold text-foreground">Details</h2>
 
-              <div>
-                <p className="text-xs text-muted-foreground">Last Updated</p>
-                <p className="mt-1 truncate text-sm font-medium">
-                  {formatDate(task.updatedAt)}
-                </p>
-              </div>
+                <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                  <div>
+                    <p className="text-xs text-muted-foreground">Created by</p>
+                    {/* user */}
+                    <div>
+                      <p className="mt-1 text-sm font-medium">{user?.name}</p>
+                      <p className="mt-1 text-xs text-muted-foreground">
+                        {user?.email || ""}
+                      </p>
+                    </div>
+                  </div>
 
-              <div>
-                <p className="text-xs text-muted-foreground">Task ID</p>
-                <p className="mt-1 truncate text-sm font-medium">{task._id}</p>
-              </div>
-            </div>
-          </section>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Created</p>
+                    <p className="mt-1 text-sm font-medium">
+                      {formatDate(task.createdAt)}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p className="text-xs text-muted-foreground">Last Updated</p>
+                    <p className="mt-1 truncate text-sm font-medium">
+                      {formatDate(task.updatedAt)}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p className="text-xs text-muted-foreground">Task ID</p>
+                    <p className="mt-1 truncate text-sm font-medium">{task._id}</p>
+                  </div>
+                </div>
+              </section>
+            </>
+          )}
         </div>
       </div>
     </div>
