@@ -1,6 +1,6 @@
 import { formatDistanceToNow } from "date-fns";
 import type { CommentResponse } from "../types/comment.types";
-import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import { MoreHorizontal, Pencil, Reply, Trash2 } from "lucide-react";
 import { useState, type Dispatch, type SetStateAction } from "react";
 import Can from "../../../shared/components/auth/Can";
 import { PERMISSIONS } from "../../../shared/constants/permissions";
@@ -15,16 +15,21 @@ interface CommentProps {
   comment: CommentResponse;
   setOpenMenuId: Dispatch<SetStateAction<string | null>>;
   openMenuId: string | null;
-  setEditingComment: Dispatch<SetStateAction<CommentResponse | null>>;
+  onEdit: (comment: CommentResponse) => void;
+  onReply: (comment: CommentResponse) => void;
+  selectedReplyId?: string;
+  composerBusy: boolean;
 }
 
 const Comment = ({
   comment,
   setOpenMenuId,
   openMenuId,
-  setEditingComment,
+  onEdit,
+  onReply,
+  selectedReplyId,
+  composerBusy,
 }: CommentProps) => {
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
 
   const { mutateAsync, isPending: isDeletingComment } = useDeleteComment();
@@ -39,14 +44,7 @@ const Comment = ({
   const canDelete = isAvailable && isAuthor && can(PERMISSIONS.COMMENT_DELETE);
 
   const handleOpenMenu = () => {
-    setIsMenuOpen((prev) => !prev);
-
-    if (isMenuOpen) {
-      setOpenMenuId(null);
-      return;
-    }
-
-    setOpenMenuId(comment._id);
+    setOpenMenuId((current) => current === comment._id ? null : comment._id);
   };
 
   const handleDeleteComment = async () => {
@@ -60,21 +58,21 @@ const Comment = ({
   };
 
   return (
-    <div className="mb-5 flex justify-start items-start gap-3">
+    <div className={`flex min-w-0 items-start gap-2.5 rounded-lg transition-colors ${selectedReplyId === comment._id ? "bg-primary/5 ring-1 ring-primary/15" : ""}`}>
       {/* Profile */}
       <span
         aria-hidden="true"
-        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-semibold text-white"
+        className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-semibold text-white"
       >
         {comment.author.name?.trim()?.charAt(0)?.toUpperCase() ?? ""}
       </span>
 
       {/* Comment Section */}
-      <div className="w-full">
-        <div className="flex justify-start items-end gap-3">
+      <div className="min-w-0 flex-1">
+        <div className="flex flex-wrap justify-start items-center gap-x-2 gap-y-0.5">
           <span className="text-sm font-semibold">{comment.author?.name}</span>
 
-          <span className="text-sm text-muted-foreground">
+          <span className="text-xs text-muted-foreground">
             <time dateTime={comment.createdAt}>
               {formatDistanceToNow(new Date(comment.createdAt), {
                 addSuffix: true,
@@ -92,7 +90,24 @@ const Comment = ({
           )}
         </div>
 
-        <div className="text-sm mt-1">{comment.content}</div>
+        <div className="mt-0.5 whitespace-pre-wrap wrap-break-word text-sm leading-5">
+          {comment.content}
+        </div>
+
+        {!comment.isDeleted && (
+          <Can permission={PERMISSIONS.COMMENT_ADD}>
+            <button
+              type="button"
+              disabled={composerBusy}
+              aria-pressed={selectedReplyId === comment._id}
+              onClick={() => { setOpenMenuId(null); onReply(comment); }}
+              className={`mt-0.5 inline-flex min-h-7 items-center gap-1 rounded-md px-1.5 text-xs font-medium transition hover:bg-primary/10 hover:text-primary focus-visible:outline-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-50 ${selectedReplyId === comment._id ? "bg-primary/15 text-primary" : "text-muted-foreground"}`}
+            >
+              <Reply aria-hidden="true" size={14} />
+              Reply
+            </button>
+          </Can>
+        )}
       </div>
 
       {/* Options */}
@@ -103,18 +118,20 @@ const Comment = ({
             className="inline-flex items-center justify-center transition-colors p-1 border border-transparent hover:border-muted-foreground rounded-2xl"
             onClick={handleOpenMenu}
             aria-label="Comment actions"
+            aria-expanded={comment._id === openMenuId}
+            disabled={composerBusy}
           >
             <MoreHorizontal size={18} />
           </button>
 
-          {isMenuOpen && comment._id === openMenuId && (
+          {comment._id === openMenuId && (
             <div className="absolute  bottom-1 right-12 z-50 w-44 rounded-xl border bg-background p-1 shadow-lg">
               <Can permission={PERMISSIONS.COMMENT_EDIT}>
                 <button
                   type="button"
                   onClick={() => {
-                    setIsMenuOpen(false);
-                    setEditingComment(comment);
+                    setOpenMenuId(null);
+                    onEdit(comment);
                   }}
                   className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm transition hover:bg-muted"
                 >
@@ -127,7 +144,7 @@ const Comment = ({
                 <button
                   type="button"
                   onClick={() => {
-                    setIsMenuOpen(false);
+                    setOpenMenuId(null);
                     setIsDeleteOpen(true);
                   }}
                   className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-red-600 hover:bg-red-50"
@@ -145,7 +162,7 @@ const Comment = ({
             title="Delete Comment"
             cancelText="Cancel"
             confirmText="Delete Comment"
-            description={`Are you sure you want to delete the comment ?`}
+            description="Delete this comment? Its replies will remain visible."
             key={`delete-${comment._id}`}
             onCancel={() => setIsDeleteOpen(!isDeleteOpen)}
             onConfirm={handleDeleteComment}

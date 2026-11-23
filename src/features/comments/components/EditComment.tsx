@@ -1,33 +1,27 @@
-import type { Dispatch, SetStateAction } from "react";
 import { notify } from "../../../shared/utils/toast";
 import { useEditComment } from "../hooks/useEditComment";
 import type { EditCommentPayload } from "../schemas/editCommentSchema";
 import type { CommentResponse } from "../types/comment.types";
-import CommentForm from "./CommentForm";
+import CommentForm, { type ComposerLifecycleProps } from "./CommentForm";
 
-interface EditCommentProps {
+interface EditCommentProps extends ComposerLifecycleProps {
   initialData: CommentResponse;
-  setEditingComment: Dispatch<SetStateAction<CommentResponse | null>>;
 }
 
-const EditComment = ({ initialData, setEditingComment }: EditCommentProps) => {
+const EditComment = ({ initialData, initialContent, ...formProps }: EditCommentProps) => {
   const { mutateAsync, isPending } = useEditComment();
-
-  const onSubmit = async (payload: EditCommentPayload) => {
-    await mutateAsync({
-      payload,
-      commentId: initialData._id,
-    });
-
+  const onSubmit = async ({ content }: EditCommentPayload) => {
+    await mutateAsync({ payload: { content }, commentId: initialData._id });
     notify.success("Comment edited successfully");
   };
 
   return (
     <CommentForm
-      title="Edit Comment"
-      submitLabel="Edit Comment"
-      defaultValues={{ content: initialData.content }}
-      setEditingComment={setEditingComment}
+      {...formProps}
+      title="Edit comment"
+      submitLabel="Save changes"
+      pendingLabel="Saving…"
+      initialContent={initialContent ?? initialData.content}
       onSubmit={onSubmit}
       isSubmitting={isPending}
     />

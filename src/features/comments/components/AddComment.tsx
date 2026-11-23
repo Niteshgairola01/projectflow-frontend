@@ -1,25 +1,35 @@
 import { notify } from "../../../shared/utils/toast";
 import { useAddComment } from "../hooks/useAddComment";
 import type { AddCommentPayload } from "../schemas/addCommentSchema";
-import CommentForm from "./CommentForm";
+import type { CommentResponse } from "../types/comment.types";
+import CommentForm, { type ComposerLifecycleProps } from "./CommentForm";
 
-const AddComment = () => {
+interface AddCommentProps extends ComposerLifecycleProps {
+  replyTo?: CommentResponse;
+}
+
+const AddComment = ({ replyTo, ...formProps }: AddCommentProps) => {
   const { mutateAsync, isPending } = useAddComment();
-
-  const onSubmit = async (data: AddCommentPayload) => {
-    await mutateAsync(data);
-    notify.success("Comment added successfully");
+  const onSubmit = async ({ content }: AddCommentPayload) => {
+    await mutateAsync({
+      content,
+      ...(replyTo ? { parentComment: replyTo._id } : {}),
+    });
+    notify.success(
+      replyTo ? "Reply posted successfully" : "Comment added successfully",
+    );
   };
 
   return (
-    <div>
-      <CommentForm
-        title="Add Comment"
-        submitLabel="Post Comment"
-        onSubmit={onSubmit}
-        isSubmitting={isPending}
-      />
-    </div>
+    <CommentForm
+      {...formProps}
+      title={replyTo ? "Your reply" : "Add a comment"}
+      contextLabel={replyTo ? `Replying to: ${replyTo.author.name}` : undefined}
+      submitLabel={replyTo ? "Post reply" : "Post comment"}
+      pendingLabel="Posting…"
+      onSubmit={onSubmit}
+      isSubmitting={isPending}
+    />
   );
 };
 

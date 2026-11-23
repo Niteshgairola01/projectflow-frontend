@@ -46,7 +46,7 @@ export const useEditComment = () => {
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries({
+      return queryClient.invalidateQueries({
         queryKey: commentKeys.list(
           workspaceId ?? "",
           projectId ?? "",

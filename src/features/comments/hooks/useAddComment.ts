@@ -32,7 +32,7 @@ export const useAddComment = () => {
     onSuccess: () => {
       if (!workspaceId || !projectId || !taskId) return;
 
-      queryClient.invalidateQueries({
+      return queryClient.invalidateQueries({
         queryKey: commentKeys.list(workspaceId, projectId, taskId),
       });
     },
