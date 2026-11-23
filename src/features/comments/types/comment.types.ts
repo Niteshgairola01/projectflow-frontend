@@ -22,9 +22,11 @@ export interface CommentResponse extends Omit<Comment, "author"> {
 }
 
 // Deleted ancestors contain structure only; author and content are not returned.
-export interface DeletedCommentResponse extends Omit<Comment, "author" | "content" | "isDeleted"> {
+export interface DeletedCommentResponse extends Omit<
+  Comment,
+  "author" | "content" | "isDeleted"
+> {
   isDeleted: true;
 }
 
-export type CommentThreadResponse = CommentResponse | 
-\;
+export type CommentThreadResponse = CommentResponse | DeletedCommentResponse;

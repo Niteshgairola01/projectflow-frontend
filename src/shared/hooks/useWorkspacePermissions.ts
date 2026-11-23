@@ -13,7 +13,9 @@ export const useWorkspacePermissions = () => {
 
   const role = membership?.role;
 
-  const permissions = role ? WORKSPACE_ROLE_PERMISSIONS[role] : [];
+  const permissions: readonly Permission[] = role
+    ? WORKSPACE_ROLE_PERMISSIONS[role]
+    : [];
 
   const can = (permission: Permission) => {
     return permissions.includes(permission);
